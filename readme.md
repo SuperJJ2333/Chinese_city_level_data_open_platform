@@ -26,6 +26,7 @@ cd Chinese_city_level_data_open_platform
 ```
 ## 项目结构
 
+```
 .
 ├── .idea
 ├── output
@@ -42,3 +43,5 @@ common: 公共工具和辅助函数
 config.py: 配置文件
 main.py: 主入口文件
 output: 保存爬取的数据
+
+```
