@@ -1,6 +1,8 @@
 import re
 from datetime import datetime
-from typing import List
+from typing import List, Optional
+
+import pandas as pd
 
 from common.form_utils import format_date
 
@@ -8,7 +10,8 @@ from common.form_utils import format_date
 class DataModel:
     def __init__(self, title: str, subject: str, description: str, source_department: str, release_time: str,
                  update_time: str, open_conditions: str, data_volume: int, is_api: str, file_type: List[str],
-                 access_count: int, download_count: int, api_call_count: int, link: str, update_cycle: str):
+                 access_count: int, download_count: int, api_call_count: int, link: str, update_cycle: str,
+                 location: Optional[str] = None):
         """
         数据模型初始化
 
@@ -28,22 +31,36 @@ class DataModel:
         api_call_count (int): API调用次数
         link (str): 链接
         update_cycle (str): 更新周期
+        location (Optional[str]): 位置
         """
-        self.title = title or ""
-        self.subject = subject or ""
-        self.description = description or ""
-        self.source_department = source_department or ""
-        self.release_time = self.parse_date(release_time)
-        self.update_time = self.parse_date(update_time)
-        self.open_conditions = open_conditions or ""
+        self.title = self.strip_string(title)
+        self.subject = self.strip_string(subject)
+        self.description = self.strip_string(description)
+        self.source_department = self.strip_string(source_department)
+        self.release_time = self.parse_date(self.strip_string(release_time))
+        self.update_time = self.parse_date(self.strip_string(update_time))
+        self.open_conditions = self.strip_string(open_conditions)
         self.data_volume = self.parse_int(data_volume) if data_volume is not None else 0
-        self.is_api = is_api or "False"
+        self.is_api = self.strip_string(is_api)
         self.file_type = file_type or []
         self.access_count = self.parse_int(access_count) if access_count is not None else 0
         self.download_count = self.parse_int(download_count) if download_count is not None else 0
         self.api_call_count = self.parse_int(api_call_count) if api_call_count is not None else 0
-        self.link = link or ""
-        self.update_cycle = update_cycle or ""
+        self.link = self.strip_string(link)
+        self.update_cycle = self.strip_string(update_cycle)
+        self.location = self.strip_string(location) if location is not None else ""
+
+    def strip_string(self, value: str) -> str:
+        """
+        移除字符串首尾的空白字符
+
+        参数:
+        value (str): 输入字符串
+
+        返回:
+        str: 去除首尾空白字符后的字符串
+        """
+        return value.strip() if isinstance(value, str) else value
 
     @staticmethod
     def parse_date(date_str: str) -> datetime:
@@ -57,7 +74,7 @@ class DataModel:
         datetime: 解析后的 datetime 对象
         """
 
-        return format_date(date_str) if date_str else None
+        return format_date(date_str)
 
     @staticmethod
     def parse_int(num_str) -> int:
@@ -68,15 +85,23 @@ class DataModel:
         num_str (str or int):
 
         返回:
-        datetime: 整数
+        int: 解析后的整数
         """
+        if num_str is None or num_str == "":
+            return 0
+
         if isinstance(num_str, str):
             # 使用正则表达式匹配所有整数
             numbers = re.findall(r'\d+', num_str)
-            # 将匹配到的字符串数字转换为整型列表
-            num = int(''.join(num for num in numbers))
+            # 将匹配到的字符串数字转换为整型
+            if not numbers:
+                return 0
+            num = int(''.join(numbers))
         elif isinstance(num_str, float):
-            num = int(num_str)
+            if pd.isnull(num_str):
+                return 0
+            else:
+                num = int(num_str)
         else:
             num = num_str
 
@@ -90,6 +115,7 @@ class DataModel:
         dict: 包含所有属性的字典
         """
         return {
+            "location": self.location,
             "title": self.title,
             "subject": self.subject,
             "description": self.description,

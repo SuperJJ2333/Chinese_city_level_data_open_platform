@@ -1,3 +1,4 @@
+from datetime import datetime
 import os
 import re
 import pandas as pd
@@ -90,6 +91,17 @@ def format_date(date_str):
     返回:
     str: 标准化的日期字符串或者None（如果无法识别格式）。
     """
+    if isinstance(date_str, str):
+        if not date_str or date_str.strip() == '' or date_str.lower() == 'nan':
+            return ''
+    elif isinstance(date_str, float):
+        if pd.isnull(date_str):
+            return ''
+    elif isinstance(date_str, datetime):
+        return date_str.strftime('%Y-%m-%d')
+    elif pd.isnull(date_str):
+        return ''
+
     # 匹配 YYYY-MM-DD 格式
     match_iso = re.search(r'\d{4}-\d{1,2}-\d{1,2}', date_str)
     if match_iso:
@@ -99,19 +111,27 @@ def format_date(date_str):
     match_extended = re.search(r'(\d{4})年(\d{1,2})月(\d{1,2})日', date_str)
     if match_extended:
         year, month, day = match_extended.groups()
-        return f"{year}-{month}-{day}"
+        return f"{year}-{month.zfill(2)}-{day.zfill(2)}"
 
     # 匹配 YYYY/MM/DD 格式
     match_line = re.search(r'(\d{4})/(\d{1,2})/(\d{1,2})', date_str)
     if match_line:
         year, month, day = match_line.groups()
-        return f"{year}-{month}-{day}"
+        return f"{year}-{month.zfill(2)}-{day.zfill(2)}"
 
-    # 匹配 YYYY.MM.DD xx:xx:xx格式
-    match_second = re.search(r'(\d{4})\.(\d{1,2})\.(\d{1,2})', date_str)
-    if match_second:
-        year, month, day = match_second.groups()
-        return f"{year}-{month}-{day}"
+    # 匹配 YYYY.MM.DD 格式
+    match_dot = re.search(r'(\d{4})\.(\d{1,2})\.(\d{1,2})', date_str)
+    if match_dot:
+        year, month, day = match_dot.groups()
+        return f"{year}-{month.zfill(2)}-{day.zfill(2)}"
+
+    # 匹配 DD-MM-YY 格式
+    match_dmy = re.search(r'(\d{1,2})-(\d{1,2})-(\d{2})', date_str)
+    if match_dmy:
+        day, month, year = match_dmy.groups()
+        year = '20' + year  # 假设年份在2000年之后
+        return f"{year}-{month.zfill(2)}-{day.zfill(2)}"
+
     return None
 
 def format_url(url_str):
@@ -153,3 +173,14 @@ def set_nested_value(dic, path, value):
     for key in keys[:-1]:  # 遍历所有键（除了最后一个）
         dic = dic.setdefault(key, {})  # 获取键对应的字典值，如果不存在，则初始化为字典并返回
     dic[keys[-1]] = int(value)  # 在最后一个键处设置值
+
+def convert_timestamp_to_date(timestamp: int) -> str:
+
+    if isinstance(timestamp, str):
+        timestamp = int(timestamp)
+
+    # 将时间戳转换为datetime对象
+    dt_object = datetime.fromtimestamp(timestamp / 1000)
+    # 格式化为YYYY-MM-DD字符串
+    formatted_date = dt_object.strftime('%Y-%m-%d')
+    return formatted_date

@@ -25,6 +25,14 @@ class ZHengjiakouCrawler(PageBase):
                      'base_url': 'https://kf.zjkzwfw.gov.cn/extranet/rest/dataOpen/getResourceList'
                      }
 
+        api_city_info = {'name': '吉安市_api',
+                         'province': 'Jiangxi',
+                         'total_items_num': 148,
+                         'each_page_count': 10,
+                         'base_url': 'https://opendata.jian.gov.cn/opendata-portal/prod-api/apiService/page',
+                         'is_api': 'True'
+                         }
+
         super().__init__(city_info, is_headless)
 
         self.headers = {"Accept": "application/json, text/javascript, */*; q=0.01",
@@ -114,8 +122,7 @@ class ZHengjiakouCrawler(PageBase):
 
         return id_lists
 
-    @staticmethod
-    def extract_page_data(json_data, upper_item):
+    def extract_page_data(self, json_data, upper_item):
         data = json.loads(json_data)
         item = data['custom']
         models = []
@@ -153,13 +160,12 @@ class ZHengjiakouCrawler(PageBase):
 
         model = DataModel(title, subject, description, source_department, release_time, update_time,
                           open_conditions, data_volume, is_api, file_types, access_count, download_count,
-                          api_call_count, link, update_cycle)
+                          api_call_count, link, update_cycle, self.name)
         models.append(model.to_dict())
 
         return models
 
-    @staticmethod
-    def extract_api_page_data(json_data):
+    def extract_api_page_data(self,json_data):
         json_data = json.loads(json_data.strip('"'))
         results = json_data['data']
         models = []
@@ -186,7 +192,7 @@ class ZHengjiakouCrawler(PageBase):
 
             model = DataModel(title, subject, description, source_department, release_time, update_time,
                               open_conditions, data_volume, is_api, file_type, access_count, download_count,
-                              api_call_count, link, update_cycle)
+                              api_call_count, link, update_cycle, self.name)
             models.append(model.to_dict())
 
         return models

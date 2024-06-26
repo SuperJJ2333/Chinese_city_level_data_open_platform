@@ -20,6 +20,12 @@ def query_string_to_decoded_dict(query_string):
 
     return data_dict
 
+def query_string_to_dict_parse(encoded_data):
+
+    decoded_data = urllib.parse.unquote(encoded_data)
+    data_dict = json.loads(decoded_data)
+    return data_dict
+
 
 if __name__ == '__main__':
     while True:
@@ -30,6 +36,10 @@ if __name__ == '__main__':
             print(result_dict)
         elif search_string == "exit":
             break
+        elif search_string == "parse":
+            search_string = input("请输入需要解析的查询字符串：")
+            result_dict = query_string_to_dict_parse(search_string)
+            print(result_dict)
         else:
             result_dict = query_string_to_dict(search_string)
             print(result_dict)

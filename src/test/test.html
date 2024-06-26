@@ -2,1106 +2,1096 @@
 
 
 
-
-
-
-
-
-
 <!DOCTYPE html>
 <html>
-	<head>
 
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-<title>承德市政府数据开放平台</title>
-<link rel="shortcut icon" href="/shuju/static/web/mao/image/favicon.ico" type="image/x-icon">
-<meta name="keywords" content="承德市政府数据开放平台、涵盖经济建设、资源环境、教育科技、道路交通、社会发展、公共安全、文化休闲、卫生健康、民生服务、机构团体、城市建设等11个重点数据主题">
-<meta name="description" content="【承德市政府数据开放平台】承担着对外数据开放、提供检索下载服务等功能，覆盖各部门主要业务范围，涵盖经济建设、资源环境、教育科技、道路交通、社会发展、公共安全、文化休闲、卫生健康、民生服务、机构团体、城市建设等11个重点数据主题，作为公共资源的一种，共享和开放有利于各类市场主体平等高效使用政府数据资源，促进全社会力量共同参与经济社会管理。">
-
-
-
-<link type="text/css" rel="stylesheet" href="/shuju/static/web/css/base.css">
-<link type="text/css" rel="stylesheet" href="/shuju/static/web/css/index.css">
-<link type="text/css" rel="stylesheet" href="/shuju/static/web/css/style.css">
-<!--  tab切换  -->
-<script src="/shuju/static/web/js/jquery-v1.10.2.js" type="text/javascript"></script>
-<script src="/shuju/static/web/js/flickerplate.js" type="text/javascript"></script>
-
-
-<script src="/shuju/static/js/plugins/layer/layer.min.js"></script>
-
-<script>
-	var baseUrl = "/shuju/";
-    $(document).ready(function () {
-
-        $(".smenu li").click(function () {
-            $(this).addClass("on").siblings("li").removeClass("on");
-            $(".R_list .mainlist:eq(" + $(this).index() + ")").show().siblings(".mainlist").hide();
-        })
-
-
-    });
-</script>
-
-<!-- <script src="http://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script> -->
-   <!--  评分  -->
-
-
-<!--  搜索框下拉  -->
-
-<script src="/shuju/static/web/js/search/jquery_002.js" type="text/javascript"></script>
-
-
-<!--  跟随滚动  -->
-
-<script src="/shuju/static/web/js/float/float_zxx.js"></script>
-
-<!--  ECharts  -->
-<script src="/shuju/static/web/js/ECharts/echarts.common.min.js"></script>
-
-<!-- 无障碍阅读 -->
-<script id="barrierfree" src="/shuju/static/accessiblereading/load.js"></script>
-<!-- 简繁体 -->
-<script src="/shuju/static/language/language.js"></script>
-
-
-<!--搜索框显示图标-->
-<script type="text/javascript">
-	$(document).ready(function () {
-
-    var flagSearch = 0;
-    $('#expend_search').click(function () {
-        $('div.sea_tips').slideDown("slow", function () {
-            // $("#moreSearch").html("收起<img src='images/icon_up.gif'/>");
-            $("#moreSearch")[0].innerHTML = "收起&nbsp;&nbsp;<img src='/shuju/static/web/images/icon_up.gif'/>";
-            flagSearch = 1;
-        })
-    });
-
-
-    $('#moreSearch').click(function () {
-        $('div.sea_tips').slideToggle("slow", function () {
-            if (flagSearch == 0) {
-                //$("#moreSearch").html("收起&nbsp;&nbsp;<img src='images/icon_up.gif'/>");
-                $("#moreSearch")[0].innerHTML = "收起&nbsp;&nbsp;<img src='/shuju/static/web/images/icon_up.gif'/>";
-
-                flagSearch = 1;
-            } else if (flagSearch == 1) {
-                // $("#moreSearch").html("更多&nbsp;&nbsp;<img src='images/icon_down.gif'/>");
-                $("#moreSearch")[0].innerHTML = "更多&nbsp;&nbsp;<img src='/shuju/static/web/images/icon_down.gif'/>";
-                flagSearch = 0;
-
-            }
-
-        })
-    });
-
-    $('#search_up').click(function () {
-        $('div.sea_tips').slideUp("slow");
-
-    })
-
-
-
-
-
-});
-</script>
-
-
-<!-- Bootstrap end-->
-
-
-<meta http-equiv="X-UA-Compatible" content="IE=edge" >
-<link href="/shuju/static/web/mao/css.css" rel="stylesheet">
-<script type="text/javascript" src="/shuju/static/web/mao/web.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- cookie操作 -->
-<script src="/shuju/static/web/js/jquery.cookie.min.js"></script>
-
-<script type="text/javascript">
-                    $(function () {
-                        $(".personal_box ul.personal_l").hide();
-                        $(".personal_box a.personal_h").click(function (event) {
-                            event.stopPropagation();
-                            $(this).parent().find("ul.personal_l").slideToggle("fast");
-                        });
-                        $(document).click(function (event) {
-                            $('ul.personal_l').hide()
-                        });
-                    });
-                </script>
-
-                <style type="text/css">
-	::-webkit-input-placeholder { /* WebKit browsers */
-		  color: #fff;
-		  font-size: 14px;
-		}
-
-		::-moz-placeholder { /* Mozilla Firefox 19+ */
-		  color: #fff;
-		  font-size: 14px;
-		}
-
-		:-ms-input-placeholder { /* Internet Explorer 10+ */
-		  color: #fff;
-		  font-size: 14px;
-		}
-</style>
-<div id="barrierfree_container">
-<div class="top_box">
-	        <div class="center_box">
-		        <div class="top_menu">
-            	<p class="top_text">
-            	<a href="javascript:;" onclick="toggleToolBar();"><span style="color:white;margin:10px">无障碍浏览</span></a><a id='zh_click_s' style="color:white;" class='zh_click' href="javascript:zh_tran('n')"><span style="color:white;">简</span></a><a id='zh_click_t' class='zh_click' style="color:white;" href="javascript:zh_tran('t')"><span style="color:white;"> | 繁</span></a>
-            	  今天是2024年06月06日 星期四
-            	 </p>
-
-
-			        	<div class="m_box" style="right:70px;">
-		                    <a class="log" href="/shuju/web/userWeb/login" ><img src="/shuju/static/web/images/top_icon_user.png">登录</a>
-		                    <a href="/shuju/web/userWeb/register">注册</a>
-		            	</div>
-
-
-                 <div class="logo">
-	            	<img src="/shuju/static/web/images/logo.png" />
-	            </div>
-
-	            <div class="search_box">
-	            	<input type="text" class="search_inp" id="keyStrBox" name="keyStrBox" value="" placeholder="请输入关键词搜索" onkeyup="setKeyStr();">
-	            	<a href="javascript:searchData();" class="search_a"></a>
-	            </div>
-
-
-
-			        <div class="shortcut-box" id="tool_float">
-		                <div class="wrapper gg">
-		                    <a href="/shuju/web/notice_list"><img src="/shuju/static/web/images/wrapper_gg.png">
-		                        <br>通知公告</a>
-		                    <i id="noticeCount1" style="display: none;"></i>
-		                </div>
-		                <div class="wrapper jl">
-	                    	<a href="/shuju/web/hdjl/index">
-		                    	<img src="/shuju/static/web/images/wrapper_hdjl.png" style="width: 45px;height: 45px;">
-		                        <br>互动交流
-		                    </a>
-		                </div>
-		                <div class="wrapper faq">
-		                    <a href="/shuju/web/faq"><img src="/shuju/static/web/images/wrapper_FAQ.png">
-		                        <br>FAQ</a>
-		                </div>
-		                <div class="wrapper zd">
-		                    <a href="#"><img src="/shuju/static/web/images/wrapper_zd.png">
-		                    </a>
-		                </div>
-		            </div>
-
-		           <!--  <script type="text/javascript">
-		                $("#tool_float").smartFloat();
-		            </script> -->
-				</div>
-	        <div class="search clear">
-	            	<script type="text/javascript">
-	            		function setKeyStr(){
-
-
-	            			var keyStr=$("#keyStr");
-	            			var keyStrBox=$("#keyStrBox");
-	            		 	var inj_str = "'|and|exec|insert|select|delete|update|count|*|%|chr|mid|master|truncate|char|declare|;|or|-|+|,|~|!|@|#|$|^|&|(|)";
-							// 这里的东西还可以自己添加
-							var inj_stra = inj_str.split("|");
-	            		 	if (validataStr(keyStrBox.val())) {
-	            		 		var str=keyStrBox.val().substring(0,(keyStrBox.val().length-1));
-	            		 		var repStr;
-	            		 		for (var i = 0; i < inj_stra.length; i++) {
-	            		 			repStr=inj_stra[i];
-	            		 			str=str.replace(repStr,"");
-	            		 		}
-	            				keyStr.val(str);
-	            				keyStrBox.val(str);
-	            			}else{
-	            				keyStr.val(keyStrBox.val());
-	            			}
-
-	            		}
-	             	</script>
-		            <form action="/shuju/web/searchData" id="searchForm" method="post">
-		    			<input type="hidden" name="pageNum" id="pageNum" value="1" />
-		    			<input type="hidden" name="sortFeild" id="sortFeild" value="" />
-		    			<input type="hidden" name="dataDomainIds" id="dataDomainIds" value="" />
-		    			<input type="hidden" name="dataOrgIds" id="dataOrgIds" value="" />
-		    			<input type="hidden" name="keyStr"  id="keyStr" value="">
-
-
-		    			<input type="hidden" name="sortDirection" id="sortDirection" value="" />
-
-		            </form>
-	            </div>
-	            	        </div>
-	    </div>
-
-	    <div class="top_nav">
-        <ul class="clear">
-            <li><a href="/shuju/web/index">首页</a></li>
-            <li><a  href="/shuju/web/dataList?domainId=0">数据目录</a></li>
-            <li><a class="curr" href="/shuju/web/dataList?domainId=0&resourceType=DATAQUERY">数据查询</a></li>
-
-            <li><a  href="/shuju/web/dataList?domainId=0&resourceType=SERVICE">数据接口</a></li>
-            <li><a  href="/shuju/web/dataList?domainId=0&resourceType=APP">数据应用</a></li>
-            <li><a  href="/shuju/web/stat/openIndex?resourceType=STAT">开放指数</a></li>
-
-
-
-        </ul>
-    </div>
-
-
-<script>
-
-function getVisitNum(){
-	var cookies = $.cookie();
-	var tempList = new Array();
-	for(var x in cookies){
-		if(x.indexOf("dsId=")>=0){
-			tempList.push(1);
-		}
-		if(x.indexOf("article_id")>=0){
-			tempList.push(1);
-		}
-	}
-
-	var num = tempList.length;
-	return num;
-}
-$("#visitNum").text(getVisitNum());
-
-/**
- * 右边公告数量
- */
-function noticeCount1(){
-	$.post("/shuju/web/noticeCount1",{},function(result){
-		var noCou=$("#noticeCount1");
-		if (result==0) {
-			noCou.css({"background":"none"});
-			noCou.html("");
-		}else{
-			noCou.removeAttr("style");
-			noCou.html(result);
-		}
-
-	});
-}
-
-$(function(){
-	//初始化公告数据
-	noticeCount1();
-});
-</script>
-
-
-
-
-<link type="text/css" rel="stylesheet" href="/shuju/static/web/css/new_startScore.css">
-
-<script type="text/javascript" src="/shuju/static/web/js/frontEnd/view.js"></script>
-<!-- 历史记录处理 -->
-<script src="/shuju/static/web/js/jquery.cookie.min.js"></script>
-
-<!-- uploader -->
-<script type="text/javascript" src="/shuju/static/webuploader/webuploader.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/shuju/static/webuploader/webuploader.css"/>
-
-
-<script type="text/javascript">
-	//点入即更新
-function getVisitNum(){
-	var cookies = $.cookie();
-	var tempList = new Array();
-	for(var x in cookies){
-		if(x.indexOf("dsId")>=0){
-			tempList.push(1);
-		}
-		if(x.indexOf("article_id")>=0){
-			tempList.push(1);
-		}
-	}
-
-	var num = tempList.length;
-	return num;
-}
-	$("#visitNum").text(getVisitNum());
-</script>
-
-<script language="javascript">
-    var $ = jQuery,
-    $list = $('#fileList'),
-    // 优化retina, 在retina下这个值是2
-    ratio = window.devicePixelRatio || 1,
-    // 缩略图大小
-    thumbnailWidth = 100 * ratio,
-    thumbnailHeight = 100 * ratio,
-    // Web Uploader实例
-    uploader;
-
-    function initWebUpload(){
-    	var testSwf = baseUrl + 'static/webuploader/Uploader.swf';
-    	var testServer = baseUrl + 'web/webUpload/upload';
-    	// 初始化Web Uploader
-        uploader = WebUploader.create({
-            // 自动上传。
-            auto: true,
-            // swf文件路径
-            swf:baseUrl + 'static/webuploader/Uploader.swf',
-            // 文件接收服务端。
-            server: baseUrl + 'web/webUpload/upload',
-            // 选择文件的按钮。可选。
-            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
-            pick: '#filePicker',
-         // 图片质量，只有type为`image/jpeg`的时候才有效。
-            quality: 90,
-//             只允许选择文件，可选。
-            accept: {
-            	title: 'Files',
-                extensions: 'gif,jpg,jpeg,bmp,png,pdf,doc,docx,txt,xls,xlsx,ppt,pptx,text,csv',
-                mimeTypes: 'image/*,text/*'
-                    //word
-                +',application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-                    //excel
-                +',application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                    //ppt
-                +',application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation'
-                +',application/pdf'
-                +',application/csv'
-            }
-        });
-
-
-     // 当有文件添加进来的时候
-        uploader.on( 'fileQueued', function( file ) {
-            var $li = $(
-                    '<div id="' + file.id + '" class="file-item thumbnail">' +
-                        '<img>' +
-                        '<div class="info">' + file.name + '</div>' +
-                    '</div>'
-                    ),
-                $img = $li.find('img');
-            // $list为容器jQuery实例
-            $list.append( $li );
-
-            // 创建缩略图
-            // 如果为非图片文件，可以不用调用此方法。
-            // thumbnailWidth x thumbnailHeight 为 100 x 100
-            uploader.makeThumb( file, function( error, src ) {
-                if ( error ) {
-                    $img.replaceWith('<span>不能预览</span>');
-                    return;
-                }
-
-                $img.attr( 'src', src );
-            }, thumbnailWidth, thumbnailHeight );
-        });
-
-     // 文件上传过程中创建进度条实时显示。
-        uploader.on( 'uploadProgress', function( file, percentage ) {
-            var $li = $( '#'+file.id ),
-                $percent = $li.find('.progress span');
-
-            // 避免重复创建
-            if ( !$percent.length ) {
-                $percent = $('<p class="progress"><span></span></p>')
-                        .appendTo( $li )
-                        .find('span');
-            }
-
-            $percent.css( 'width', percentage * 100 + '%' );
-        });
-
-        // 文件上传成功，给item添加成功class, 用样式标记上传成功。
-        //注意我写样式了啊response:服务端返回的数据
-        uploader.on( 'uploadSuccess', function( file,response) {
-            $( '#'+file.id ).addClass('upload-state-done');
-            //console.info(response);
-            //console.info(response._raw);
-            var json = base.json(response._raw);
-            if (json.error=='0'){
-            	//上传成功
-            	$("#upInfo").html("<font color='#00FF00'>上传成功</font>");
-            	$("#applicationFj").val(json.message);
-            }else{
-            	//上传失败
-            	$("#upInfo").html("<font color='red'>上传失败</font>");
-            	$("#applicationFj").val("");
-            }
-            /*
-    		if(json.success==true){
-    			//layer.msg(json.message);
-    			layer.msg("注册成功,将返回首页!");
-    			location.href=baseUrl+"/web/index";
-    		}else{
-    			layer.msg(json.message);
-    			changeImg();
-    		}
-            */
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="SiteName" content="温州市公共数据开放平台">
+    <meta name="SiteDomain" content="data.wenzhou.gov.cn">
+    <meta name="SiteIDCode" content="3303000003">
+    <meta name="ColumnType" content="数据开放">
+    <meta name="ColumnName" content="[数据详细页面]">
+    <meta name="ColumnKeywords" content="数据开放、数据集、数据应用">
+    <meta name="ColumnDescription" content="政府数据对外开放、提供利用。">
+    <meta name="ArticleTitle" content="客运售票信息">
+    <meta name="PubDate" content="">
+    <meta name="ContentSource" content="温州市交运集团">
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-store, must-revalidate">
+    <title>数据详细页面</title>
+
+    <link type="text/css" rel="stylesheet" href="/jdop_front/ui/front/css/global.css"/>
+<script type="text/javascript" src="/jdop_front/ui/lib/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/jdop_front/ui/lib/jquery/jquery-migrate-1.4.1.min.js"></script>
+<script type="text/javascript" src="/jdop_front/ui/front/script/ui.js"></script>
+<link type="text/css" rel="stylesheet" href="/jdop_front/ui/widgets/hanweb/iconfont/css/iconfont.css"/>
+<link type="text/css" rel="stylesheet" href="/jdop_front/ui/widgets/hanweb/menu/css/menu.css"/>
+<script type="text/javascript" src="/jdop_front/ui/widgets/hanweb/menu/menu.js"></script>
+<link type="text/css" rel="stylesheet" href="/jdop_front/ui/widgets/hanweb/select/css/select.css"/>
+<script type="text/javascript" src="/jdop_front/ui/widgets/hanweb/select/select.js"></script>
+<link type="text/css" rel="stylesheet" href="/jdop_front/ui/front/select/css/select.css"/>
+<link type="text/css" rel="stylesheet" href="/jdop_front/ui/widgets/dialog/skin/default/layer.css"/>
+<link type="text/css" rel="stylesheet" href="/jdop_front/ui/front/dialog/css/dialog.css"/>
+<script type="text/javascript" src="/jdop_front/ui/widgets/dialog/layer.js"></script>
+<script type="text/javascript" src="/jdop_front/ui/front/dialog/dialog.js"></script>
+<link type="text/css" rel="stylesheet" href="/jdop_front/ui/front/msg/css/message.css"/>
+<script type="text/javascript" src="/jdop_front/ui/front/msg/message.js"></script>
+<link type="text/css" rel="stylesheet" href="/jdop_front/ui/widgets/hanweb/validity/css/validity.css"/>
+<script type="text/javascript" src="/jdop_front/ui/widgets/validity/validity.js"></script>
+<script type="text/javascript" src="/jdop_front/ui/widgets/hanweb/validity/validity.js"></script>
+<link type="text/css" rel="stylesheet" href="/jdop_front/ui/front/validity/css/validity.css"/>
+<script type="text/javascript" src="/jdop_front/ui/front/validity/validity.js"></script>
+<link type="text/css" rel="stylesheet" href="/jdop_front/ui/widgets/loadmask/jquery.loadmask.css"/>
+<script type="text/javascript" src="/jdop_front/ui/widgets/loadmask/jquery.loadmask.min.js"></script>
+<link type="text/css" rel="stylesheet" href="/jdop_front/ui/widgets/hanweb/placeholder/css/placeholder.css"/>
+<script type="text/javascript" src="/jdop_front/ui/widgets/hanweb/placeholder/placeholder.js"></script>
+<link type="text/css" rel="stylesheet" href="/jdop_front/ui/widgets/paging/paging.css"/>
+<link type="text/css" rel="stylesheet" href="/jdop_front/ui/front/grid/css/grid.css"/>
+<script type="text/javascript" src="/jdop_front/ui/widgets/paging/query.js"></script>
+<script type="text/javascript" src="/jdop_front/ui/widgets/paging/paging.js"></script>
+<script type="text/javascript" src="/jdop_front/ui/front/grid/grid.js"></script>
+
+    <link href="/jdop_front/resources/layui/css/layui.css" rel="stylesheet" type="text/css"/>
+
+    <script type="text/javascript" src="/jdop_front/resources/layui/layui.js"></script>
+
+    <script type="text/javascript" src="/jdop_front/resources/layui/lay/modules/element.js"></script>
+
+    <link href="/jdop_front/resources/jdop/common/base.css" rel="stylesheet" type="text/css"/>
+
+    <link href="/jdop_front/resources/jdop/front/images/hanweb.css" rel="stylesheet" type="text/css"/>
+
+    <link href="/jdop_front/resources/jdop/front/images/sjkf.css" rel="stylesheet" type="text/css"/>
+
+    <link href="/jdop_front/resources/jdop/front/images/sjxq.css" rel="stylesheet" type="text/css"/>
+
+    <link href="/jdop_front/resources/jdop/front/index/css.css" rel="stylesheet" type="text/css"/>
+
+    <script type="text/javascript" src="/jdop_front/resources/jdop/jquery.tmpl.min.js"></script>
+
+    <script type="text/javascript" src="/jdop_front/resources/jdop/user/js/common.js"></script>
+
+    <script type="text/javascript" src="/jdop_front/resources/jdop/common/base.js"></script>
+
+    <!-- 评论与互动 -->
+    <script type="text/javascript" src="/jdop_front/resources/jdop/common/interaction.js"></script>
+
+    <script type="text/javascript" src="/jdop_front/resources/jdop/front/comment/comment.js"></script>
+
+    <script type="text/javascript" src="/jdop_front/resources/jdop/front/comment/js/jquery.raty.js"></script>
+
+    <link href="/jdop_front/resources/jdop/common/interaction.css" rel="stylesheet" type="text/css"/>
+
+    <link href="/jdop_front/resources/jdop/common/comment.css" rel="stylesheet" type="text/css"/>
+
+    <link href="/jdop_front/resources/jdop/iconfont/iconfont.css" rel="stylesheet" type="text/css"/>
+
+    <!-- <!-- <script src="https://zjjcmspublic.oss-cn-hangzhou-zwynet-d01-a.internet.cloud.zj.gov.cn/jcms_files/jcms1/web3096/site/images/40015/jquery.min.js"></script> -->
+    <script src="https://zjjcmspublic.oss-cn-hangzhou-zwynet-d01-a.internet.cloud.zj.gov.cn/jcms_files/jcms1/web3096/site/images/40330/jquery.share.min.js"></script>
+    <script type="text/javascript" src="/jdop_front/resources/jdop/jquery.form.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            var baseDataid = '6158';
+            checkFavorite(baseDataid);
+            checkSubscribe(baseDataid);
 
         });
+    </script>
+    <style type="text/css">
+        .body {
+            width: 1100px;
+            margin: 0 auto;
+        }
 
-        // 文件上传失败
-        uploader.on( 'uploadError', function(file) {
-            var $li = $( '#'+file.id ),
-                $error = $li.find('div.error');
-            alert(reson);
+        .detail-header {
+            overflow: hidden;
+            padding: 20px 0 15px;
+        ;
+        }
 
-            // 避免重复创建
-            if ( !$error.length ) {
-                $error = $('<div class="error"></div>').appendTo( $li );
-            }
+        .user-action {
+            float: right;
+        }
 
-            $error.text('上传失败!');
-        });
+        .nav {
+            float: left;
+            font-size: 17px;
+        }
 
-        // 完成上传完了，成功或者失败，先删除进度条。
-        uploader.on( 'uploadComplete', function( file ) {
-            $( '#'+file.id ).find('.progress').remove();
-        });
-    }
+        .title {
+            font-weight: bold;
+            font-size: 20px;
+            padding: 5px 5px;
+        }
 
+        .table {
+            width: 100%;
+        }
 
+        .table td {
+            border: 1px solid #E5E5E5;
+        }
 
-  	//文件上传
-    jQuery(function() {
-    	//删除存在的div
-    	$("#uploader-demo").remove();
-    	//增加div
-    	$("#uploadDiv").prepend("<div id='uploader-demo'><div id='fileList' class='uploader-list'></div><div id='upInfo'></div><div id='filePicker'>选择文件</div></div>");
-    	//初始化
-        initWebUpload();
-    });
-  	</script>
+        .table td:nth-child(2n) {
+            padding-left: 30px;
+            color: #205CA3;
+            width: 410px;
+        }
 
+        .table td:nth-child(2n+1) {
+            background-color: #F5F5F5;
+            white-space: nowrap;
+            width: 140px;
+            text-align: center;
+        }
 
-<!--  评分窗口  -->
+        .param-table {
+            width: 100%;
+            border-collapse: collapse;
+            /* margin-top: 20px; */
+        }
 
-<!-- 申请窗口 -->
-<div id="myModal3" class="reveal-modal large score_box" style="left: 0px;width: 670px !important;margin-left: calc(50% - 320px) !important;">
-<h1><img style="width:17px;height:17px;" src="/shuju/static/images/img_search.gif">申请登记</h1>
-<a class="close-reveal-modal">&#215;</a>
-<form id="applicationForm"  method="post">
-<input type="hidden" name="dataServer.id" value="000000006dfb4c3a016dfeaab834005a">
-<div class="mainlist" style="height:550px;">
-                        <div class="table2">
-                            <table class="table-main2 table_sq" cellspacing="4" cellpadding="0">
-                                <tbody>
-                                <tr>
-                                	<th>流水号</th>
-                                	<td></td>
-                                </tr>
-                                <tr>
-                                	<th>审核状态</th>
-                                	<td></td>
-                                </tr>
-                                <tr>
-                                    <th>证件号</th>
-                                    <td>
-                                        <input type="text" disabled="disabled" value="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>申请对象</th>
-                                    <td>
-                                        <input type="text" disabled="disabled" value="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>联系人</th>
-                                    <td>
-                                        <input type="text"  disabled="disabled" value="">
-                                    </td>
-                                </tr>
-                                 <tr>
-                                    <th>联系手机</th>
-                                    <td>
-                                        <input type="text" disabled="disabled" value="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><span style="color:red;">* </span>申请理由</th>
-                                    <td>
-	                                    <textarea  class="" style="width: 360px; height: 60px;" placeholder="请填写您的申请理由。"  id="reason"  name="reason"  maxlength="50" ></textarea>
-                                    </td>
-                                </tr>
+        .param-table th {
+            border: 1px solid #E5E5E5;
+            text-align: center;
+            height: 40px;
+            /* background-color: #F5F5F5; */
+            padding-left: 10px;
+        }
 
+        .param-table td {
+            border: 1px solid #E5E5E5;
+            height: 40px;
+            text-align: center;
+        }
 
-                                <tr>
-                                <input type="hidden" value="" name="applicationFj.id" id="applicationFj" >
-	                                <th>上传附件</th>
-	                                    <td>
-	                                        <div id="uploadDiv">
-											<div id="uploader-demo">
-										    <!--用来存放item-->
-											    <div id="fileList" class="uploader-list"></div>
-											    <div id="upInfo"></div>
-											    <div id="filePicker">选择文件</div>
+        .discuss {
+            margin-top: 20px;
+        }
 
-											</div>
-										</div>
-	                                    </td>
+        .discuss>.discuss-title {
+            font-weight: bold;
+            font-size: 20px;
+            border: 1px solid #E5E5E5;
+            height: 40px;
+            line-height: 40px;
+            background: #F5F5F5;
+            padding-left: 10px;
+        }
 
-                                </tr>
+        .discuss>.discuss-content {
+            border-bottom: 1px solid #E5E5E5;
+            padding: 15px 10px;
+        }
 
-                                <tr>
+        .reply {
+            margin-top: 20px;
+            padding-left: 10px;
+            width: 50%;
+        }
 
-                                </tr>
-                                 <tr>
-                                    <th>请输入使用系统的名称</th>
-                                    <td>
-                                    <textarea class="" style="width: 360px; height: 60px;" placeholder="请输入使用系统的名称"  id="systemName"  name="systemName"  maxlength="50" ></textarea>
-                                    </td>
-                                </tr>
-                                 <tr>
-                                    <th>请描述要使用系统的业务简介和功能概述</th>
-                                    <td>
-                                    <textarea class="" style="width: 360px; height: 60px;" placeholder="请描述要使用系统的业务简介和功能概述"  id="systemDesc"  name="systemDesc"  maxlength="500" ></textarea>
-                                    </td>
-                                </tr>
+        .reply .stars {
+            padding: 5px;
+            font-weight: bold;
+        }
 
-                            </tbody></table>
-                            <div class="line"></div>
-                            <div class="p30" style="padding-left:40%;">
-                            <button onclick="applicationSave()">提交申请</button>
+        .reply textarea {
+            width: 100%;
+        }
 
-                            </div>
-                        </div>
-                    </div>
-                    </form>
-</div>
-</div>
+        .reply .button>.btn {
+            margin: 5px auto;
+            display: block;
+        }
 
+        .related-list {
+            border: 1px solid #E5E5E5;
+            /* margin-top: 20px; */
+        }
 
-		<script type="text/javascript" src="/shuju/static/js/base/base.js"></script>
+        .related-data {
+            padding-top: 10px;
+            padding-left: 10px;
+            border-bottom: 1px solid #E5E5E5;
+        }
 
-		<script type="text/javascript">
-			var baseUrl = "https://www.chengde.gov.cn:443/shuju/";
-		</script>
+        .related-item-line {
+            height: 30px;
+        }
 
-<script type="text/javascript" src="/shuju/static/js/My97DatePicker/WdatePicker.js"></script>
-    	<script src="/shuju/static/js/flickerplate.js" type="text/javascript"></script>
-		<!-- 我的收藏 -->
-		<!--  登录弹窗  -->
+        .related-title>a {
+            /* font-weight: bold; */
+            font-size: 18px;
+            color: #205CA3;
+            margin-left: 10px;
+        }
 
-		<script type="text/javascript" src="/shuju/static/web/js/frontEnd/collection.js"></script>
-		<script>
-	        $(document).ready(function () {
-	            $(".data_tab li").click(function () {
-	                $(this).addClass("on").siblings("li").removeClass("on");
-	                $(".app_box .data_main:eq(" + $(this).index() + ")").show().siblings(".data_main").hide();
-	            })
-	        });
-	    </script>
-		<style type="text/css">
-		.download_tips{
-			font-size: 16px;
-			height: 30px;
-			padding: 10px 50%;
-			width: 90px;
-			background: #d4dde2;
-		}
-		.downLoadA {
-			margin-bottom: 5px; text-align: center; margin-top: 5px;
-		}
-		.downLoadA_dt {
-			height: 40px; line-height: 40px; background-color: white;
-			font-family: "微软雅黑";
-			font-size:14px;
-		}
-		.downLoadA_dt:hover {
-			background-color: #e3e3e3;
-		}
-		.downloadCB {
-			position:absolute;
-			margin:2% 0px 0px -2%;
-		}
-		.downloadButton {
-		width: 60px;
-    height: 30px;
-    background-color: #58b5f2;
-    display: block;
-    text-align: center;
-    position: absolute;
-    color:white;
-        margin-left: 85%;
-    margin-top: -4%
-		}
-		</style>
-	</head>
+        .related-item {
+            float: left;
+            margin-right: 30px;
+            margin-left: 10px;
+        }
+
+        .related-content {
+            width: 380px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .btn-download-old {
+            background: #00c1de;
+        }
+        /* 分享隐藏 */
+        .bdshare-slide-list li:nth-child(1),.bdshare-slide-list li:nth-child(3),.bdshare-slide-list li:nth-child(4),.bdshare-slide-list li:nth-child(5){
+            display: none !important;
+        }
+        .bdshare_dialog_list li:nth-child(1),.bdshare_dialog_list li:nth-child(3),.bdshare_dialog_list li:nth-child(4),.bdshare_dialog_list li:nth-child(5){
+            display: none !important;
+        }
+        .slide-mshare,.slide-tsina,.slide-bdysc,.slide-weixin{
+            display: none !important;
+        }
+    </style>
+</head>
+
 <body>
-		<input type="hidden" id="thisDomainId" value="" />
-		<input type="hidden" id="thisOrg" value="" />
-		<input type="hidden" id="enterType" value="" />
-		<input type="hidden" id="resourceType" value="" />
-		<input type="hidden" id="entityInfoId" value="000000006dfaef9a016dfb0c4f2f0322" />
+<div id="barrierfree_container">
+    <script src="/jdop_front/resources/jdop/front/index/header_lanmu.js"></script>
+    <style>
+        /* 栏目高亮 */
 
-     <div class="bg" >
-        <div class="container">
-            <div class="R_main">
-                <div class="R_list clear">
-                    <div class="mainlist">
-                        <dl>
-                            <dd>
-                                 <div class="header">
+        .hd_list ul li.active>a {
+            border-bottom: none;
+            font-weight: normal;
+        }
 
+        #top_navkfsj a {
+            border-bottom: 4px solid #ffd558;
+            font-weight: bold;
+        }
 
-                                    	<a href="javascript:collection.add('000000006dfb4c3a016dfeaab834005a');" id="collection1" dsId="000000006dfb4c3a016dfeaab834005a">收藏</a>
+        #top_navkfsjlist1 a {
+            border-bottom: none;
+            font-weight: normal;
+        }
 
-                                    <h2><a href="#">交通民警执勤执法和依法行政依据的法律法规</a></h2>
-                                </div>
-                            </dd>
-                        </dl>
-                        <div class="pT15 pB15">
-                            <table class="table-main" cellspacing="0" cellpadding="0">
-                                <tr>
-                                    <th>部门名称</th>
-                                    <td colspan="3"><span>承德市公安局</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>摘要</th>
-                                    <td colspan="3">法规名称、内容、文号
-</td>
-                                </tr>
-                                <tr>
-                                    <th width="20%">数据条数</th>
-                                    <td width="30%">1174</td>
-                                    <th width="20%">数据截止时间</th>
-                                    <td width="30%">2024年04月28日</td>
-                                </tr>
-                                <tr>
-                                    <th>更新频率</th>
-                                    <td>每年</td>
-                                    <th>数据主题</th>
-                                    <td>道路交通</td>
-                                </tr>
-                                <tr>
-                                    <th>下载量</th>
-                                    <td>190</td>
-                                    <th>开放等级</th>
-                                    <td>完全公开</td>
-                                </tr>
-                                <tr>
-                                    <th>访问量</th>
-                                    <td>773</td>
-                                    <th><!-- 项目评分 --></th>
-                                    <td>
+        #top_navkfsjlist2 a {
+            border-bottom: none;
+            font-weight: normal;
+        }
 
+        #top_navkfsjlist3 a {
+            border-bottom: none;
+            font-weight: normal;
+        }
 
-                                    </td>
-                                </tr>
-                            </table>
+        .bd_weixin_popup .bd_weixin_popup_foot {
+            line-height: 15px;
+        }
 
-                            <div class="table_details">
-                                <div class="app_box">
-                                    <!-- <h3>数据下载</h3> -->
+        .bd_weixin_popup {
+            height: 320px!important;
+        }
+    </style>
+    <!--开放数据展开效果js-->
+    <script type="text/javascript">
+        $(".nav_kfsj").click(function() {
+            $(".nav_kfsj_list").stop().slideToggle();
+        })
+    </script>
+    <input type="hidden" id="currContextPath" value="/jdop_front">
 
+    <div class="bt-box-1200 main_sjxq">
+        <div class="dqwz">
+            <img src="../resources/jdop/front/images/dqwz_03.png" style="margin-top: -4px;">
+            <a class="ml10" href="/jdop_front/index.do">首页</a>
+            <span class="ml10">»</span>
+            <a class="ml10" href="/jdop_front/channal/data_public.do">数据集</a>
+            <span class="ml10">»</span>
+            <a class="ml10">客运售票信息</a>
+        </div>
 
-                                    <div class="p30" style="text-align: center;">
-
-
-                                    		<ul class="data_tab clear">
-		                                        <li class="on">数据下载</li>
-		                                        <li>数据查询</li>
-		                                    </ul>
-		                                    <!-- tab1 -->
-		                                    <div class="data_main" style="display:block;">
-
-
-	                                    	<!-- <input type="checkbox" class="checkAll" style="text-align: left;margin-left: -21.5px;">全选</p> -->
-	                                    	<!-- <button type="button" class="downloadButton btn" style="" >批量下载</button> -->
-	                                    	<!-- 有权限才能下载 -->
-
-
-				                                    <!-- <input type="checkbox" class="downloadCB"> -->
-				                                        <div class="dl_class clear" data-batch-id="000000006dfaef9a016dfb0c4f2f0322" style="width:100%;">
-
-				                                            <a href="/shuju/web/dataServerView?id=000000006dfb4c3a016dfeaab834005a&viewType=attachmentBrowse&entitiInfoId=000000006dfaef9a016dfb0c4f2f0322&batchId=000000006dfaef9a016dfb0c4f2f0322"><img src="/shuju/static/web/images/ico_look.png">预览</a>
-				                                            <a href="javascript:void(0);" ><img src="/shuju/static/web/images/ico_download.png"><em class="downloadMore" style="font-style: normal;">下载&nbsp;&nbsp;<img src="/shuju/static/web/images/icon_down.gif"></em></a>
-
-				                                            <span>Xls</span>
-				                                            <span style="background-color: #dd269f;">Json</span>
-				                                            <span style="background-color: #0071b9;">Csv</span>
-				                                            <p title="交通民警执勤执法和依法行政依据的法律法规">交通民警执勤执法和依法行政依据的法律法规</p>
-
-				                                       <!-- 原来的附件 -->
-
-				                                        </div>
-				                                        <div class="download_tips" onmouseleave="$(this).hide();" style="display:none; position: absolute; width: 118px; max-width: 118px; padding: 2px 2px; left: 74.5%; margin-top:-14px; height: 120px; line-height:80px; border: 1px solid #e3e3e3;">
-
-										                    <dl>
-										                        <a class="downLoadA" href="/shuju/web/exportData/000000006dfaef9a016dfb0c4f2f0322?dsId=000000006dfb4c3a016dfeaab834005a"><dt class="downLoadA_dt">Xls下载</dt></a>
-										                    </dl>
-										                    <dl>
-										                        <a class="downLoadA" href="/shuju/web/exportJsonData/000000006dfaef9a016dfb0c4f2f0322?dsId=000000006dfb4c3a016dfeaab834005a"><dt class="downLoadA_dt">Json下载</dt></a>
-										                    </dl>
-										                    <dl>
-										                        <a class="downLoadA" href="/shuju/web/exportCsvData/000000006dfaef9a016dfb0c4f2f0322?dsId=000000006dfb4c3a016dfeaab834005a"><dt class="downLoadA_dt">Csv下载</dt></a>
-										                    </dl>
-									                	</div>
-
-
-
-
-
-
-
-
-
-		                                    </div>
-		                                    <!-- tab1 -->
-		                                    <!-- tab2 -->
-		                                    <div class="data_main">
-
-
-			                                     <div class="tCenter" id="top_search_form">
-						                 			<form class="form-inline" id="queryForm" method="post">
-
-
-							                 			<div id="editable_filter" class="s_term">
-							                 				<label  style=" white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="文号">文号：</label>
-
-
-								                 					<p><input type="search" name="WH"></p>
-
-							                 				</div>
-
-							                 			<div id="editable_filter" class="s_term">
-							                 				<label  style=" white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="内容">内容：</label>
-
-
-								                 					<p><input type="search" name="NR"></p>
-
-							                 				</div>
-
-							                 			<div id="editable_filter" class="s_term">
-							                 				<label  style=" white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="法规名称">法规名称：</label>
-
-
-								                 					<p><input type="search" name="FGMC"></p>
-
-							                 				</div>
-
-						                 			</form>
-
-			                 						<button class="btn001 mB30" type="submit" onclick="query();">查询</button>
-
-
-
-			                 						</div>
-
-
-
-		                                        <div id="list" >
-
-		                                        </div>
-		                                    </div>
-		                                    <!-- tab2 -->
-
-
-
-
-                                    </div>
-
-                                </div>
+        <div class="box1">
+            <table style="width: 1200px;">
+                <tr style="height: 45px;">
+                    <td colspan="4">
+                        <div class="sjxqTit">
+                            <span class="sjxqTit1">客运售票信息</span>
+                            <span class="curr_rating"></span>
+                            <input type="hidden" value=0 class="dataScore"></input>
+                            <div class="user-action">
+                                <span><i class="iconfont" >&#xe61d</i>&nbsp;&nbsp;分享</span>
+                                <span onclick="showxy()"><i class="iconfont" >&#xe6a1</i>&nbsp;&nbsp;协议</span>
+                                <span onclick="collect(6158)"><i class="iconfont" >&#xe613</i>&nbsp;&nbsp;收藏</span>
+                                <span onclick="subscribe(6158)"><i class="iconfont" >&#xe7ea</i>&nbsp;&nbsp;订阅</span>
+                                <span onclick="correct(6158)"><i class="iconfont" >&#xe628</i>&nbsp;&nbsp;纠错&nbsp;&nbsp;</span>
                             </div>
-
-                            <div class="tCenter table-btn p30">
-
-                                <button onclick="javascript:window.history.back();">返回上一页</button>
-                            </div>
+                            <script>
+                                window._bd_share_config = {
+                                    "common": {
+                                        "bdSnsKey": {},
+                                        "bdText": "",
+                                        "bdMini": "2",
+                                        "bdMiniList": false,
+                                        "bdPic": "",
+                                        "bdStyle": "0",
+                                        "bdSize": "16"
+                                    },
+                                    "slide": {
+                                        "type": "slide",
+                                        "bdImg": "2",
+                                        "bdPos": "right",
+                                        "bdTop": "100"
+                                    }
+                                };
+                                with(document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+                            </script>
                         </div>
-                    </div>
-                </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>摘&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;要:</td>
+                    <td colspan="3">车次日期,发车时间,上车站名称,总座位数,已售张数,线路名称,车次状态,到站名称,</td>
+                </tr>
+                <tr>
+                    <td>资源代码:</td>
+                    <td colspan="3"></td>
+                </tr>
+                <tr>
+                    
+                    <td>更新周期：</td>
+                    <td>每日</td>
+                </tr>
+                <tr>
+                    <td>资源格式：</td>
+                    <td>02,0203</td>
+                    <td>数源单位：</td>
+                    <td>温州市交运集团</td>
+                </tr>
+                <tr>
+                    <td>数源单位地址：</td>
+                    
+                    
+                        <td>浙江省温州市鹿城区飞霞南路920号</td>
+                    
+                    <td>联系方式：</td>
+                    
+                    
+                        <td>0577-55587659</td>
+                    
+                </tr>
+                <tr>
+                    <td>数据领域：</td>
+                    <td>交通运输,生活服务</td>
+                    <td>访问/下载次数：</td>
+                    <td>60248/1497</td>
+                </tr>
+                <tr>
+                    <td>系统名称：</td>
+                    <td></td>
+                    <td>评分/评价次数：</td>
+                    <td>0/0</td>
+                </tr>
+                <tr>
+                    <td>行业分类：</td>
+                    
+                    
+                        <td>暂无</td>
+                    
+                    <td>数据预览：</td>
+                    <td>
+                        
+                            
+                                <a class="btnList" target="_blank" href="data_preview.do?iid=6158">预览
+                                </a>
+                                
+                                    <a class="btnList" target="_blank" style="margin-left: 10px;" href="data_preview.do?iid=6158&type=2">可视化
+                                    </a>
+                                
+
+                            
+                            
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>数据分级：</td>
+                    
+                        
+                        
+                        
+                            <td>完全开放</td>
+                        
+                    
+                    <td>数据接口：</td>
+                    <td>
+
+                        <a target="_blank" href="api.do?iid=6159" class="btnList">API</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>开放条件：</td>
+                    
+                    
+                        <td>开放网站</td>
+                    
+                    <td>数据范围：</td>
+                    
+                        <td>暂无</td>
+                    
+                    
+
+                </tr>
+                <tr>
+                    <td>更新日期：</td>
+                    <td>2024-01-14</td>
+                    <td>发布日期：</td>
+                    <td>2021-11-09</td>
+                </tr>
+                <tr>
+                    <td>数据量：</td>
+                    <td>738</td>
+                    <td>数据图谱：</td>
+                    <td><a target="_blank" href="data_atlas.do?iid=6158" class="btnList" style="width:72px">数据图谱</a></td>
+                </tr>
+                <tr>
+                    <td class="sjxz1" height='64'>数据下载：</td>
+                    <td colspan="3">
+                        
+                            
+                                <a target="_blank" class="btn btn-primary" onclick="showKfxy('xls','6158')">XLS</a>
+                                <a target="_blank" class="btn btn-primary" onclick="showKfxy('csv','6158')">CSV</a>
+                                <a target="_blank" class="btn btn-primary" onclick="showKfxy('xml','6158')">XML</a>
+                                <a target="_blank" class="btn btn-primary" onclick="showKfxy('json','6158')">JSON</a>
+                                <a target="_blank" class="btn btn-primary" onclick="showKfxy('rdf','6158')">RDF</a>
+
+                                <!-- <a target="_blank" class="btn btn-primary" href="../resource/data/download.do?fileType=xls&iid=6158">XLS</a>
+                                <a target="_blank" class="btn btn-primary" href="../resource/data/download.do?fileType=csv&iid=6158">CSV</a>
+                                <a target="_blank" class="btn btn-primary" href="../resource/data/download.do?fileType=xml&iid=6158">XML</a>
+                                <a target="_blank" class="btn btn-primary" href="../resource/data/download.do?fileType=json&iid=6158">JSON</a>
+                                <a target="_blank" class="btn btn-primary" href="../resource/data/download.do?fileType=rdf&iid=6158">RDF</a> -->
+
+                            
+                            
+                            
+                            
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td class="sjxz1" height='64'>历史数据下载：</td>
+                    <td colspan="3">
+                        
+                            
+                                <a target="_blank" class="btn btn-primary btn-download-old" onclick="showKfxyHistory('xls','6158')">XLS</a>
+                                <a target="_blank" class="btn btn-primary btn-download-old" onclick="showKfxyHistory('csv','6158')">CSV</a>
+                                <a target="_blank" class="btn btn-primary btn-download-old" onclick="showKfxyHistory('xml','6158')">XML</a>
+                                <a target="_blank" class="btn btn-primary btn-download-old" onclick="showKfxyHistory('json','6158')">JSON</a>
+                                <a target="_blank" class="btn btn-primary btn-download-old" onclick="showKfxyHistory('rdf','6158')">RDF</a>
+                            
+                            
+                            
+                            
+                        
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="box2">
+            <div class="tabTit">
+                <ul class="tabTitList">
+                    <li class="on">数据项</li>
+                    <li>相关数据</li>
+                    <!-- <li>相关数据</li> -->
+                    <li>相关应用</li>
+                    <!-- <li>使用者</li> -->
+                </ul>
+                <ul class="tabSelect">
+                    <li style="height:350px;overflow-y:auto;">
+                        
+                            
+                                <table style="width: 1200px" border="1">
+                                    <tr>
+                                        <td>字段名称</td>
+                                        <td>英文名称</td>
+                                        <td>数据类型</td>
+                                        <td>字段描述</td>
+                                        <td>字段长度</td>
+                                        <td>是否字典项</td>
+                                        <!-- <td>开放属性</td> -->
+                                        <td>是否为空</td>
+                                        <td>是否主键</td>
+                                    </tr>
+                                    
+                                        <tr>
+                                            <td>车次日期</td>
+                                            <td>bus_date</td>
+                                            <td>01,1</td>
+                                            
+                                            
+                                                <td>车次日期</td>
+                                            
+                                            <td>200</td>
+                                            
+                                            
+                                                <td>是</td>
+                                            
+                                            <!-- <td>是</td> -->
+                                            
+                                                <td>否</td>
+                                            
+                                            
+                                            
+                                                <td>否</td>
+                                            
+                                            
+                                        </tr>
+                                    
+                                        <tr>
+                                            <td>发车时间</td>
+                                            <td>bus_start_time</td>
+                                            <td>01,1</td>
+                                            
+                                            
+                                                <td>发车时间</td>
+                                            
+                                            <td>200</td>
+                                            
+                                            
+                                                <td>是</td>
+                                            
+                                            <!-- <td>是</td> -->
+                                            
+                                                <td>否</td>
+                                            
+                                            
+                                            
+                                                <td>否</td>
+                                            
+                                            
+                                        </tr>
+                                    
+                                        <tr>
+                                            <td>上车站名称</td>
+                                            <td>sell_station_name</td>
+                                            <td>01,1</td>
+                                            
+                                            
+                                                <td>上车站名称</td>
+                                            
+                                            <td>50</td>
+                                            
+                                            
+                                                <td>是</td>
+                                            
+                                            <!-- <td>是</td> -->
+                                            
+                                                <td>否</td>
+                                            
+                                            
+                                            
+                                                <td>否</td>
+                                            
+                                            
+                                        </tr>
+                                    
+                                        <tr>
+                                            <td>总座位数</td>
+                                            <td>total_seat</td>
+                                            <td>01,1</td>
+                                            
+                                            
+                                                <td>总座位数</td>
+                                            
+                                            <td>100</td>
+                                            
+                                            
+                                                <td>是</td>
+                                            
+                                            <!-- <td>是</td> -->
+                                            
+                                            
+                                                <td>是</td>
+                                            
+                                            
+                                                <td>否</td>
+                                            
+                                            
+                                        </tr>
+                                    
+                                        <tr>
+                                            <td>已售张数</td>
+                                            <td>sale_quantity</td>
+                                            <td>01,1</td>
+                                            
+                                            
+                                                <td>已售张数</td>
+                                            
+                                            <td>100</td>
+                                            
+                                            
+                                                <td>是</td>
+                                            
+                                            <!-- <td>是</td> -->
+                                            
+                                            
+                                                <td>是</td>
+                                            
+                                            
+                                                <td>否</td>
+                                            
+                                            
+                                        </tr>
+                                    
+                                        <tr>
+                                            <td>线路名称</td>
+                                            <td>route_name</td>
+                                            <td>01,1</td>
+                                            
+                                            
+                                                <td>线路名称</td>
+                                            
+                                            <td>40</td>
+                                            
+                                            
+                                                <td>是</td>
+                                            
+                                            <!-- <td>是</td> -->
+                                            
+                                            
+                                                <td>是</td>
+                                            
+                                            
+                                                <td>否</td>
+                                            
+                                            
+                                        </tr>
+                                    
+                                        <tr>
+                                            <td>车次状态</td>
+                                            <td>status</td>
+                                            <td>01,1</td>
+                                            
+                                            
+                                                <td>车次状态</td>
+                                            
+                                            <td>8</td>
+                                            
+                                            
+                                                <td>是</td>
+                                            
+                                            <!-- <td>是</td> -->
+                                            
+                                            
+                                                <td>是</td>
+                                            
+                                            
+                                                <td>否</td>
+                                            
+                                            
+                                        </tr>
+                                    
+                                        <tr>
+                                            <td>到站名称</td>
+                                            <td>end_station_name</td>
+                                            <td>01,1</td>
+                                            
+                                            
+                                                <td>到站名称</td>
+                                            
+                                            <td>200</td>
+                                            
+                                            
+                                                <td>是</td>
+                                            
+                                            <!-- <td>是</td> -->
+                                            
+                                                <td>否</td>
+                                            
+                                            
+                                            
+                                                <td>否</td>
+                                            
+                                            
+                                        </tr>
+                                    
+                                </table>
+                            
+                            
+                        
+                    </li>
+                    <li style="display: none;">
+                        <div>
+                            
+                                
+                                    <div class="related-list">
+                                        
+                                            <div class="related-data">
+                                                <div class="related-item-line">
+                                                    <div class="related-title">
+                                                        <a href="data.do?iid=10873">省回流_客运包车运行信息</a>
+                                                    </div>
+                                                </div>
+                                                <div class="related-item-line">
+                                                    <div class="related-item">主题：交通运输</div>
+                                                    <div class="related-item related-content">摘要：主键ID,线路起讫,</div>
+                                                    <div class="related-item">访问：22744</div>
+                                                    <div class="related-item">评分： 0</div>
+                                                    <div class="related-item">数源单位： 温州市交通运输局</div>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="related-data">
+                                                <div class="related-item-line">
+                                                    <div class="related-title">
+                                                        <a href="data.do?iid=10851">省回流_道路旅客运输站信息</a>
+                                                    </div>
+                                                </div>
+                                                <div class="related-item-line">
+                                                    <div class="related-item">主题：交通运输</div>
+                                                    <div class="related-item related-content">摘要：道路旅客运输站,包含业户名称,经营许可证字,经营许可证号,注册地址,经济类型等信息</div>
+                                                    <div class="related-item">访问：23460</div>
+                                                    <div class="related-item">评分： 0</div>
+                                                    <div class="related-item">数源单位： 温州市交通运输局</div>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="related-data">
+                                                <div class="related-item-line">
+                                                    <div class="related-title">
+                                                        <a href="data.do?iid=10863">省回流_客运出租汽车驾驶员证</a>
+                                                    </div>
+                                                </div>
+                                                <div class="related-item-line">
+                                                    <div class="related-item">主题：交通运输</div>
+                                                    <div class="related-item related-content">摘要：网络预约出租汽车驾驶员证从业资格证基础信息</div>
+                                                    <div class="related-item">访问：8018</div>
+                                                    <div class="related-item">评分： 0</div>
+                                                    <div class="related-item">数源单位： 温州市交通运输局</div>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="related-data">
+                                                <div class="related-item-line">
+                                                    <div class="related-title">
+                                                        <a href="data.do?iid=10927">省回流_道路客运班线经营许可证</a>
+                                                    </div>
+                                                </div>
+                                                <div class="related-item-line">
+                                                    <div class="related-item">主题：交通运输</div>
+                                                    <div class="related-item related-content">摘要：状态,发证单位,发证日期,经营者名称,有效期（起始）,有效期（截止）,起点及站名,讫点及站名,主要途径地,停靠站点,客运班线类型,班车类型,日发班次,车牌号码,车辆类型等级,班车客运标志牌编号,经营许可证号,</div>
+                                                    <div class="related-item">访问：30145</div>
+                                                    <div class="related-item">评分： 0</div>
+                                                    <div class="related-item">数源单位： 温州市交通运输局</div>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="related-data">
+                                                <div class="related-item-line">
+                                                    <div class="related-title">
+                                                        <a href="data.do?iid=16652">景点信息</a>
+                                                    </div>
+                                                </div>
+                                                <div class="related-item-line">
+                                                    <div class="related-item">主题：生态环境</div>
+                                                    <div class="related-item related-content">摘要：景点名称,景点类别,景区ID,中心经度,中心纬度,海拔,描述,封面图片,图片,音频,视频,地理围栏坐标集合,景点解说触发距离,解说触发规则,创建用户,创建时间,更新用户,更新时间,是否为重要景点(1:是0:否),位置,标签,适合季节,语言,</div>
+                                                    <div class="related-item">访问：355</div>
+                                                    <div class="related-item">评分： 0</div>
+                                                    <div class="related-item">数源单位： 温州生态园管理委员会</div>
+                                                </div>
+                                            </div>
+                                        
+                                    </div>
+                                
+                                
+                            
+                        </div>
+                    </li>
+                    <!-- <li style="display: none;">
+                                            <div>
+                                                
+                                                    
+                                                    
+                                                        <p style="color: #00c1de;width: 100%; display: block;line-height: 200px;text-align: center;font-size: 30px;">暂无相关数据</p>
+                                                    
+                                                
+                                            </div>
+                                        </li> -->
+                    <li style="display: none;">
+                        <div>
+                            
+                                
+                                
+                                    <p style="color: #00c1de;width: 100%; display: block;line-height: 200px;text-align: center;font-size: 30px;">暂无相关应用</p>
+                                
+                            
+                        </div>
+                    </li>
+                    
+                </ul>
             </div>
         </div>
-    </div>
-    	<link type="text/css" rel="stylesheet" href="/shuju/static/web/css/reveal.css">
-		<script type="text/javascript" src="/shuju/static/web/js/jquery.reveal.js"></script>
-
-<script type="text/javascript">
-$(function(){
-	$(".downloadMore").click(function(){
-		var index = $(".downloadMore").index($(this));
-		if($(".download_tips")[index].style.display == 'block'){
-			$(".download_tips")[index].style.display = 'none';
-		}else{
-			$(".download_tips")[index].style.display = 'block';
-		}
-
-	});
-	$(".checkAll").click(function(){
-		var checkAll = $(this);
-		var downloadCBs = $(".downloadCB");
-		for(var i =0,l = downloadCBs.length;i<l;i++ ){
-			if(checkAll.attr("checked")){
-				downloadCBs.get(i).checked = "true";
-			}else{
-				downloadCBs.get(i).checked = "";
-			}
-
-		}
-
-	});
-	$(".downloadButton").click(function(){
-		var checkedCB = new Array();
-		var downloadBatchIds = new Array();
-		var downloadCBs = $(".downloadCB");
-		var dl_class = $("div.dl_class");
-
-		for(var i =0,l = downloadCBs.length;i<l;i++ ){
-			if(downloadCBs.get(i).checked){
-				checkedCB.push(i);
-				downloadBatchIds.push($(dl_class.get(i)).attr("data-batch-id"));
-			}
-		}
-
-		if(downloadBatchIds.length ==0){
-			alert("请选择一条数据.");
-			return false;
-		}
-		var entityInfoId = $("#entityInfoId").val();
-		var url = baseUrl+"web/mutiExport/"+entityInfoId+"/"+downloadBatchIds;
-
-
-		parent.layer.confirm('由于批量下载,可能需要等待.是否知晓?', {
-			btn: ['确定', '取消'], //按钮
-			shade: false //不显示遮罩
-		}, function() {
-/* 			var index = layer.load(1, {
-				  shade: [0.1,'#fff'] //0.1透明度的白色背景
-				}); */
-			window.open(url);
-			layer.closeAll();
-		});
-
-	});
-
-})
-function downloadMore(){
-	parent.layer.confirm('由于批量下载,可能需要等待.是否知晓?', {
-		btn: ['确定', '取消'], //按钮
-		shade: false //不显示遮罩
-	}, function() {
-
-	});
-
-}
-
-function query(page, dir) {
-	if (page == null) page = 1;
-	var params = "page=" + page;
-	//拼接排序
-	if(!checkSearchInput()){
-		alert("请输入至少一个查询的条件.");
-		return false;
-	}
-
-	if (dir != "" && dir != " " && dir != undefined) {
-		params += "&sortDirection=" + dir;
-	}
-	params += "&dsId=" +'000000006dfb4c3a016dfeaab834005a';
-	//拼接查询参数
-	var inputs = $("input[type='search']");
-	if (inputs.length > 0) {
-		for (var i = 0; i < inputs.length; i++) {
-			params += "&" + inputs[i].name + "=" + $(inputs[i]).val().trim();
-		}
-	}
-
-	base.load(baseUrl + "web/entityBrowse/query?", 'list', params, function() {});
-}
-
-function checkSearchInput(){
-	var inputs = $("input[type='search']");
-	var flag = false;
-	if (inputs.length > 0) {
-		for (var i = 0; i < inputs.length; i++) {
-			if($(inputs[i]).val().length>0){
-				flag = true;
-				return flag;
-			}
-		}
-	}
-	return flag;
-}
-</script>
-
-
-
-<meta http-equiv = "X-UA-Compatible" content = "IE=edge,chrome=1" />
-
-
-     <div class="foot">
-        <div class="container clear">
-            <div class="footer clear">
-            	 <div class="floatL mR20">
-            	 <a href="http://bszs.conac.cn/sitename?method=show&id=0BCF1C123DD32617E053012819ACD37C" target="_blank">
-                    <img src="/shuju/static/web/images/jglogo.png">
-                    </a>
-                </div>
-                <div class="floatL mT10 mL30">
-
-                </div>
-               <div class="foot_r floatR" style="float: left;">
-               <p id="bottomLinkBox" class="foot_r_r" style="padding-top:15px;">
-				</p>
-                <div class="foot_r_text">
-               		<p>承德市人民政府主办    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;承德市人民政府版权所有    &nbsp;&nbsp;&nbsp;&nbsp;网站标识码：1308000009     &nbsp;&nbsp;</p>
-               		<p><a  target="_blank" href="https://beian.miit.gov.cn/">冀ICP备13014508号-1</a> <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=13080202000261" target="_blank"><img src="/shuju/static/web/images/foot_img.png" />&nbsp;冀公网安备 13080202000261号</a></p>
-               		<span class="foot_f"></span>
-                </div>
-
-               </div>
-
-            </div>
-        </div>
-    </div>
-
-<!-- 代码 结束 -->
-
-<script type="text/javascript">
-	$(function() {
-		//底部链接
-		buttomLink();
-		try {
-			//添加浏览记录
-			var urlStr=window.location.href;
-			var title="";
-				if ((urlStr.indexOf("dataServer")>0)) {
-					title=$("h2").text();
-					addHistory(urlStr,title);
-				}else if((urlStr.indexOf("noticeDetail")>0)){
-					title=$("h1[style]").text();
-					addHistory(urlStr,title);
-				}else if((urlStr.indexOf("faq")>0)&&(urlStr.indexOf("ogview")<1)){
-					title="常见问题";
-					addHistory(urlStr,title);
-				}else if((urlStr.indexOf("ogview")>0)){
-					title=$("h1[style]").text();
-					addHistory(urlStr,title);
-				}
-
-		} catch(e) {
-			//console.log(e.name + ": " + e.message);
-		}
-	});
-
-	/**
-	 * 添加浏览记录
-	 */
-	function addHistory(urlStr,title) {
-		var num = findStr(urlStr, "/", 2);
-		urlStr = urlStr.slice(num);
-		var url = baseUrl + "web/addBrowsingHistory";
-		var params = "title="+title+"&urlStr=" + escape(urlStr);
-		$.ajax({
-			type: "POST",
-			url: url,
-			data: params,
-			beforeSend: function() {
-				//$("body").mask("加载数据中...", 500);
-			},
-			success: function(result) {
-				if(window.console && console.log){
-					console.log('浏览记录保存>>'+result.result);
-				}
-			},
-			complete: function() {
-				//$("body").unmask();
-			},
-			error: function() {
-				if(window.console && console.log){
-					console.log('出现未知异常，操作失败！');
-				}
-
-			}
-		});
-	};
-	/**
-	 * 查找第n次出现的子字符串
-	 * @param {Object} str
-	 * @param {Object} cha
-	 * @param {Object} num
-	 */
-	function findStr(str, cha, num) {
-		var x = str.indexOf(cha);
-		for(var i = 0; i < num; i++) {
-			x = str.indexOf(cha, x + 1);
-		}
-		return x;
-	};
-	/**
-	 * 底部链接（异步拼接底部链接HTML代码）
-	 *
-	 */
-	function buttomLink() {
-		var url = baseUrl + "web/bottomLink";
-		var params = "";
-		$.ajax({
-			type: "POST",
-			url: url,
-			//					data: params,
-			cache: true,
-			beforeSend: function() {
-				//$("body").mask("加载数据中...", 500);
-			},
-			success: function(result) {
-				var htmlCode = "";
-				var bottomLinkBox = $("#bottomLinkBox");
-				for(var i = 0; i < result.length; i++) {
-					if(result[i].status == "true") {
-						if(result[i].linkUrl != null) {
-							htmlCode += "<a href="+baseUrl + result[i].linkUrl + " target=" + result[i].openTypeEnName + ">" + result[i].title + "</a>";
-						} else {
-							htmlCode += "<a href='javascript:void(0);'  onclick=location.href='" + baseUrl + "/web/detailInfo?id=" + result[i].id + "' target=_self>" + result[i].title + "</a>";
-						}
-					} else {
-						htmlCode += "<a href=javascript:void(0);>" + result[i].title + "</a>";
-					}
-					if(i != (result.length - 1)) {
-						if(i%2!=0){
-							htmlCode +="<br>";
-						}else{
-							htmlCode += "|";
-						}
-
-					}
-				}
-				bottomLinkBox.html(htmlCode);
-			},
-			complete: function() {
-				//$("body").unmask();
-			},
-			error: function() {
-				base.alert('出现未知异常，操作失败！');
-			}
-		});
-	}
-</script>
-
+        <script>
+            //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+            layui.use('element', function() {
+                var element = layui.element;
+            });
+        </script>
+        <div class="box3" style="height: auto;">
+            <div class="discuss" id="assess">
+                <div class="commentTit">数据评论</div>
+                <div class="discuss-content">
+                    <form method="post" id="comment" name="comment">
+                        <input type="hidden" name="basedataid" value="6158">
+                        <div class="comment-list">
+                            <div id="front_list" class="data-grid-wrap" form="comment" url="../comment/datalist.do" callback="makeList" before="" complete="" error="" mask="true" p='' pg="" plist="" toolbar="">	<div class="grid-data-list">
+	</div>
+	<div class="grid-pagination">
+	</div>
 </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="score">
+                <div class="scoreStar reply">
+                    <form action="../assess/comment/submit_comment.do" method="post"
+                          id="oprform" name="oprform">
+                        <input type="hidden" name="basedataId" value="6158">
+                        <input type="hidden" name="oglTable" value="com.hanweb.jdop.entity.OglTable@335baaf7">
+                        <input type="hidden" name="state" value="0">
+                        <input type="hidden" name="themeName" value="">
+                        <div class="stars">评分：</div>
+                        <div class="lable">
+							<textarea class="input-textarea" id="comment_info" style="width: 1000px;height: 170px;border: 1px solid #eeeeee;"
+                                      name="comment_info"></textarea>
+                        </div>
+                        <div class="verify" style="padding-top: 10px;">
+                            <span>验证码:</span> <input type="text" name="verifyCode"
+                                                     id="verifyCode" class="input-text" style="width: 100px"
+                                                     placeholder="请输入验证码" />
+                            <img id="verifyImg" src="../assess/comment/verify_code.do?random=1719336693806" onclick="this.src='../assess/comment/verify_code.do?random='+ Math.random();" style="cursor:pointer;vertical-align: middle;"  width="110"  height="40" />
+                        </div>
+                        <br>
+                        <div class="commentCont">
+                            <input type="submit" value="发表评论" class="loginP" />
+                        </div>
+                        <br>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(".tabTitList li").mouseover(function() {
+            var i = $(this).index();
+            $(this).addClass("on").siblings("li").removeClass("on");
+            $(".tabSelect li").eq(i).show().siblings(".tabSelect li").hide();
+        });
+    </script>
+    <!-- 2021.11.2 -->
+    <style>
+        .bdshare-slide-button-box{
+            display: none !important;
+        }
+    </style>
+    <!-- 新分享 -->
+    <style>
+        .bdshare-slide-button-box{
+            display: none;
+        }
+        #share-2 {
+            position: fixed;
+            right: 15px;
+            top: 50%;
+            margin-top: -30px;
+            width: 36px;
+        }
+
+        .social-share .icon-wechat:hover .wechat-qcode {
+            display: block;
+        }
+
+        .social-share .icon-wechat .wechat-qcode h4 {
+            font-weight: normal;
+            height: 26px;
+            line-height: 26px;
+            font-size: 12px;
+            background-color: #f3f3f3;
+            margin: 0;
+            padding: 0;
+            color: #777;
+        }
+
+        .social-share .icon-wechat .wechat-qcode .qcode {
+            width: 105px;
+            margin: 15px auto 8px;
+            height: 105px;
+            /* background: url(http://www.zjedu.org/picture/0/s_327060b4126e496a8ce8a78930061999.jpg) no-repeat center; */
+        }
 
 
+        .social-share .icon-wechat .wechat-qcode {
+            display: none;
+            border: 1px solid #eee;
+            position: absolute;
+            padding-bottom: 5px;
+            z-index: 9;
+            top: -100px;
+            right: 45px;
+            width: 200px;
+            height: auto;
+            color: #666;
+            font-size: 12px;
+            text-align: center;
+            background-color: #fff;
+            box-shadow: 0 2px 10px #aaa;
+            transition: all 200ms;
+            -webkit-tansition: all 350ms;
+            -moz-transition: all 350ms;
+        }
 
+        .social-share .icon-weibo {
+            /* color: #ff763b; */
+            /* border-color: #ff763b; */
+            background: url(https://zjjcmspublic.oss-cn-hangzhou-zwynet-d01-a.internet.cloud.zj.gov.cn/jcms_files/jcms1/web3096/site/images/40330/icon-weibo.png) no-repeat 100% 100%;
+        }
+
+        .social-share .social-share-icon {
+            position: relative;
+            display: inline-block;
+            width: 34px;
+            height: 32px;
+            font-size: 16px;
+            border-radius: 50%;
+            line-height: 22px;
+            /* border: 1px solid #666; */
+            color: #666;
+            text-align: center;
+            vertical-align: middle;
+            transition: background 0.6s ease-out 0s;
+        }
+
+        .social-share .icon-wechat {
+            position: relative;
+            /* color: #7bc549; */
+            /* border-color: #7bc549; */
+            background: url(https://zjjcmspublic.oss-cn-hangzhou-zwynet-d01-a.internet.cloud.zj.gov.cn/jcms_files/jcms1/web3096/site/images/40330/icon-wechat.png) no-repeat 100% 100%;
+        }
+
+        .social-share .social-share-icon {
+            position: relative;
+            display: inline-block;
+            width: 34px;
+            height: 32px;
+            font-size: 16px;
+            border-radius: 50%;
+            line-height: 22px;
+            /* border: 1px solid #666; */
+            color: #666;
+            text-align: center;
+            vertical-align: middle;
+            transition: background 0.6s ease-out 0s;
+        }
+
+        .social-share a {
+            position: relative;
+            text-decoration: none;
+            margin: 0 3px;
+            display: inline-block;
+            outline: none;
+        }
+
+        .social-share .icon-qzone {
+            /* color: #FDBE3D; */
+            /* border-color: #FDBE3D; */
+            background: url(https://zjjcmspublic.oss-cn-hangzhou-zwynet-d01-a.internet.cloud.zj.gov.cn/jcms_files/jcms1/web3096/site/images/40330/icon-qzone.png) no-repeat 100% 100%;
+        }
+
+        .social-share .social-share-icon {
+            position: relative;
+            display: inline-block;
+            width: 34px;
+            height: 32px;
+            font-size: 16px;
+            border-radius: 50%;
+            line-height: 22px;
+            /* border: 1px solid #666; */
+            color: #666;
+            text-align: center;
+            vertical-align: middle;
+            transition: background 0.6s ease-out 0s;
+            margin-bottom: 15px;
+        }
+
+        .bdshare-slide-style-r2 {
+            display: none !important;
+        }
+
+        .qcode {
+            background: none !important;
+        }
+        .social-share .icon-wechat .wechat-qcode .qcode img{
+            display: block;
+        }
+    </style>
+    <!--bds button begin-->
+    <div id="share-2"></div>
+    <script>
+        $('#share-2').share({
+            sites: ['weibo', 'wechat', 'qzone']
+        });
+    </script>
+    <!--bds button end-->
+    <!-- 我是页脚 -->
+    <div class="footer">
+        <script src="/jdop_front/resources/jdop/front/index/footer.js"></script>
+    </div>
+
+    <!-- 输入框高亮 -->
+    <script type="text/javascript">
+        $(function() {
+            $(".sear_input").each(function() {
+                $(this).addClass("blur");
+                $(this).focus(function() {
+                    $(this).removeClass("blur").addClass("focus");
+                });
+                $(this).blur(function() {
+                    $(this).removeClass("focus").addClass("blur");
+                });
+            });
+            $("#oprform").ajaxForm(function (data) {
+                    console.log(data);
+                    alert(data.message);
+                }
+            );
+        });
+    </script>
+    <style>
+        .focus {
+            border: 1px solid #0d8ee9;
+            outline: none;
+            border-radius: 5px;
+            color: #333333;
+        }
+
+        .blur {
+            border: 1px solid #ebebeb;
+            outline: none;
+            border-radius: 5px;
+        }
+    </style>
+
+    <script language="javascript" src="//zjjcmspublic.oss-cn-hangzhou-zwynet-d01-a.internet.cloud.zj.gov.cn/jcms_files/jcms1/web3242/site/script/0/2005061115113094.js"></script>
+</div>
 </body>
 
 </html>

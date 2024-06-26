@@ -49,12 +49,13 @@ class PageBase:
         # 设置日志信息
         self.logger = logger
 
-        if self.total_items_num != 0:
-            self.total_page_num = math.ceil(self.total_items_num / self.each_page_num) + 1
+        self.total_page_num = self.count_page_num()
 
         self.is_headless = is_headless
         self.thread_num = thread_num
         self.proxies = proxies if proxies is not None else {"http": None, "https": None}
+        self.fiddler_proxies = {"http": "http://127.0.0.1:8888",
+                                "https": "http://127.0.0.1:8888"}
 
         self.data_list = []
         self.total_data = []
@@ -65,7 +66,7 @@ class PageBase:
     def start_page(self):
         """根据是否为无头模式初始化浏览器页面。"""
         options = ChromiumOptions()
-        options.auto_port()
+        # options.auto_port()
         if self.is_headless:
             options.headless()
         page = ChromiumPage(options)
@@ -89,3 +90,10 @@ class PageBase:
 
         save_to_excel(self.total_data, self.name, self.province)
 
+    def count_page_num(self):
+        """获取总页数。"""
+        if self.total_items_num <= 0:
+            total_page_num = 0
+        else:
+            total_page_num = math.ceil(self.total_items_num / self.each_page_num) + 1
+        return total_page_num
