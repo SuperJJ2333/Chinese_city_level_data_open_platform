@@ -111,7 +111,7 @@ class LishuiCrawler(PageBase):
         update_time = session_page.ele('x://tr[td="更新日期："]/td[2]').text
 
         open_conditions = session_page.ele('x://tr[td="数据分级："]/td[2]').text
-        data_volume = int(session_page.ele('x://tr[td="数据量："]/td[2]').text if session_page.ele('x://tr[td="数据量："]/td[2]') else 0)
+        data_volume = int(session_page.ele('x://tr[td="数据量："]/td[2]').text if session_page.ele('x://tr[td="数据量："]/td[2]') and session_page.ele('x://tr[td="数据量："]/td[2]').text != "" else 0)
         file_types = [file.text for file in session_page.eles('x://tr[td="数据下载："]/td[2]/a')]
         is_api = 'True' if session_page.ele('x://tr[td="数据接口："]/td[4]').text else 'False'
 
