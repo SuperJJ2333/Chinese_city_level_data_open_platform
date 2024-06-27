@@ -66,7 +66,7 @@ class PageBase:
     def start_page(self):
         """根据是否为无头模式初始化浏览器页面。"""
         options = ChromiumOptions()
-        # options.auto_port()
+        options.auto_port()
         if self.is_headless:
             options.headless()
         options.set_proxy('')
