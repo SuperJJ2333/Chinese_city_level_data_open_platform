@@ -69,6 +69,7 @@ class PageBase:
         # options.auto_port()
         if self.is_headless:
             options.headless()
+        options.set_proxy('')
         page = ChromiumPage(options)
 
         logger.info(f"{self.name} - 浏览器初始化完成 - 爬虫最大进程数为{self.thread_num}")

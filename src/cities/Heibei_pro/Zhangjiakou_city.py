@@ -10,7 +10,7 @@ from mother_class.base_page import PageBase
 from mother_class.data_model import DataModel
 
 
-class ZHengjiakouCrawler(PageBase):
+class ZhangjiakouCrawler(PageBase):
     """
     post请求获取api数据
     二级页面：在详细页获取目的数据
@@ -18,7 +18,7 @@ class ZHengjiakouCrawler(PageBase):
     """
 
     def __init__(self, is_headless=True):
-        city_info = {'name': 'Zhangjiakou',
+        city_info = {'name': '张家口市',
                      'province': 'Hebei',
                      'total_items_num': 228,
                      'each_page_count': 15,
@@ -49,6 +49,7 @@ class ZHengjiakouCrawler(PageBase):
                         "sec-ch-ua-mobile": "?0", "sec-ch-ua-platform": "\"Windows\""}
 
         self.params = {'token': None, 'usertype': None, 'params': {'currentPage': '0', 'pageSize': '15', 'sortField': '', 'sortOrder': 'desc', 'resourcesName': '', 'resourceSubject': '', 'resourceIndustry': '', 'resourceScene': '', 'registDepartGuid': '', 'openType': '', 'resourcesType': '', 'resourceFormat': ''}}
+
     def run(self):
         self.total_data = self.process_views()
         self.save_files()
@@ -125,7 +126,6 @@ class ZHengjiakouCrawler(PageBase):
     def extract_page_data(self, json_data, upper_item):
         data = json.loads(json_data)
         item = data['custom']
-        models = []
 
         title = item.get('resourcesName', '')
         subject = item.get('resourceSubject', '')
@@ -161,9 +161,8 @@ class ZHengjiakouCrawler(PageBase):
         model = DataModel(title, subject, description, source_department, release_time, update_time,
                           open_conditions, data_volume, is_api, file_types, access_count, download_count,
                           api_call_count, link, update_cycle, self.name)
-        models.append(model.to_dict())
 
-        return models
+        return model.to_dict()
 
     def extract_api_page_data(self,json_data):
         json_data = json.loads(json_data.strip('"'))
@@ -257,5 +256,5 @@ class ZHengjiakouCrawler(PageBase):
 
 
 if __name__ == '__main__':
-    page = ZHengjiakouCrawler(is_headless=True)
+    page = ZhangjiakouCrawler(is_headless=True)
     page.run()

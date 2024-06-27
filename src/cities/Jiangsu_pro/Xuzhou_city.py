@@ -130,7 +130,7 @@ class XuzhouCrawler(PageBase):
             'gxrq') else None
 
         # 从提供的信息中获取开放类型和更新周期
-        open_conditions = item.get('kftj', '')
+        open_conditions = self.format_update_cycle(item.get('kftj', ''))
         update_cycle = item.get('gxzq', '')
 
         access_count = item.get('llsl', 0)
@@ -193,13 +193,14 @@ class XuzhouCrawler(PageBase):
         """
         # 定义映射字典
         cycle_dict = {
-            0: '实时',
-            2: '每日',
-            3: '每周',
+            7: '实时',
+            1: '每日',
+            2: '每周',
+            3: '每月',
             4: '每季度',
-            5: '每半年',
-            6: '每年',
-            7: '自定义',
+            6: '每半年',
+            5: '每年',
+            0: '自定义',
             8: '每两年'
         }
 
