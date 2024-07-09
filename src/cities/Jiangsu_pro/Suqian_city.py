@@ -23,13 +23,6 @@ class SuqianCrawler(PageBase):
                      'each_page_count': 10,
                      'base_url': 'https://data.suqian.gov.cn/oportal/catalog/index?page={page_num}',
                      }
-        api_city_info = {'name': '泰州市_api',
-                         'province': 'Jiangsu',
-                         'total_items_num': 83,
-                         'each_page_count': 10,
-                         'base_url': 'http://opendata.taizhou.gov.cn/oportal/api/index?page={page_num}',
-                         'is_api': 'True'
-                         }
 
         super().__init__(city_info, is_headless)
 
@@ -134,8 +127,7 @@ class SuqianCrawler(PageBase):
 
         return data_list
 
-    @staticmethod
-    def extract_page_data(session_page, item):
+    def extract_page_data(self, session_page, item):
         # 假定session_page是已经加载了HTML内容的对象
         title = session_page.ele('x://*[@id="app"]/div[7]/div[1]/div/div/div/div[1]/ul[1]/li/h4').text
         subject = session_page.ele(
@@ -158,7 +150,7 @@ class SuqianCrawler(PageBase):
             'x://li[contains(@class,"text-ligth-gray")][1]/img/following-sibling::text()')
         download_count = session_page.ele(
             'x://li[contains(@class,"text-ligth-gray")][2]/img/following-sibling::text()')
-        api_call_count = 0  # 页面中未提供API调用次数信息
+        api_call_count = None  # 页面中未提供API调用次数信息
         link = session_page.url
 
         update_cycle = session_page.ele(
@@ -167,7 +159,7 @@ class SuqianCrawler(PageBase):
         # 创建DataModel实例
         model = DataModel(title, subject, description, source_department, release_time,
                           update_time, open_conditions, data_volume, is_api, file_type,
-                          access_count, download_count, api_call_count, link, update_cycle)
+                          access_count, download_count, api_call_count, link, update_cycle, self.name)
 
         return model.to_dict()
 
@@ -185,13 +177,13 @@ class SuqianCrawler(PageBase):
             update_time = frame.ele('x://div[3]/div[4]/span[2]').text
 
             open_conditions = frame.ele('x://div[3]/div[5]/span[2]').text
-            data_volume = 0  # 页面中未提供数据量信息
+            data_volume = None  # 页面中未提供数据量信息
             file_type = ['接口']
             is_api = 'True'
 
             access_count = frame.ele('x://div[4]/div[2]').text
-            download_count = 0
-            api_call_count = 0  # 页面中未提供API调用次数信息
+            download_count = None
+            api_call_count = None  # 页面中未提供API调用次数信息
             link = session_page.url
 
             update_cycle = ''

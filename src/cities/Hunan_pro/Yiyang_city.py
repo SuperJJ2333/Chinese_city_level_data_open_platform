@@ -137,7 +137,7 @@ class YiyangCrawler(PageBase):
 
         open_conditions = session_page.ele(
             'x://div[@class="m-license"]/table//tr[td[contains(text(), "公开属性")]]/td[2]').text
-        data_volume = 0  # 页面中未提供数据量信息
+        data_volume = None  # 页面中未提供数据量信息
         file_type = [file.text for file in session_page.eles(
             'x://div[@class="m-license"]/table//tr[td[contains(text(), "数据格式")]]/td[2]')]
         is_api = 'False' if '接口' not in file_type else 'True'  # 页面中未提供API信息
@@ -146,7 +146,7 @@ class YiyangCrawler(PageBase):
             'x://div[@class="m-license"]/table//tr[td[contains(text(), "访问量")]]/td[2]').text
         download_count = session_page.ele(
             'x://div[@class="m-license"]/table//tr[td[contains(text(), "下载次数")]]/td[2]').text
-        api_call_count = 0  # 页面中未提供API调用次数信息
+        api_call_count = None  # 页面中未提供API调用次数信息
         link = session_page.url
 
         update_cycle = session_page.ele(

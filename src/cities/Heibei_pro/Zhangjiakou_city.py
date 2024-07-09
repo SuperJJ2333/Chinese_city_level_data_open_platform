@@ -25,14 +25,6 @@ class ZhangjiakouCrawler(PageBase):
                      'base_url': 'https://kf.zjkzwfw.gov.cn/extranet/rest/dataOpen/getResourceList'
                      }
 
-        api_city_info = {'name': '吉安市_api',
-                         'province': 'Jiangxi',
-                         'total_items_num': 148,
-                         'each_page_count': 10,
-                         'base_url': 'https://opendata.jian.gov.cn/opendata-portal/prod-api/apiService/page',
-                         'is_api': 'True'
-                         }
-
         super().__init__(city_info, is_headless)
 
         self.headers = {"Accept": "application/json, text/javascript, */*; q=0.01",
@@ -152,9 +144,9 @@ class ZhangjiakouCrawler(PageBase):
         if item.get('rdfUrl', False):
             file_types.append('RDF')
 
-        access_count = int(item.get('visitCnt', 0))
-        download_count = int(item.get('downloadCnt', 0))
-        api_call_count = 0  # No API call count detail provided
+        access_count = item.get('visitCnt', None)
+        download_count = item.get('downloadCnt', None)
+        api_call_count = None  # No API call count detail provided
         link = f'https://kf.zjkzwfw.gov.cn/extranet/openportal/pages/resource/resource_detail.html?rowguid={upper_item["rowGuid"]}'  # No link detail provided
         update_cycle = item.get('updateFrequency', '')
 
@@ -179,13 +171,13 @@ class ZhangjiakouCrawler(PageBase):
             update_time = datetime.strptime(item.get('gxsj', ''), '%Y%m%d%H%M%S').strftime('%Y-%m-%d')
 
             open_conditions = ''
-            data_volume = 0
+            data_volume = None
             is_api = 'True'
             file_type = [item.get('fjhzm', '')]
 
-            access_count = item.get('fws', 0)
-            download_count = 0
-            api_call_count = item.get('xzs', 0)  # Assuming 0 since not provided
+            access_count = item.get('fws', None)
+            download_count = None
+            api_call_count = item.get('xzs', None)  # Assuming 0 since not provided
             link = ''
             update_cycle = ''
 

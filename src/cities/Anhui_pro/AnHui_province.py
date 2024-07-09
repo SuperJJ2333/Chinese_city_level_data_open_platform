@@ -16,11 +16,13 @@ class AnHuiCrawler(PageBase):
     """
 
     def __init__(self, is_headless=True):
-        city_info = {'name': 'Maanshan',
-                     'province': 'Anhui',
-                     'total_items_num': 326,
-                     'each_page_count': 10,
-                     'base_url': 'http://data.ahzwfw.gov.cn:8000/dataopen-web/data/findByPage'}
+        city_info = {
+            'city_name': '马鞍山市',
+            'name': 'Maanshan',
+            'province': 'Anhui',
+            'total_items_num': 326,
+            'each_page_count': 10,
+            'base_url': 'http://data.ahzwfw.gov.cn:8000/dataopen-web/data/findByPage'}
 
         super().__init__(city_info, is_headless)
 
@@ -35,7 +37,7 @@ class AnHuiCrawler(PageBase):
             "screen_ratio": "1536*864"
         }
 
-        self.city_type = [{'Maanshan': ['3405', 40]}, {'Tonglin': ['3407', 22]}]
+        self.city_type = [{'安徽省': ['3400', 1146]}, {'马鞍山市': ['3405', 40]}, {'铜陵市': ['3407', 22]}]
 
         self.params = {'pageSize': '10', 'pageNum': '1', 'xzqh': '3405'}
 
@@ -108,8 +110,7 @@ class AnHuiCrawler(PageBase):
 
         return info_list
 
-    @staticmethod
-    def extract_page_data(json_data):
+    def extract_page_data(self, json_data):
         data = json.loads(json_data)
         item = data['data']
 
@@ -124,19 +125,19 @@ class AnHuiCrawler(PageBase):
             '%Y-%m-%d') if item.get('updateTime', '') else ''
 
         open_conditions = item.get('openTypeName', '')
-        data_volume = 0  # Assuming this information is not provided
+        data_volume = None
         is_api = 'True' if 'API' in item.get('formats', []) else 'False'
         file_type = item.get('formats', [])
 
-        access_count = item.get('llcs', 0)
-        download_count = item.get('xzcs', 0)
-        api_call_count = item.get('dycs', 0)
+        access_count = item.get('llcs', None)
+        download_count = item.get('xzcs', None)
+        api_call_count = item.get('dycs', None)
         link = f'http://data.ahzwfw.gov.cn:8000/dataopen-web/api-data-details.html?rid={item.get("rid", "")}'  # Link is not provided in the data
         update_cycle = item.get('updateCycleTxt', '')
 
         model = DataModel(title, subject, description, source_department, release_time, update_time,
                           open_conditions, data_volume, is_api, file_type, access_count, download_count,
-                          api_call_count, link, update_cycle)
+                          api_call_count, link, update_cycle, location=self.name)
 
         return model.to_dict()
 

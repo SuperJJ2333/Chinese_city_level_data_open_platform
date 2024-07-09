@@ -130,9 +130,9 @@ class YongzhouCrawler(PageBase):
             'x://div[@class="c_detail"]/div[span[@class="name"]="信息资源格式类型："]/span[@class="value"]').text]  # As the subject and source department are from the same element
 
         is_api = 'True' if 'json' in file_type else 'False'
-        access_count = 0  # Not available
-        download_count = 0  # Not available
-        api_call_count = 0  # Assume 0 since not specified
+        access_count = None  # Not available
+        download_count = None  # Not available
+        api_call_count = None  # Assume 0 since not specified
 
         link = session_page.url  # Assume this method exists to get the current page URL
 

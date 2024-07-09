@@ -16,7 +16,7 @@ class ChangzhiCrawler(PageBase):
     """
 
     def __init__(self, is_headless=True):
-        city_info = {'name': 'Changzhi',
+        city_info = {'name': '长治市',
                      'province': 'Shanxi',
                      'total_items_num': 95,
                      'each_page_count': 6,
@@ -132,24 +132,23 @@ class ChangzhiCrawler(PageBase):
                 '%Y-%m-%d') if item.get('update_time', '') else ''
 
             open_conditions = item.get('open_type', '')
-            data_volume = item.get('catalogStatistic', {}).get('data_count', 0)  # 默认值，如果JSON中没有提供具体信息
+            data_volume = item.get('catalogStatistic', {}).get('data_count', None)  # 默认值，如果JSON中没有提供具体信息
             is_api = 'True' if item.get('catalogStatistic', {}).get('api_count', 0) > 0 else 'False'
             file_type = [format for format in item.get('resource_format', '').split(',')]  # 假设资源格式是以逗号分隔的字符串
 
-            access_count = item.get('catalogStatistic', {}).get('use_visit', 0)
-            download_count = item.get('catalogStatistic', {}).get('file_count', 0)
-            api_call_count = item.get('catalogStatistic', {}).get('api_count', 0)
+            access_count = item.get('catalogStatistic', {}).get('use_visit', None)
+            download_count = item.get('catalogStatistic', {}).get('file_count', None)
+            api_call_count = item.get('catalogStatistic', {}).get('api_count', None)
             link = f'https://www.changzhi.gov.cn/odweb/catalog/catalogDetail.htm?cata_id={item["cata_id"]}'  # 假设没有直接的链接提供
             update_cycle = self.format_update_cycle(item.get('conf_update_cycle', ''))
 
             model = DataModel(title, subject, description, source_department, release_time,
                               update_time, open_conditions, data_volume, is_api, file_type,
-                              access_count, download_count, api_call_count, link, update_cycle)
+                              access_count, download_count, api_call_count, link, update_cycle, self.name)
             models.append(model.to_dict())
 
         return models
 
-    @staticmethod
     def extract_api_page_data(self, json_data):
         json_data = json.loads(json_data)
 
@@ -172,16 +171,16 @@ class ChangzhiCrawler(PageBase):
             is_api = 'True'
             file_type = ['json']
 
-            access_count = item.get('viewCount', 0)
+            access_count = item.get('viewCount', None)
             download_count = item.get('downCount', 0)
-            api_call_count = 0
+            api_call_count = None
             link = f'http://open.huaibeidata.cn:1123/#/interface/detail/{item["id"]}'  # 未提供
             update_cycle = item.get('updateCycle', '')
 
             # 创建DataModel实例
             model = DataModel(title, subject, description, source_department, release_time,
                               update_time, open_conditions, data_volume, is_api, file_type,
-                              access_count, download_count, api_call_count, link, update_cycle)
+                              access_count, download_count, api_call_count, link, update_cycle, self.name)
             models.append(model.to_dict())
 
         return models

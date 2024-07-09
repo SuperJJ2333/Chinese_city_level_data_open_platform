@@ -33,7 +33,7 @@ class WuxiCrawler(PageBase):
                          'is_api': 'True'
                          }
 
-        super().__init__(api_city_info, is_headless)
+        super().__init__(city_info, is_headless)
 
         self.headers = {"Accept": "application/json, text/javascript, */*; q=0.01",
                         "Accept-Encoding": "gzip, deflate, br, zstd",
@@ -137,14 +137,14 @@ class WuxiCrawler(PageBase):
             update_time = item.get('update_time', '')
 
             open_conditions = item.get('open_type', '无条件开放')  # 假设 open_type 字段直接描述开放条件
-            data_volume = item.get('total_storage', '0')  # 假设 total_storage 是数据量
+            data_volume = item.get('total_storage', None)  # 假设 total_storage 是数据量
             file_types = ['XLS', 'XML', 'JSON', 'CSV'] if item.get('resource_format_type', '') == '2' \
                                                           or item.get('resource_format_type', '') == '3' else ['API']
             is_api = 'True' if 'API' in file_types else 'False'
 
-            access_count = item.get('conf_view_num', 0)
-            download_count = item.get('DOWNLOADS', 0)
-            api_call_count = 0  # JSON中未提供API调用次数信息
+            access_count = item.get('conf_view_num', None)
+            download_count = item.get('DOWNLOADS', None)
+            api_call_count = None  # JSON中未提供API调用次数信息
             link = f'https://data.wuxi.gov.cn/data/catalog/catalogDetail.htm?cata_id={item.get("cata_id", "")}'  # 假设没有具体的链接信息
 
             update_cycle = self.format_update_cycle(item.get('conf_update_cycle', ''))
@@ -173,13 +173,13 @@ class WuxiCrawler(PageBase):
 
             # 检查是否开放和需要用户授权，来决定开放条件
             open_conditions = "无条件开放" if item.get('need_user_authorize', 1) == 0 else "需要用户授权"
-            data_volume = item.get('total_visits_count', 0)  # 访问次数作为数据量的一种指标
+            data_volume = item.get('total_visits_count', None)  # 访问次数作为数据量的一种指标
             file_type = ["API"]  # 由于数据服务类型，假设文件类型为API
             is_api = 'True'
 
-            access_count = item.get('total_visits_count', 0)
-            download_count = item.get('total_apply_count', 0)
-            api_call_count = access_count  # 使用访问次数作为API调用次数
+            access_count = item.get('total_visits_count', None)
+            download_count = item.get('total_apply_count', None)
+            api_call_count = None  # 使用访问次数作为API调用次数
 
             link = f'https://data.wuxi.gov.cn/data/dev/developer/serviceDetail.htm?service_id={item.get("service_id", "")}'  # 使用服务的上下文路径作为链接
             update_cycle = ''

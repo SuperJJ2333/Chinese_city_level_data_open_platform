@@ -107,13 +107,13 @@ class GuanganCrawler(PageBase):
             update_time = item.get('last_modify', '')
 
             open_conditions = '无条件开放' if item.get('is_open', 'false').lower() == 'true' else '有条件开放'
-            data_volume = item.get('total_number', 0)
+            data_volume = item.get('total_number', None)
             file_type = ['xlsx', 'xml', 'json', 'csv', 'rdf']
             is_api = 'True' if 'json' in file_type else 'False'
 
-            access_count = int(item.get('visit_num', 0))
-            download_count = int(item.get('use_num', 0))
-            api_call_count = int(item.get('interface_num', 0))
+            access_count = item.get('visit_num', None)
+            download_count = item.get('use_num', None)
+            api_call_count = item.get('interface_num', None)
             link = f'https://www.gadata.net.cn:80/opendoor/base/zh-cn/code/detail.html?resource_code={item.get("code", "")}'  # 假设没有具体的链接信息
             update_cycle = self.format_update_cycle(item.get('update_period', ''))
 

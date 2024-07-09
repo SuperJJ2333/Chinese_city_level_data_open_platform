@@ -33,7 +33,7 @@ class YichunCrawler(PageBase):
                          'is_api': 'True'
                          }
 
-        super().__init__(api_city_info, is_headless)
+        super().__init__(city_info, is_headless)
 
         self.headers = {"Accept": "application/json, text/javascript, */*; q=0.01", "Accept-Encoding": "gzip, deflate",
                         "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6", "Content-Length": "323",
@@ -140,7 +140,7 @@ class YichunCrawler(PageBase):
         update_time = item.get('updateTime', '')  # No specific format given, assuming already in correct format
 
         open_conditions = item.get('openScope', '')
-        data_volume = item.get('dataCount', '')  # This detail isn't provided, assume default
+        data_volume = item.get('dataCount', None)# This detail isn't provided, assume default
         is_api = 'True' if item.get('jsonUrl', False) else 'False'
         file_types = []
         if item.get('jsonUrl', False):
@@ -156,9 +156,9 @@ class YichunCrawler(PageBase):
         if item.get('rdfUrl', False):
             file_types.append('RDF')
 
-        access_count = int(item.get('visitCnt', 0))
-        download_count = int(item.get('downloadCnt', 0))
-        api_call_count = int(item.get('apiCnt', 0))  # No API call count detail provided
+        access_count = item.get('visitCnt', None)
+        download_count = item.get('downloadCnt', None)
+        api_call_count = item.get('apiCnt', None)  # No API call count detail provided
         link = f'http://data.yichun.gov.cn/extranet/openportal/pages/resource/resource_detail.html?rowguid={upper_item["rowGuid"]}'  # No link detail provided
         update_cycle = item.get('updateFrequency', '')
 
@@ -185,15 +185,15 @@ class YichunCrawler(PageBase):
             update_time = service.get('updateTime', '')  # 更新时间
 
             open_conditions = '申请开放' if service.get('isApplyPass', False) else '不开放'
-            data_volume = 0  # JSON数据中没有提供数据量，保留为0
+            data_volume = None  # JSON数据中没有提供数据量，保留为0
 
             # 基于是否有API状态来判断是否是API
             is_api = 'True' if service.get('apiStatus', '') == '正常' else 'False'
             file_type = ['接口']  # 文件类型未在服务列表中明确，保留为空数组
 
-            access_count = service.get('visitCount', 0)
-            download_count = service.get('applyCount', 0)  # 使用申请次数作为下载次数的近似值
-            api_call_count = service.get('applyCount', 0)  # API调用次数默认为0，因为数据中未提供
+            access_count = service.get('visitCount', None)
+            download_count = service.get('applyCount', None)  # 使用申请次数作为下载次数的近似值
+            api_call_count = service.get('applyCount', None)  # API调用次数默认为0，因为数据中未提供
 
             link = f'http://data.yichun.gov.cn/extranet/openportal/pages/api/api_detail.html?rowguid={service["rowGuid"]}'  # 假设没有具体的链接信息
             update_cycle = ''  # 更新周期未提供

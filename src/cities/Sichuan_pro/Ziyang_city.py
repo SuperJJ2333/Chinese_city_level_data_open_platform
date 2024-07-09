@@ -118,17 +118,17 @@ class ZiyangCrawler(PageBase):
             source_department = item.get('officeName', '')
 
             release_time = item.get('publishDate', '')
-            update_time = item.get('updateTime', '') if item.get('updateTime') else release_time  # 使用发布时间作为默认值
+            update_time = item.get('updateTime', '')
 
             open_conditions = item.get('openLevelName', '')
-            data_volume = item.get('recordTotal', 0)
+            data_volume = item.get('recordTotal', None)
 
             file_type = [item.get('suffixes', '').split(',')]
             is_api = 'True' if "json" in file_type else 'False'  # 假设sourceType为'api'表示有API
 
-            access_count = int(item.get('visits', 0))
-            download_count = int(item.get('downloads', 0))
-            api_call_count = int(item.get('invokedCount', 0))
+            access_count = item.get('visits', None)
+            download_count = item.get('downloads', None)
+            api_call_count = item.get('invokedCount', None)
             link = ''  # 假设没有具体的链接信息
             update_cycle = item.get('updateCycle', '')
 

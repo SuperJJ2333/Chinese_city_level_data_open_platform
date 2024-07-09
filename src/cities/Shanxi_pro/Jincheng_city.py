@@ -16,7 +16,7 @@ class JinchengCrawler(PageBase):
     """
 
     def __init__(self, is_headless=True):
-        city_info = {'name': 'Jincheng',
+        city_info = {'name': '晋城市',
                      'province': 'Shanxi',
                      'total_items_num': 335,
                      'each_page_count': 6,
@@ -130,16 +130,16 @@ class JinchengCrawler(PageBase):
             release_time = datetime.fromtimestamp(item.get('createTime', 0) / 1000).strftime('%Y-%m-%d')
             update_time = datetime.fromtimestamp(item.get('updateTime', 0) / 1000).strftime('%Y-%m-%d')
 
-            open_conditions = item.get('strOpenLimit', '暂无')
-            data_volume = item.get('catalogStatistic', {}).get('data_count', 0)
+            open_conditions = item.get('strOpenLimit', '')
+            data_volume = item.get('catalogStatistic', {}).get('data_count', None)
             is_api = 'True' if item.get('api', 0) > 0 else 'False'
             file_type = ['API'] if is_api == 'True' else ['电子文件']
 
-            access_count = item.get('view', 0)
-            download_count = item.get('downloadCount', 0)  # 适当地调整，如果JSON结构有差异
-            api_call_count = item.get('apiApplicationCount', 0)
-            link = item.get('fileUrl', '无')
-            update_cycle = self.format_update_cycle(item.get('updataCycle', '0'))
+            access_count = item.get('view', None)
+            download_count = item.get('downloadCount', None)  # 适当地调整，如果JSON结构有差异
+            api_call_count = item.get('apiApplicationCount', None)
+            link = item.get('fileUrl', '')
+            update_cycle = self.format_update_cycle(item.get('updataCycle', ''))
 
             model = DataModel(title, subject, description, source_department, release_time,
                               update_time, open_conditions, data_volume, is_api, file_type,
@@ -194,7 +194,7 @@ class JinchengCrawler(PageBase):
             "7": "每年",
             "0": "不定期"
         }
-        return update_cycle_dict.get(str(update_cycle_code), "未知")
+        return update_cycle_dict.get(str(update_cycle_code), "")
 
 
 if __name__ == '__main__':

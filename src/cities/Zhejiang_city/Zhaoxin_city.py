@@ -123,12 +123,12 @@ class ZhaoxinCrawler(PageBase):
         else:
             open_conditions = "完全公开"
 
-        data_volume = item.get('dataCount', 0)  # 使用dataCount作为数据量
+        data_volume = item.get('dataCount', None)  # 使用dataCount作为数据量
         is_api = 'True' # 根据interfaceId判断是否API
 
-        access_count = int(item.get('visitCount', 0))
-        download_count = int(item.get('useCount', 0))
-        api_call_count = int(item.get('invokes', 0) if item.get('invokes') else 0)
+        access_count = item.get('visitCount', None)
+        download_count =item.get('useCount', None)
+        api_call_count = item.get('invokes', None)
 
         file_types = ["XLS", "CSV", "XML", "JSON", "RDF"]  # 使用fileType作为文件类型
 

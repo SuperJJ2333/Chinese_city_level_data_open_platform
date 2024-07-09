@@ -128,11 +128,11 @@ class SuizhouCrawler(PageBase):
             update_time = item.get('dataUpdateTime', '')
             open_conditions = item.get('openLevel', '')  # 开放等级作为开放条件
             file_type = item.get('metadataFileSuffix', '').split(',')  # 文件类型
-            data_volume = item.get('fileSize', '0')  # 数据量信息，如果没有提供默认为 '0'
+            data_volume = item.get('fileSize', None)  # 数据量信息，如果没有提供默认为 '0'
 
-            access_count = item.get('visit', 0)
-            download_count = item.get('download', 0)
-            api_call_count = 0  # 假设数据中没有 API 调用次数
+            access_count = item.get('visit', None)
+            download_count = item.get('download', None)
+            api_call_count = None  # 假设数据中没有 API 调用次数
             link = f'http://www.suizhou.gov.cn/data//dataSet/toDataSet/{item.get("id")}'  # 假设没有提供具体的链接信息
             update_cycle = item.get('updateCycle', '')
 
@@ -162,9 +162,9 @@ class SuizhouCrawler(PageBase):
             open_conditions = '有条件开放' if item.get('isOpen', '') == '1' else '无条件开放'
             data_volume = item.get('resourceMount', '0')  # 数据量信息，如果没有提供默认为 '0'
 
-            access_count = item.get('browseCount', 0)
-            download_count = item.get('applyCount', 0)  # 假设 applyCount 可能意味着下载
-            api_call_count = item.get('serviceCount', 0)  # 使用 serviceCount 作为 API 调用次数
+            access_count = item.get('browseCount', None)
+            download_count = item.get('applyCount', None)  # 假设 applyCount 可能意味着下载
+            api_call_count = item.get('serviceCount', None)  # 使用 serviceCount 作为 API 调用次数
             link = item.get('preUrl', '')  # 使用 preUrl 作为链接地址，如果有的话
 
             file_type = ['接口']  # 文件类型，如果没有默认为空

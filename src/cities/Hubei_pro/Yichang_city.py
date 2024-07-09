@@ -33,7 +33,7 @@ class YichangCrawler(PageBase):
                          'is_api': 'True'
                          }
 
-        super().__init__(api_city_info, is_headless)
+        super().__init__(city_info, is_headless)
 
         self.headers = {
             "Cookie": "Hm_lvt_4ae480935d61ee0ea0a491a5215a50f2=1718200870; Hm_lpvt_4ae480935d61ee0ea0a491a5215a50f2=1718200870",
@@ -175,16 +175,13 @@ class YichangCrawler(PageBase):
             if item.get('dataUpdateDate') else ''
 
         open_conditions = item.get('openCondition', '') if item.get('openCondition') else ''
-        data_volume = item.get('dataSize', 0)
+        data_volume = item.get('dataSize', None)
         is_api = 'True' if item.get('interfaceId', '0') is not None else 'False'
         file_types = [item.get('downloadDataInfo', []).get('dataType')] if item.get('downloadDataInfo') else []
 
-        access_count = int(item.get('visitCount', 0)) if item.get(
-            'visitCount') else 0  # Assumes 'visitCount' reflects access count
-        download_count = int(item.get('useCount', 0)) if item.get(
-            'useCount') else 0  # Assumes 'useCount' reflects download count
-        api_call_count = int(item.get('invokes', 0)) if item.get(
-            'invokes') else 0  # Assumes 'invokes' reflects API call count
+        access_count = item.get('visitCount', None)
+        download_count = item.get('useCount', None)
+        api_call_count = item.get('invokes', None)
         link = url  # 假设没有具体的链接信息
 
         update_cycle = self.format_update_cycle(item.get('updateFreq', ''))
@@ -211,13 +208,13 @@ class YichangCrawler(PageBase):
             update_time = item.get('dataUpdateDate', '') if item.get('dataUpdateDate') else item.get('modifyDate', '')
 
             open_conditions = ''  # 开放条件未提供
-            data_volume = item.get('dataSize', 0)  # 假设如果没有提供，则为0
+            data_volume = item.get('dataSize', None)  # 假设如果没有提供，则为0
             is_api = 'True'  # API调用不明确，假设为False
             file_type = ['接口']  # 文件类型不明确，留空数组
 
-            access_count = item.get('visitCount', 0)
-            download_count = item.get('useCount', 0)
-            api_call_count = item.get('invokes', 0)
+            access_count = item.get('visitCount', None)
+            download_count = item.get('useCount', None)
+            api_call_count = item.get('invokes', None)
             link = f'https://data.yichang.gov.cn/kf/open/interface/detail/{item.get("iid")}'  # 链接未提供
             update_cycle = self.format_update_cycle(item.get('updateFreq', ''))  # 更新周期未提供
 

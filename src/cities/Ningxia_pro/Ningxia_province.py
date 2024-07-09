@@ -25,11 +25,9 @@ class NingxiaCrawler(PageBase):
 
         super().__init__(city_info, is_headless)
 
-        self.headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0",
-        }
+        self.headers = {"Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6","Connection":"keep-alive","Cookie":"OPENSESSION=75f34ac8-8bf6-4784-87dd-b02052dcc983; __utrace=f28d520bdde711de3fa4277dd5b70c36","Host":"opendata.nx.gov.cn","Referer":"https://opendata.nx.gov.cn/portal/catalog/index?filterParam=region_code&filterParamCode=6402&page=1","Sec-Fetch-Dest":"document","Sec-Fetch-Mode":"navigate","Sec-Fetch-Site":"same-origin","Sec-Fetch-User":"?1","Upgrade-Insecure-Requests":"1","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0","sec-ch-ua":"\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"","sec-ch-ua-mobile":"?0","sec-ch-ua-platform":"\"Windows\""}
 
-        self.city_type = {'石嘴山市': [6402, 78], '吴忠市': [6403, 88]}
+        self.city_type = {'宁夏省': ['0000', 2001], '石嘴山市': [6402, 78], '吴忠市': [6403, 88]}
 
         self.params = {'pageSize': '10', 'pageNum': '1', 'xzqh': '3405'}
 
@@ -46,7 +44,10 @@ class NingxiaCrawler(PageBase):
             # 计算页数
             self.total_page_num = self.count_page_num()
 
-            self.base_url = self.base_url.format(city_code=city_item[0], page_num='{page_num}')
+            if city_item[0] == '0000':
+                self.base_url = 'https://opendata.nx.gov.cn/portal/catalog/index?page={page_num}'
+            else:
+                self.base_url = self.base_url.format(city_code=city_item[0], page_num='{page_num}')
 
             self.total_data = self.process_views()
             self.save_files()
@@ -147,7 +148,7 @@ class NingxiaCrawler(PageBase):
             'x://*[@id="app"]/div[6]/div[1]/div/div/div/div[2]/ul/li[6]').text
         download_count = session_page.ele(
             'x://*[@id="app"]/div[6]/div[1]/div/div/div/div[2]/ul/li[7]').text
-        api_call_count = 0  # 页面中未提供API调用次数信息
+        api_call_count = None  # 页面中未提供API调用次数信息
         link = session_page.url
 
         update_cycle = frame.ele('x://tr[4]/td[2]').text

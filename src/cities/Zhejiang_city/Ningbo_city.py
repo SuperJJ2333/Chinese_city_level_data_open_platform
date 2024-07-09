@@ -133,13 +133,13 @@ class NingboCrawler(PageBase):
             update_time = item.get('updateTime', '')
 
             open_conditions = item.get('openConditions', '').strip()
-            data_volume = item.get('dataNumber', '')
+            data_volume = item.get('dataNumber', None)
             is_api = 'True'
             file_type = [item.get('formatClassification', '')]
 
-            access_count = int(item.get('previewNum', 0))
-            download_count = int(item.get('downloadNum', 0))
-            api_call_count = int(item.get('downloadNum', 0))
+            access_count = item.get('previewNum', None)
+            download_count = item.get('downloadNum', None)
+            api_call_count = item.get('downloadNum', None)
             link = ''  # 假设没有具体的链接信息
             update_cycle = item.get('updateFrequency', '')
 

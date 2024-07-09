@@ -17,13 +17,13 @@ class HuainanCrawler(PageBase):
         接口数据需要第二次爬取
     """
     def __init__(self, is_headless=True):
-        city_info = {'name': 'Huainan',
+        city_info = {'name': '淮南市',
                      'province': 'Anhui',
                      'total_items_num': 14,
                      'each_page_count': 10,
                      'base_url': 'https://sjzyj.huainan.gov.cn/odssite/govData/getGovDataList?dataType=1&fuzzy=&page={page_num}&size=10'
                      }
-        api_city_info = {'name': 'Huainan_api',
+        api_city_info = {'name': '淮南市_api',
                          'province': 'Anhui',
                          'total_items_num': 13,
                          'each_page_count': 10,
@@ -143,19 +143,19 @@ class HuainanCrawler(PageBase):
             release_time = datetime.strptime(item.get('createTime', ''), '%Y-%m-%d').strftime('%Y-%m-%d')
             update_time = datetime.strptime(item.get('modifyTime', ''), '%Y-%m-%d').strftime('%Y-%m-%d')
             open_conditions = item.get('openLvName', '')
-            data_volume = 0  # Default value since it's not specified
+            data_volume = None  # Default value since it's not specified
             is_api = 'False' if item.get('dataType', '') == '1' else 'True'
             file_type = []  # Default value since it's not specified
-            access_count = item.get('browseCount', 0)
-            download_count = item.get('downCount', 0)
-            api_call_count = 0  # Default value since it's not specified
+            access_count = item.get('browseCount', None)
+            download_count = item.get('downCount', None)
+            api_call_count = None  # Default value since it's not specified
             link = f'https://sjzyj.huainan.gov.cn/odssite/view/page/govDataTable?pageIndex=table&dataId={item["dataId"]}'  # Default value since it's not specified
             update_cycle = ''
 
             # 创建DataModel实例
             model = DataModel(title, subject, description, source_department, release_time,
                               update_time, open_conditions, data_volume, is_api, file_type,
-                              access_count, download_count, api_call_count, link, update_cycle)
+                              access_count, download_count, api_call_count, link, update_cycle, self.name)
             models.append(model.to_dict())
 
         return models

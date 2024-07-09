@@ -135,16 +135,16 @@ class NanjingCrawler(PageBase):
             open_conditions = "无条件开放" if item.get('KFFS', 0) == 1 else "有条件开放"
 
             # 数据量使用XXZYGSFL字段表示
-            data_volume = 0
+            data_volume = None
 
             # 判断是否为API提供服务，此处假设若含'JSON'则为API服务
             is_api = 'True' if 'JSON' in item.get('XXZYGSLX', '') else 'False'
 
             file_type = [o.strip() for o in item.get('XXZYGSLX', '').split(',')]
 
-            access_count = item.get('PAGE_VIEW', 0)
-            download_count = item.get('DOWNLOADS', 0)
-            api_call_count = int(item.get('download_count', '0')) if is_api == 'True' else 0
+            access_count = item.get('PAGE_VIEW', None)
+            download_count = item.get('DOWNLOADS', None)
+            api_call_count = item.get('download_count', None) if is_api == 'True' else None
 
             link = f'http://opendata.nanjing.gov.cn/#/dataDetail?guid={item.get("XXZYID", "")}&xxzydm={item.get("XXZYDM", "")}'  # 假设没有具体的链接信息
             update_cycle = item.get('GXZQ', '')

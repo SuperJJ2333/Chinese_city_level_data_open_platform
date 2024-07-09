@@ -198,14 +198,14 @@ class HangzhouCrawler(PageBase):
         update_cycle = item.get('updateCycle', '')
 
         # 其他统计数据
-        access_count = int(item.get('source_views', 0))
-        download_count = int(item.get('source_download_count', 0))
-        api_call_count = int(item.get('source_apply_count', 0) if item.get('source_apply_count') is not None else 0)
+        access_count = item.get('source_views', None)
+        download_count = item.get('source_download_count', None)
+        api_call_count = item.get('source_apply_count', None)
 
         # 数据类别处理
         open_conditions = item.get('openCondition', '')
         file_types = [item.get('data_type', '')]
-        data_volume = item.get('data_count', 0)
+        data_volume = item.get('data_count', None)
         link = upper_item
         is_api = 'False' if item.get('source_apply_count', '') is None else 'True'
 

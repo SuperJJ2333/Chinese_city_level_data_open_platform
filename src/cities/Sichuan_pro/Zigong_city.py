@@ -30,7 +30,7 @@ class ZigongCrawler(PageBase):
                          'is_api': 'True'
                          }
 
-        super().__init__(api_city_info, is_headless)
+        super().__init__(city_info, is_headless)
 
         self.headers = {"Accept": "application/json, text/javascript, */*; q=0.01",
                         "Accept-Encoding": "gzip, deflate, br, zstd",
@@ -136,13 +136,13 @@ class ZigongCrawler(PageBase):
             if item.get('modifiedTime') else None
 
         open_conditions = '无条件开放' if item.get('openType', '') == '0' else '有条件开放'  # # 开放类型，可能需要映射到具体说明
-        data_volume = item.get('catalogStatistic', {}).get('data_count', 0)  # 数据量
+        data_volume = item.get('catalogStatistic', {}).get('data_count', None)  # 数据量
         is_api = 'True' if item.get('catalogFormat', '') == 'API' else 'False'  # 通过某个字段判断是否为API
         file_type = [item.get('catalogFormatType', '')]
 
-        access_count = item.get('clickCount', 0)
-        download_count = item.get('downloadCount', 0)
-        api_call_count = item.get('callCount', 0)
+        access_count = item.get('clickCount', None)
+        download_count = item.get('downloadCount', None)
+        api_call_count = item.get('callCount', None)
         link = item_url  # 假设没有具体的链接信息
         update_cycle = item.get('updateCycle', '')
 
@@ -172,13 +172,13 @@ class ZigongCrawler(PageBase):
             if item.get('modifiedTime') else None
 
         open_conditions = '无条件开放' if item.get('isOpen') == '1' else '有条件开放'
-        data_volume = item.get('clickCount', 0)  # 使用点击数代替数据量字段
+        data_volume = item.get('clickCount', None)  # 使用点击数代替数据量字段
         is_api = 'True' if item.get('serviceType') == 'webservice' else 'False'
         file_type = [item.get('catalogFormatType', '')]
 
-        access_count = item.get('clickCount', 0)
-        download_count = item.get('downloadCount', 0)
-        api_call_count = item.get('callCount', 0)
+        access_count = item.get('clickCount', None)
+        download_count = item.get('downloadCount', None)
+        api_call_count = item.get('callCount', None)
         link = url  # 假设没有具体的链接信息
         update_cycle = item.get('updateCycle', '')
 

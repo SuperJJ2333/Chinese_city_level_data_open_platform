@@ -132,13 +132,13 @@ class WulanchabuCrawler(PageBase):
             'x://tr[td="更新周期"]/td[4]').text
 
         open_conditions = session_page.ele('x://tr[td="开放条件"]/td[6]').text
-        data_volume = 0  # 页面中未提供数据量信息
+        data_volume = None  # 页面中未提供数据量信息
         file_types = [session_page.ele('x://tr[td="资源格式"]/td[4]').text]
         is_api = 'False' if '数据库' not in file_types else 'True'
 
-        access_count = item.get('access_amount', 0)
-        download_count = item.get('download_amount', 0)
-        api_call_count = download_count if is_api == 'True' else 0
+        access_count = item.get('access_amount', None)
+        download_count = item.get('download_amount', None)
+        api_call_count = None
         link = session_page.url
 
         update_cycle = session_page.ele(

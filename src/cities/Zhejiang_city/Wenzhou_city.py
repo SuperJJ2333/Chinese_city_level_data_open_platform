@@ -137,7 +137,7 @@ class WenzhouCrawler(PageBase):
 
         access_count = int(session_page.ele('x://tr[td="访问/下载次数："]/td[4]').text.split('/')[0])
         download_count = int(session_page.ele('x://tr[td="访问/下载次数："]/td[4]').text.split('/')[1])
-        api_call_count = download_count if is_api == 'True' else 0  # Assuming no direct count available
+        api_call_count = None
         link = session_page.url
 
         update_cycle = session_page.ele('x://tr[td="更新周期："]/td[2]').text

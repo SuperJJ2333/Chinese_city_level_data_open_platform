@@ -31,7 +31,7 @@ class TaizhouCrawler(PageBase):
                          'is_api': 'True'
                          }
 
-        super().__init__(api_city_info, is_headless)
+        super().__init__(city_info, is_headless)
 
         self.headers = {"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,"
                                   "image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
@@ -130,8 +130,7 @@ class TaizhouCrawler(PageBase):
 
         return data_list
 
-    @staticmethod
-    def extract_page_data(session_page, files_type):
+    def extract_page_data(self, session_page, files_type):
         # 假定session_page是已经加载了HTML内容的对象
         title = session_page.ele('x://*[@id="app"]/div[7]/div[1]/div/div/div/div[1]/ul[1]/li/h4').text
         subject = session_page.ele(
@@ -148,7 +147,7 @@ class TaizhouCrawler(PageBase):
 
         open_conditions = session_page.ele(
             'x://li[contains(text(),"开放类型")]/span[@class="text-primary"]').text
-        data_volume = 0  # 页面中未提供数据量信息
+        data_volume = None  # 页面中未提供数据量信息
         file_type = files_type['file_type']
         is_api = 'True' if 'JSON' in file_type else 'False'
 
@@ -156,7 +155,7 @@ class TaizhouCrawler(PageBase):
             'x://li[contains(@class,"text-ligth-gray")][1]/img/following-sibling::text()')
         download_count = session_page.ele(
             'x://li[contains(@class,"text-ligth-gray")][2]/img/following-sibling::text()')
-        api_call_count = 0  # 页面中未提供API调用次数信息
+        api_call_count = None  # 页面中未提供API调用次数信息
         link = session_page.url
 
         update_cycle = session_page.ele(
@@ -165,12 +164,12 @@ class TaizhouCrawler(PageBase):
         # 创建DataModel实例
         model = DataModel(title, subject, description, source_department, release_time,
                           update_time, open_conditions, data_volume, is_api, file_type,
-                          access_count, download_count, api_call_count, link, update_cycle)
+                          access_count, download_count, api_call_count, link, update_cycle, self.name)
 
         return model.to_dict()
 
-    @staticmethod
-    def extract_api_page_data(session_page, item):
+
+    def extract_api_page_data(self, session_page, item):
         frames = session_page.eles('x://*[@id="app"]/div[7]/div[2]/div[3]/ul/li')
         models = []
         for frame in frames:
@@ -183,13 +182,13 @@ class TaizhouCrawler(PageBase):
             update_time = frame.ele('x://div[3]/div[4]/span[2]').text
 
             open_conditions = frame.ele('x://div[3]/div[5]/span[2]').text
-            data_volume = 0  # 页面中未提供数据量信息
+            data_volume = None  # 页面中未提供数据量信息
             file_type = ['接口']
             is_api = 'True'
 
             access_count = frame.ele('x://div[4]/div[2]').text
-            download_count = 0
-            api_call_count = 0  # 页面中未提供API调用次数信息
+            download_count = None
+            api_call_count = None  # 页面中未提供API调用次数信息
             link = session_page.url
 
             update_cycle = ''
@@ -197,7 +196,7 @@ class TaizhouCrawler(PageBase):
             # 创建DataModel实例
             model = DataModel(title, subject, description, source_department, release_time,
                               update_time, open_conditions, data_volume, is_api, file_type,
-                              access_count, download_count, api_call_count, link, update_cycle)
+                              access_count, download_count, api_call_count, link, update_cycle, self.name)
             models.append(model.to_dict())
 
         return models

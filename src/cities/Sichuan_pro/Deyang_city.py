@@ -221,13 +221,13 @@ class DeyangCrawler(PageBase):
         open_conditions = item.get('kftj', '')
         update_cycle = self.format_update_cycle(item.get('gxzq', ''))
 
-        access_count = item.get('llsl', 0)
-        download_count = item.get('sqsl', 0)
+        access_count = item.get('llsl', None)
+        download_count = item.get('sqsl', None)
 
         is_api = 'False'
         file_types = [item.get('zygs', '')]
-        data_volume = 0
-        api_call_count = item.get('sqsl', 0)  # Assuming 0 since not provided
+        data_volume = None
+        api_call_count = item.get('sqsl', None)  # Assuming 0 since not provided
         link = url
 
         model = DataModel(title, subject, description, source_department, release_time, update_time,
@@ -256,13 +256,13 @@ class DeyangCrawler(PageBase):
         open_conditions = item.get('gxsx', '')
         update_cycle = self.format_update_cycle(item.get('gxzq', ''))
 
-        access_count = item.get('llcs', 0)
-        download_count = item.get('sqsl', 0)
+        access_count = item.get('llcs', None)
+        download_count = item.get('sqsl', None)
 
         is_api = 'True'
         file_types = ['接口']
-        data_volume = 0
-        api_call_count = item.get('sqsl', 0)  # Assuming 0 since not provided
+        data_volume = None
+        api_call_count = item.get('sqsl', None)  # Assuming 0 since not provided
         link = url
 
         model = DataModel(title, subject, description, source_department, release_time, update_time,

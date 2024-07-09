@@ -18,21 +18,21 @@ class ChengduCrawler(PageBase):
 
     def __init__(self, is_headless=True):
         city_info = {'name': '成都市',
-                     'province': 'Liaoning',
+                     'province': 'Sichuan',
                      'total_items_num': 7310,
                      'each_page_count': 10,
                      'base_url': 'https://data.chengdu.gov.cn/oportal/catalog/index?page={page_num}'
                      }
 
         api_city_info = {'name': '成都市_api',
-                         'province': 'Liaoning',
+                         'province': 'Sichuan',
                          'total_items_num': 3740,
                          'each_page_count': 10,
                          'base_url': 'https://data.chengdu.gov.cn/oportal/api/index?page={page_num}',
                          'is_api': 'True'
                          }
 
-        super().__init__(api_city_info, is_headless)
+        super().__init__(city_info, is_headless)
 
         self.headers = {
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
@@ -153,7 +153,7 @@ class ChengduCrawler(PageBase):
             'x://*[@id="app"]/div[2]/div[1]/div/div/div/div[2]/ul/li[6]').text
         download_count = session_page.ele(
             'x://*[@id="app"]/div[2]/div[1]/div/div/div/div[2]/ul/li[7]').text
-        api_call_count = 0  # 页面中未提供API调用次数信息
+        api_call_count = None  # 页面中未提供API调用次数信息
         link = session_page.url
 
         update_cycle = frame.ele('x://tr[4]/td[2]').text
@@ -185,14 +185,14 @@ class ChengduCrawler(PageBase):
 
         open_conditions = session_page.ele(
             'x://*[@id="app"]/div[2]/div[1]/div/div/div/div[2]/ul/li[5]/span').text
-        data_volume = 0
+        data_volume = None
         file_type = files_type
         is_api = 'True' if '接口' in file_type else 'False'
 
         access_count = session_page.ele(
             'x://*[@id="app"]/div[2]/div[1]/div/div/div/div[2]/ul/li[6]').text
-        download_count = 0
-        api_call_count = 0  # 页面中未提供API调用次数信息
+        download_count = None
+        api_call_count = None  # 页面中未提供API调用次数信息
         link = session_page.url
 
         update_cycle = ''

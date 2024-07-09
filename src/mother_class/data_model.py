@@ -2,6 +2,7 @@ import re
 from datetime import datetime
 from typing import List, Optional
 
+import numpy as np
 import pandas as pd
 
 from common.form_utils import format_date
@@ -40,12 +41,12 @@ class DataModel:
         self.release_time = self.parse_date(self.strip_string(release_time))
         self.update_time = self.parse_date(self.strip_string(update_time))
         self.open_conditions = self.strip_string(open_conditions)
-        self.data_volume = self.parse_int(data_volume) if data_volume is not None else 0
+        self.data_volume = self.parse_int(data_volume)
         self.is_api = self.strip_string(is_api)
         self.file_type = file_type or []
-        self.access_count = self.parse_int(access_count) if access_count is not None else 0
-        self.download_count = self.parse_int(download_count) if download_count is not None else 0
-        self.api_call_count = self.parse_int(api_call_count) if api_call_count is not None else 0
+        self.access_count = self.parse_int(access_count)
+        self.download_count = self.parse_int(download_count)
+        self.api_call_count = self.parse_int(api_call_count)
         self.link = self.strip_string(link)
         self.update_cycle = self.strip_string(update_cycle)
         self.location = self.strip_string(location) if location is not None else ""
@@ -77,33 +78,35 @@ class DataModel:
         return format_date(date_str)
 
     @staticmethod
-    def parse_int(num_str) -> int:
+    def parse_int(num_str):
         """
-        将日期字符串解析为 int 对象
+        将日期字符串或数字解析为 int 对象，无效或缺失的输入返回 np.nan。
 
         参数:
-        num_str (str or int):
+        num_str (str or int or float): 要解析的数字或字符串。
 
         返回:
-        int: 解析后的整数
+        int 或 np.nan: 解析后的整数或 NaN
         """
         if num_str is None or num_str == "":
-            return 0
+            return np.nan  # 使用 np.nan 代替 None 表示无效或缺失的整数
 
         if isinstance(num_str, str):
             # 使用正则表达式匹配所有整数
             numbers = re.findall(r'\d+', num_str)
             # 将匹配到的字符串数字转换为整型
             if not numbers:
-                return 0
+                return np.nan
             num = int(''.join(numbers))
         elif isinstance(num_str, float):
             if pd.isnull(num_str):
-                return 0
+                return np.nan
             else:
                 num = int(num_str)
-        else:
+        elif isinstance(num_str, int):
             num = num_str
+        else:
+            return np.nan  # 如果输入类型不是预期类型，返回 np.nan
 
         return num
 
@@ -123,12 +126,12 @@ class DataModel:
             "release_time": self.release_time,
             "update_time": self.update_time,
             "open_conditions": self.open_conditions,
-            "data_volume": int(self.data_volume),
+            "data_volume": self.data_volume,
             "is_api": self.is_api,
             "file_type": self.file_type,
-            "access_count": int(self.access_count),
-            "download_count": int(self.download_count),
-            "api_call_count": int(self.api_call_count),
+            "access_count": self.access_count,
+            "download_count": self.download_count,
+            "api_call_count": self.api_call_count,
             "link": self.link,
             "update_cycle": self.update_cycle
         }

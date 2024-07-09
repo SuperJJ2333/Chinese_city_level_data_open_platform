@@ -127,13 +127,13 @@ class HuaianCrawler(PageBase):
             release_time = item.get('publishTime', '')
             update_time = ''  # JSON数据中未提供更新时间字段
             open_conditions = item.get('sharingProperty', '')  # 分享属性作为开放条件
-            data_volume = item.get('dataVolume', 0)
+            data_volume = item.get('dataVolume', None)
             is_api = 'True' if item.get('haveApi', False) else 'False'
             file_type = []  # JSON数据中未提供文件类型
 
-            access_count = item.get('clickCount', 0)
-            download_count = item.get('downloadNumber', 0)
-            api_call_count = download_count if is_api == 'True' else 0  # JSON数据中未提供API调用次数
+            access_count = item.get('clickCount', None)
+            download_count = item.get('downloadNumber', None)
+            api_call_count = download_count if is_api == 'True' else None  # JSON数据中未提供API调用次数
             link = ''  # 假设没有具体的链接信息
             update_cycle = item.get('dataUpdatePeriod', '')
 

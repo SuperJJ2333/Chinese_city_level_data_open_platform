@@ -103,20 +103,20 @@ class XianningCrawler(PageBase):
 
         title = item.get('title')
         subject = item.get('theme')
-        description = ''
+        description = title
         source_department = item.get('department')
 
-        release_time = item.get('pubDate')
-        update_time = item.get('update')
+        release_time = item.get('release_date')
+        update_time = item.get('update_date')
 
         open_conditions = ''
-        data_volume = 0
+        data_volume = None
 
         file_type = [item.get('chnldesc')]
 
-        access_count = session.ele('x://*[@id="djl"]').text if session.ele('x://*[@id="djl"]') else 0
-        download_count = session.ele('x://*[@id="xzl"]').text if session.ele('x://*[@id="xzl"]') else 0
-        api_call_count = session.ele('x://*[@id="dyl"]').text if session.ele('x://*[@id="dyl"]') else 0
+        access_count = session.ele('x://*[@id="djl"]').text if session.ele('x://*[@id="djl"]') else None
+        download_count = session.ele('x://*[@id="xzl"]').text if session.ele('x://*[@id="xzl"]') else None
+        api_call_count = session.ele('x://*[@id="dyl"]').text if session.ele('x://*[@id="dyl"]') else None
 
         is_api = 'True' if '接口' in title else 'False'
 

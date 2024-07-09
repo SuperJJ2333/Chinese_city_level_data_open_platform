@@ -30,7 +30,7 @@ class FujianCrawler(PageBase):
             'name': 'Fujian',
             'province': 'Fujian',
             'total_items_num': 1516,
-            'each_page_count': 100,
+            'each_page_count': 10,
             'base_url': 'https://data.fujian.gov.cn/datadevelop/prod-api/open-portal/resourceService/list?pageSize=100&format=&type=2&key=&orderByColumn=&isAsc=&currentTab=city&serviceName=&approvalAuthority=',
             'is_api': 'True'
         }
@@ -45,7 +45,9 @@ class FujianCrawler(PageBase):
         self.params = {'sort': '0', 'pageNo': '38', 'pageSize': '15'}
 
         self.city_code_map = {
+
             "福州市": "350100000000",
+            "福建省": '000',
             "厦门市": "350200000000",
             "莆田市": "350300000000",
             "三明市": "350400000000",
@@ -61,12 +63,20 @@ class FujianCrawler(PageBase):
         session = self.session
 
         for city_name, city_code in self.city_code_map.items():
-            if self.is_api:
-                city_url = f'{self.base_url}&regionCode={city_code}'
-                self.name = city_name + '_api'
+            if city_code == '000':
+                if self.is_api:
+                    city_url = 'https://data.fujian.gov.cn/datadevelop/prod-api/open-portal/catalog/list?pageSize=10&format=&openType=&type=-1&key=&orderByColumn=&isAsc=&currentTab=all'
+                    self.name = city_name + '_api'
+                else:
+                    city_url = 'https://data.fujian.gov.cn/datadevelop/prod-api/open-portal/catalog/list?pageSize=10&type=1&deptCode=&cityCode=&format=&openType=&key=&orderByColumn=&isAsc=&currentTab=all'
+                    self.name = city_name
             else:
-                city_url = f'{self.base_url}&cityCode={city_code}'
-                self.name = city_name
+                if self.is_api:
+                    city_url = f'{self.base_url}&regionCode={city_code}'
+                    self.name = city_name + '_api'
+                else:
+                    city_url = f'{self.base_url}&cityCode={city_code}'
+                    self.name = city_name
 
             # 获取总页数
             session.get(url=city_url, headers=self.headers, proxies=self.proxies)
@@ -124,27 +134,29 @@ class FujianCrawler(PageBase):
             description = item.get('catalogDes', '')
             source_department = item.get('orgName', '')
 
-            release_time = ''
             update_time = item.get('updateTime')  # Using the same time for update if not specified otherwise
 
             open_conditions = '无条件开放' if item.get('openType') == '1' else '有条件开放'
-            data_volume = item.get('dataVol', 0)
+            data_volume = item.get('dataVol', None)
             is_api = 'False'
             file_type = [file.get('fileFormat', '').upper() for file in (item.get('files') or [])]
-            access_count = item.get('visits', 0)
-            download_count = item.get('downloads', 0)
-            api_call_count = 0  # No specific field in JSON, assuming 0
+            access_count = item.get('visits', None)
+            download_count = item.get('downloads', None)
+            api_call_count = None  # No specific field in JSON, assuming 0
             link = f"https://data.fujian.gov.cn/datadevelop/prod-api/open-portal/catalog/getCataInfo?cataId={item.get('catalogID')}"  # Example link construction
-            update_cycle = ''
 
-            page_data = self.process_page(link)
+            if item.get('catalogID'):
+                page_data = self.process_page(link)
 
-            release_time = page_data['release_time']
-            update_cycle = page_data['update_cycle']
+                release_time = page_data['release_time']
+                update_cycle = page_data['update_cycle']
+            else:
+                release_time = update_time
+                update_cycle = ''
 
             model = DataModel(title, subject, description, source_department, release_time,
                               update_time, open_conditions, data_volume, is_api, file_type,
-                              access_count, download_count, api_call_count, link, update_cycle)
+                              access_count, download_count, api_call_count, link, update_cycle, self.name)
             models.append(model.to_dict())
 
         return models
@@ -164,28 +176,28 @@ class FujianCrawler(PageBase):
         models = []
 
         for item in results:
-            title = item.get('serviceName', '')
-            subject = item.get('themeName', '')
-            description = item.get('serviceDesc', '')
+            title = item.get('catalogName', '') if item.get('catalogName') is not None else item.get('serviceName', '')
+            subject = item.get('themeName', '') if item.get('themeName') is not None else item.get('serviceName', '')
+            description = item.get('catalogDes', '') if item.get('catalogDes') is not None else item.get('serviceDesc', '')
             source_department = item.get('orgName', '')
 
             release_time = item.get('releaseTime') if item.get('releaseTime') is not None else item.get('updateTime', None)
             update_time = item.get('updateTime', '')
 
             open_conditions = '无条件开放' if item.get('openType') == '1' else '有条件开放'
-            data_volume = item.get('dataVol', 0)
+            data_volume = item.get('dataVol', None)
             is_api = 'True'
             file_type = ['接口']  # Assuming files are listed
 
-            access_count = item.get('visits', '0')
-            download_count = item.get('downloads', '0')
-            api_call_count = item.get('invokeTimes', '0')
+            access_count = item.get('visits', None)
+            download_count = item.get('downloads', None)
+            api_call_count = item.get('invokeTimes', None)
             link = ""  # Example link construction
             update_cycle = ''  # Placeholder if not available
 
             model = DataModel(title, subject, description, source_department, release_time,
                               update_time, open_conditions, data_volume, is_api, file_type,
-                              access_count, download_count, api_call_count, link, update_cycle)
+                              access_count, download_count, api_call_count, link, update_cycle, self.name)
             models.append(model.to_dict())
 
         return models

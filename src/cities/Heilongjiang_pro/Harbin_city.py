@@ -129,7 +129,7 @@ class HaerbinCrawler(PageBase):
 
         access_count = session_page.ele('x://img[contains(@src,"eye")]/following-sibling::text()').strip()
         download_count = session_page.ele('x://img[contains(@src,"download")]/following-sibling::text()').strip()
-        api_call_count = 0  # Placeholder, as there is no specific information in HTML
+        api_call_count = None  # Placeholder, as there is no specific information in HTML
         link = session_page.url  # Assuming the session_page object contains the URL
 
         update_cycle = session_page.ele('x://td[contains(text(),"更新频率")]/following-sibling::td').text

@@ -2,6 +2,7 @@ import json
 import time
 from datetime import datetime
 
+import pandas as pd
 from DrissionPage import ChromiumOptions, ChromiumPage, SessionPage
 
 from mother_class.base_page import PageBase
@@ -125,7 +126,7 @@ class GuangdongCrawler(PageBase):
 
         open_conditions = item.get('openMode', '')
 
-        data_volume = item.get('recordTotal', 0)
+        data_volume = item.get('recordTotal', None)
 
         return open_conditions, data_volume
 
@@ -145,14 +146,12 @@ class GuangdongCrawler(PageBase):
             update_time = datetime.strptime(item.get('dataUpdateTime', ''), '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d') \
                 if item.get('dataUpdateTime') else None
 
-            open_conditions = ''
-            data_volume = 0
             is_api = 'True' if '1' in item.get('sourceType', '') else 'False'
             file_type = item.get('sourceSuffix', '').split(',')
 
-            access_count = int(item.get('visits', 0))
-            download_count = int(item.get('downloads', 0))
-            api_call_count = int(item.get('invokedCount', 0))
+            access_count = item.get('visits', None)
+            download_count = item.get('downloads', None)
+            api_call_count = item.get('invokedCount', None)
             link = ''  # 假设没有具体的链接信息
             update_cycle = self.format_update_cycle(item.get('updateCycle', ''))
             location = self.name

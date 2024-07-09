@@ -18,13 +18,14 @@ class YueshanCrawler(PageBase):
         city_info = {'name': '乐山市',
                      'province': 'Sichuan',
                      'total_items_num': 8845,
-                     'each_page_count': 100,
-                     'base_url': 'https://www.leshan.gov.cn/data/kfmh/api/open/1/getDirectoryList?pageIndex={page_num}&pageSize=100&sortOrder=desc&sortName='
+                     'each_page_count': 10,
+                     'base_url': 'https://www.leshan.gov.cn/data/kfmh/api/open/1/getDirectoryList?pageIndex={page_num}&pageSize=10&sortOrder=desc&sortName='
                      }
         super().__init__(city_info, is_headless)
 
-        self.headers = {"Accept":"application/json, text/plain, */*","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6","Connection":"keep-alive","Cookie":"JSESSIONID=E1AA637EDC66CC36DCE766C7742D1BA6","Host":"www.leshan.gov.cn","Referer":"https://www.leshan.gov.cn/data/","Sec-Fetch-Dest":"empty","Sec-Fetch-Mode":"cors","Sec-Fetch-Site":"same-origin","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0","sec-ch-ua":"\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"","sec-ch-ua-mobile":"?0","sec-ch-ua-platform":"\"Windows\""}
-        self.params = {'page': '2', 'limit': '10', 'field': 'data_Update_Time'}
+        self.headers = {"Accept":"application/json, text/plain, */*","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6","Connection":"keep-alive","Cookie":"Hm_lvt_5fda478391278e1a06bc820b9b3020e6=1720160445; JSESSIONID=24DBF1B2E2A4D761A9E5F0A05A594891","Host":"www.leshan.gov.cn","Referer":"https://www.leshan.gov.cn/data/","Sec-Fetch-Dest":"empty","Sec-Fetch-Mode":"cors","Sec-Fetch-Site":"same-origin","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0","sec-ch-ua":"\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"","sec-ch-ua-mobile":"?0","sec-ch-ua-platform":"\"Windows\""}
+
+        self.params = {'page': '2', 'limit': '6', 'field': 'data_Update_Time'}
 
     def run(self):
         self.total_data = self.process_views()
@@ -37,7 +38,7 @@ class YueshanCrawler(PageBase):
 
         for i in range(1, self.total_page_num):
             url = self.base_url.format(page_num=i)
-            session.get(url=url, proxies=self.fiddler_proxies, headers=self.headers, verify=False)
+            session.get(url=url, proxies=self.proxies, headers=self.headers)
 
             while True:
                 try:
@@ -121,14 +122,14 @@ class YueshanCrawler(PageBase):
             update_time = item.get('updateTime', '')
 
             open_conditions = item.get('openConditions', '')
-            data_volume = 0
+            data_volume = None
             file_type = [item.get('sharingMode', '')]
 
             is_api = 'True' if '数据库' in file_type else 'False'
 
-            access_count = item.get('downloads', 0)  # 使用 downloads 代表访问次数
-            download_count = item.get('downloads', 0)
-            api_call_count = item.get('hookCount', 0)
+            access_count = None  # 使用 downloads 代表访问次数
+            download_count = item.get('downloads', None)
+            api_call_count = item.get('hookCount', None)
             link = ''  # 假设没有具体的链接信息
             update_cycle = item.get('updateCycle', '')
 

@@ -149,7 +149,7 @@ class EzhouCrawler(PageBase):
 
         # access_count = session_page.ele('x://body/div[1]/div/div[2]/div[2]/ul/li[4]/div[4]').text.split('/')[0]
         # download_count = session_page.ele('x://body/div[1]/div/div[2]/div[2]/ul/li[4]/div[4]').text.split('/')[1]
-        api_call_count = 0  # 页面中未提供API调用次数信息
+        api_call_count = None  # 页面中未提供API调用次数信息
         link = session_page.url
 
         match = re.search(r'_(\d+)\.html$', link)

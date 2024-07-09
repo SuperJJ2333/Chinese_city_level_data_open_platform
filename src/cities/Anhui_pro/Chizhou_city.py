@@ -16,7 +16,7 @@ class ChizhouCrawler(PageBase):
     """
 
     def __init__(self, is_headless=True):
-        city_info = {'name': 'Chizhou',
+        city_info = {'name': '池州市',
                      'province': 'Anhui',
                      'total_items_num': 1661,
                      'each_page_count': 6,
@@ -133,13 +133,13 @@ class ChizhouCrawler(PageBase):
             update_time = frame.ele('x://div[1]/div[6]').text.split('：')[-1].strip()
 
             open_conditions = ''
-            data_volume = 0
+            data_volume = None
             file_type = [frame.ele('x://div[1]/div[2]/div').text]
             is_api = 'False'
 
-            access_count = 0
+            access_count = None
             download_count = frame.ele('x://div[2]/div/div[3]/div[2]').text
-            api_call_count = 0
+            api_call_count = None
             link = ''
 
             update_cycle = ''
@@ -147,7 +147,7 @@ class ChizhouCrawler(PageBase):
             # 创建DataModel实例
             model = DataModel(title, subject, description, source_department, release_time,
                               update_time, open_conditions, data_volume, is_api, file_type,
-                              access_count, download_count, api_call_count, link, update_cycle)
+                              access_count, download_count, api_call_count, link, update_cycle, location=self.name)
 
             model_list.append(model.to_dict())
 

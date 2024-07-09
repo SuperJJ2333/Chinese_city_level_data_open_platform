@@ -17,7 +17,7 @@ class ShuozhouCrawler(PageBase):
     """
 
     def __init__(self, is_headless=True):
-        city_info = {'name': 'Shuozhou',
+        city_info = {'name': '朔州市',
                      'province': 'Shanxi',
                      'total_items_num': 61,
                      'each_page_count': 10,
@@ -110,8 +110,7 @@ class ShuozhouCrawler(PageBase):
 
         return data_list
 
-    @staticmethod
-    def extract_page_data(session_page, files_type):
+    def extract_page_data(self, session_page, files_type):
         # Assuming session_page is an object that allows XPath queries on an HTML structure
         title = session_page.ele('x://h4').text
         subject = session_page.ele('x://div[contains(@class,"list-details")]/ul/li[2]/span').text
@@ -131,7 +130,7 @@ class ShuozhouCrawler(PageBase):
 
         access_count = session_page.ele('x://img[contains(@src,"eye")]/following-sibling::text()').strip()
         download_count = session_page.ele('x://img[contains(@src,"download")]/following-sibling::text()').strip()
-        api_call_count = 0  # Placeholder, as there is no specific information in HTML
+        api_call_count = None  # Placeholder, as there is no specific information in HTML
         link = session_page.url  # Assuming the session_page object contains the URL
 
         update_cycle = session_page.ele('x://td[contains(text(),"更新频率")]/following-sibling::td').text
@@ -139,7 +138,7 @@ class ShuozhouCrawler(PageBase):
         # Creating an instance of DataModel (assuming it's defined elsewhere)
         model = DataModel(title, subject, description, source_department, release_time,
                           update_time, open_conditions, data_volume, is_api, file_type,
-                          access_count, download_count, api_call_count, link, update_cycle)
+                          access_count, download_count, api_call_count, link, update_cycle, self.name)
 
         return model.to_dict()
 

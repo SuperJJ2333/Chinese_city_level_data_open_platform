@@ -146,7 +146,7 @@ class DazhouCrawler(PageBase):
             'x://*[@id="app"]/div[6]/div[1]/div/div/div/div[2]/ul/li[6]').text
         download_count = session_page.ele(
             'x://*[@id="app"]/div[6]/div[1]/div/div/div/div[2]/ul/li[7]').text
-        api_call_count = 0  # 页面中未提供API调用次数信息
+        api_call_count = None  # 页面中未提供API调用次数信息
         link = session_page.url
 
         update_cycle = frame.ele('x://tr[4]/td[2]').text
@@ -174,7 +174,7 @@ class DazhouCrawler(PageBase):
 
         open_conditions = session_page.ele(
             'x://*[@id="app"]/div[6]/div[1]/div/div/div/div[2]/ul/li[5]/span').text
-        data_volume = 0
+        data_volume = None
         file_type = files_type
         is_api = 'True' if '接口' in file_type else 'False'
 
@@ -182,7 +182,7 @@ class DazhouCrawler(PageBase):
             'x://*[@id="app"]/div[6]/div[1]/div/div/div/div[2]/ul/li[6]').text
         download_count = session_page.ele(
             'x://*[@id="app"]/div[6]/div[1]/div/div/div/div[2]/ul/li[7]').text
-        api_call_count = download_count  # 页面中未提供API调用次数信息
+        api_call_count = None  # 页面中未提供API调用次数信息
         link = session_page.url
 
         update_cycle = ''

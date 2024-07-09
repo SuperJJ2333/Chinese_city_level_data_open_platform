@@ -16,14 +16,15 @@ class SuzhouCrawler(PageBase):
     目的数据在详情页中
     """
     def __init__(self, is_headless=True):
-        city_info = {'name': 'Suzhou',
+        city_info = {'name': '宿州市',
                      'province': 'Anhui',
                      'total_items_num': 529,
                      'each_page_count': 10,
-                     'base_url': 'https://www.ahsz.gov.cn/oportal/catalog/index?page={page_num}'
+                     'base_url': 'https://www.ahsz.gov.cn/oportal/catalog/index?page={page_num}',
+                     'is_api': 'True'
                      }
 
-        super().__init__(city_info, is_headless, is_api=True)
+        super().__init__(city_info, is_headless)
 
         self.headers = {
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
@@ -124,7 +125,7 @@ class SuzhouCrawler(PageBase):
 
         access_count = session_page.ele('x://*[@id="app"]/div[7]/div[1]/div/div/div/div[2]/ul[1]/li[6]').text
         download_count = session_page.ele('x://*[@id="app"]/div[7]/div[1]/div/div/div/div[2]/ul[1]/li[7]').text
-        api_call_count = 0
+        api_call_count = None
         link = session_page.url
 
         update_cycle = frame.ele('x://tr[4]/td[2]').text
@@ -132,7 +133,7 @@ class SuzhouCrawler(PageBase):
         # 创建DataModel实例
         model = DataModel(title, subject, description, source_department, release_time,
                           update_time, open_conditions, data_volume, is_api, file_type,
-                          access_count, download_count, api_call_count, link, update_cycle)
+                          access_count, download_count, api_call_count, link, update_cycle, self.name)
 
         return model.to_dict()
 

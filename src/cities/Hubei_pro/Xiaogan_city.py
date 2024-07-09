@@ -117,8 +117,8 @@ class XiaoganCrawler(PageBase):
         source_department = session_page.ele(
             'x://div[@class="data-content"]//div[contains(text(), "提供单位")]/following-sibling::div').text
 
-        release_time = session_page.ele(
-            'x://div[@class="data-content"]//div[contains(text(), "发布时间")]/following-sibling::div').text
+        release_time = self.convert_date_format(session_page.ele(
+            'x://div[@class="data-content"]//div[contains(text(), "发布时间")]/following-sibling::div').text)
         update_time = release_time # No specific update time information in the HTML.
 
         open_conditions = ''
@@ -221,6 +221,23 @@ class XiaoganCrawler(PageBase):
 
         # 根据字典返回对应的更新周期描述
         return cycle_dict.get(it, it)  # 如果没有匹配的键，返回原始输入
+
+    @staticmethod
+    def convert_date_format(date_str):
+        """
+        将日期从 DD-MM-YY 格式转换为 YYYY-MM-DD 格式。
+
+        :param date_str: 日期字符串，格式为 DD-MM-YY
+        :return: 转换后的日期字符串，格式为 YYYY-MM-DD
+        """
+        # 将输入字符串解析为 datetime 对象
+        date_obj = datetime.strptime(date_str, "%y-%m-%d")
+
+        # 将 datetime 对象格式化为新的字符串格式
+        new_date_str = date_obj.strftime("%Y-%m-%d")
+
+        return new_date_str
+
 
 
 if __name__ == '__main__':

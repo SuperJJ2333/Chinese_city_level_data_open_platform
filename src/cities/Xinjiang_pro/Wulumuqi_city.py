@@ -23,7 +23,6 @@ class WulumuqiCrawler(PageBase):
                      'base_url': 'https://zwfw.wlmq.gov.cn/odweb/catalog/catalog.do?method=GetCatalog'
                      }
 
-
         super().__init__(city_info, is_headless)
 
         self.headers = {"Accept":"application/json, text/javascript, */*; q=0.01","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6","Connection":"keep-alive","Content-Length":"99","Content-Type":"application/x-www-form-urlencoded; charset=UTF-8","Cookie":"JSESSIONID=D1472DBFE0CEA56E0F41FAABD0FB38E1; sub_domain_cokie=TiG5CMD9KQ41mmsARPTuAg%3D%3D; region_name=%E4%B9%8C%E9%B2%81%E6%9C%A8%E9%BD%90%E5%B8%82","Host":"zwfw.wlmq.gov.cn","Origin":"https://zwfw.wlmq.gov.cn","Referer":"https://zwfw.wlmq.gov.cn/odweb/catalog/index.htm?cata_type=default","Sec-Fetch-Dest":"empty","Sec-Fetch-Mode":"cors","Sec-Fetch-Site":"same-origin","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0","X-Requested-With":"XMLHttpRequest","sec-ch-ua":"\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"","sec-ch-ua-mobile":"?0","sec-ch-ua-platform":"\"Windows\""}
@@ -120,16 +119,16 @@ class WulumuqiCrawler(PageBase):
                 '%Y-%m-%d %H:%M:%S') \
                 if item.get('conf_released_time') else ''
             update_time = datetime.fromtimestamp(item.get('conf_update_time', 0) / 1000).strftime('%Y-%m-%d %H:%M:%S') \
-                if item.get('conf_update_time') else release_time  # 使用发布时间作为默认值
+
 
             open_conditions = item.get('open_type', '')
-            data_volume = item.get('total_storage', 0)
+            data_volume = item.get('total_storage', None)
             is_api = 'True' if item.get('resource_type', '') == 'api' else 'False'
             file_type = [item.get('suffixes', '').split(',')]
 
-            access_count = int(item.get('conf_view_num', 0))
-            download_count = int(item.get('catalogStatistic', 0).get('use_file_count', 0))
-            api_call_count = int(item.get('catalogStatistic', 0).get('use_api_count', 0))
+            access_count = item.get('conf_view_num', None)
+            download_count = item.get('catalogStatistic', None).get('use_file_count', None)
+            api_call_count = item.get('catalogStatistic', None).get('use_api_count', None)
             link = f'https://zwfw.wlmq.gov.cn/odweb/catalog/catalogDetail.htm?cata_id={item["cata_id"]}'  # 假设没有具体的链接信息
             update_cycle = self.format_update_cycle(item.get('conf_update_cycle', ''))
 

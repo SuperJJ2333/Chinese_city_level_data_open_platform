@@ -32,14 +32,15 @@ class HuangshanCrawler(PageBase):
             '公共安全': [46, 9],
         }
 
-        city_info = {'name': 'Huangshan',
+        city_info = {'name': '黄山市',
                      'province': 'Anhui',
                      'total_items_num': 380,
                      'each_page_count': 8,
-                     'base_url': 'https://www.huangshan.gov.cn/site/label/8888?labelName=dataOpenResourceCatalogList&isPage=1&pageSize=8&providerOrgan=&dateFormat=yyyy-MM-dd&length=34&orderBy=&sortOrder=asc&containerId=resourceCatsDiv'
+                     'base_url': 'https://www.huangshan.gov.cn/site/label/8888?labelName=dataOpenResourceCatalogList&isPage=1&pageSize=8&providerOrgan=&dateFormat=yyyy-MM-dd&length=34&orderBy=&sortOrder=asc&containerId=resourceCatsDiv',
+                     'is_api': 'True',
                      }
 
-        super().__init__(city_info, is_headless, is_api=True)
+        super().__init__(city_info, is_headless)
 
         self.headers = {"Accept": "application/json, text/plain, */*", "Accept-Encoding": "gzip, deflate",
                         "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
@@ -145,13 +146,13 @@ class HuangshanCrawler(PageBase):
             update_time = frame.ele('x://div/div/p[2]/span[1]').text.split('：')[-1].strip()
 
             open_conditions = ''
-            data_volume = 0  # 假设默认为0
+            data_volume = None  # 假设默认为0
             file_type = [file_type for file_type in frame.eles('x://div/div/p[1]/span[2]/a')]
             is_api = 'True' if 'JSON' in file_type else 'False'
 
             access_count = frame.ele('x://div/div/p[2]/span[5]').text.split('：')[-1].strip()
             download_count = frame.ele('x://div/div/p[2]/span[6]').text.split('：')[-1].strip()
-            api_call_count = 0
+            api_call_count = None
             link = ''
 
             update_cycle = frame.ele('x://div/div/p[2]/span[4]').text.split('：')[-1].strip()
@@ -159,7 +160,7 @@ class HuangshanCrawler(PageBase):
             # 创建DataModel实例
             model = DataModel(title, subject, description, source_department, release_time,
                               update_time, open_conditions, data_volume, is_api, file_type,
-                              access_count, download_count, api_call_count, link, update_cycle)
+                              access_count, download_count, api_call_count, link, update_cycle, self.name)
             models_list.append(model.to_dict())
 
         return models_list

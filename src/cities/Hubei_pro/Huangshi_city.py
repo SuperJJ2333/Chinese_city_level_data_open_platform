@@ -27,13 +27,7 @@ class HuangshiCrawler(PageBase):
 
         super().__init__(city_info, is_headless)
 
-        self.headers = {
-            "Accept": "application/json, text/plain, */*", "Accept-Encoding": "gzip, deflate",
-            "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
-            "Cookie": "PHPSESSID=0c6af615c9b9ce5a34875f502db6bc7c", "Host": "data.huangshi.gov.cn",
-            "Referer": "http://data.huangshi.gov.cn/html/",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0"}
-
+        self.headers = {"GET /myapi/Datainfo/index?departmentid=&lyid=&bshy=&dataifa=0&d=2024-07-07T15":"41:45.164Z HTTP/1.1","Accept":"application/json, text/plain, */*","Accept-Encoding":"gzip, deflate","Accept-Language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6","Cookie":"PHPSESSID=0e9555b8da34abeaee1cc1272340739f","Host":"data.huangshi.gov.cn","Proxy-Connection":"keep-alive","Referer":"http://data.huangshi.gov.cn/html/","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0"}
         self.params = '{"pageNo":2,"pageSize":10,"zylx":["01","02","03"],"ssbmId":["00"],"mlmc":"","gxsjPx":2,"llslPx":"","sqslPx":"","ssztlmId":["00"],"ssjclmId":["00"],"ssqtlmId":["00"],"kflx":["00"]}'
         self.params = json.loads(self.params)
 
@@ -125,12 +119,12 @@ class HuangshiCrawler(PageBase):
         update_time = release_time
 
         open_conditions = "无条件开放" if data.get('dataopen', '') == 1 else "有条件开放"
-        data_volume = data.get('datanum', 0)  # 使用datanum作为数据量
+        data_volume = data.get('datanum', None)  # 使用datanum作为数据量
         is_api = 'True' if data.get('dataifa') == 1 else 'False'  # 根据dataifa判断是否API
 
-        access_count = data.get('dls', 0)
-        download_count = data.get('fws', 0)
-        api_call_count = 0  # 无API调用次数信息
+        access_count = data.get('dls', None)
+        download_count = data.get('fws', None)
+        api_call_count = None  # 无API调用次数信息
         file_types = [data.get('datafmt', '')]  # 使用fjhzm作为文件类型
 
         link = url  # 使用datauri作为链接，如果有的话
@@ -161,9 +155,9 @@ class HuangshiCrawler(PageBase):
             is_api = 'True'
             file_type = [item.get('fjhzm', '')]
 
-            access_count = item.get('fws', 0)
-            download_count = 0
-            api_call_count = item.get('xzs', 0)  # Assuming 0 since not provided
+            access_count = item.get('fws', None)
+            download_count = None
+            api_call_count = item.get('xzs', None)  # Assuming 0 since not provided
             link = ''
             update_cycle = ''
 

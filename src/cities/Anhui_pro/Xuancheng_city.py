@@ -14,7 +14,7 @@ class XuanchengCrawler(PageBase):
     直接在目录页获取目的数据
     """
     def __init__(self, is_headless=True):
-        city_info = {'name': 'Xuancheng',
+        city_info = {'name': '宣城市',
                      'province': 'Anhui',
                      'total_items_num': 501,
                      'each_page_count': 10,
@@ -69,8 +69,7 @@ class XuanchengCrawler(PageBase):
 
         return views_list
 
-    @staticmethod
-    def extract_page_data(json_data):
+    def extract_page_data(self, json_data):
         # 假设json_data是JSON格式的字符串
         data = json_data
         results = data['data']['rows']  # 根据你的JSON数据结构调整路径
@@ -82,25 +81,23 @@ class XuanchengCrawler(PageBase):
             description = item.get('summary', '')
             source_department = item.get('providerDept', '')
 
-            release_time = datetime.strptime(item.get('publishTime', ''), '%Y%m%d%H%M%S').strftime(
-                '%Y-%m-%d') if item.get('publishTime', '') else ''
-            update_time = datetime.strptime(item.get('updateTime', ''), '%Y%m%d%H%M%S').strftime(
-                '%Y-%m-%d') if item.get('updateTime', '') else ''
+            release_time = item.get('publishTime', '')
+            update_time = item.get('updateTime', '')
 
             open_conditions = item.get('shareTypeName', '')
-            data_volume = 0  # 此信息可能需要从其他地方获取
+            data_volume = None  # 此信息可能需要从其他地方获取
             is_api = 'True' if 'API' in item.get('formats', []) else 'False'
             file_type = item.get('formats', [])
 
-            access_count = item.get('llcs', 0)
-            download_count = item.get('xzcs', 0)
-            api_call_count = item.get('dycs', 0)
+            access_count = item.get('llcs', None)
+            download_count = item.get('xzcs', None)
+            api_call_count = item.get('dycs', None)
             link = ''  # 链接未在JSON数据中提供
             update_cycle = '每年'
 
             model = DataModel(title, subject, description, source_department, release_time, update_time,
                               open_conditions, data_volume, is_api, file_type, access_count, download_count,
-                              api_call_count, link, update_cycle)
+                              api_call_count, link, update_cycle, self.name)
             models.append(model.to_dict())
 
         return models

@@ -133,11 +133,11 @@ class XuzhouCrawler(PageBase):
             open_conditions = "无条件开放" if item.get('openAttribute', '1') == '1' else "有条件开放"
 
             update_cycle = self.format_update_cycle(item.get('updateFrequency', ''))
-            access_count = item.get('viewCount', 0)
-            download_count = item.get('downloadCount', 0)
-            api_call_count = item.get('applyCount', 0)
+            access_count = item.get('viewCount', None)
+            download_count = item.get('downloadCount', None)
+            api_call_count = item.get('applyCount', None)
 
-            data_volume = item.get('dataVolume', 0)
+            data_volume = item.get('dataVolume', None)
 
             file_types = [item.get('resourceType', '')]
 

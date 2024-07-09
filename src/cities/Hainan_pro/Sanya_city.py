@@ -24,15 +24,7 @@ class SanyaCrawler(PageBase):
 
         super().__init__(city_info, is_headless)
 
-        self.headers = {"APP_ID": "bj9pl7nrles8b9l3lp9g", "Accept": "*/*", "Accept-Encoding": "gzip, deflate, br, zstd",
-                        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
-                        "Content-Type": "application/json", "Host": "api.sanya.gov.cn",
-                        "Origin": "https://dataopen1.sanya.gov.cn", "Referer": "https://dataopen1.sanya.gov.cn/",
-                        "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-site",
-                        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0",
-                        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6ImM2a3AyNDc1azV2ZWFxc2ViY2kwIiwidWlkIjoiODg4ODg4ODg4ODg4ODg4ODg4ODgiLCJvcGVuSWQiOiI4ODg4ODg4ODg4ODg4ODg4ODg4OCIsInJ1blRpbWUiOiIiLCJleHAiOjE3MTc5NDczMDJ9.5qVWFK78vZMWuUj2yGEFH3UKorUCBWxSDIi-HMjYzQA",
-                        "sec-ch-ua": "\"Microsoft Edge\";v=\"125\", \"Chromium\";v=\"125\", \"Not.A/Brand\";v=\"24\"",
-                        "sec-ch-ua-mobile": "?0", "sec-ch-ua-platform": "\"Windows\""}
+        self.headers = {"APP_ID":"bj9pl7nrles8b9l3lp9g","Accept":"*/*","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6","Connection":"keep-alive","Content-Length":"92","Content-Type":"application/json","Host":"api.sanya.gov.cn","Origin":"https://dataopen1.sanya.gov.cn","Referer":"https://dataopen1.sanya.gov.cn/","Sec-Fetch-Dest":"empty","Sec-Fetch-Mode":"cors","Sec-Fetch-Site":"same-site","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0","authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6ImM2a3AyNDc1azV2ZWFxc2ViY2kwIiwidWlkIjoiODg4ODg4ODg4ODg4ODg4ODg4ODgiLCJvcGVuSWQiOiI4ODg4ODg4ODg4ODg4ODg4ODg4OCIsInJ1blRpbWUiOiIiLCJleHAiOjE3MjAzNzA0MDN9.OF_MEYEnipH0vDDPtAzgFXkKvDqNkyy6SpdYwIlliAo","sec-ch-ua":"\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"","sec-ch-ua-mobile":"?0","sec-ch-ua-platform":"\"Windows\""}
         self.params = '{"page":3,"page_size":10,"department_id":"","theme_id":"","tag":"","format":"","keyword":""}'
 
         self.params = json.loads(self.params)
@@ -99,7 +91,7 @@ class SanyaCrawler(PageBase):
 
         item = json_data['data']
 
-        data_volume = item.get('dataCapacity', 0)
+        data_volume = item.get('dataCapacity', None)
         update_cycle = item.get('frequency', '')
 
         return {'data_volume': data_volume, 'update_cycle': update_cycle}
@@ -122,16 +114,16 @@ class SanyaCrawler(PageBase):
                 if item.get('updated_date') else ''
 
             open_conditions = "无条件开放" if item.get('status', '') == 2 else "有条件开放"
-            data_volume = 0
+            data_volume = None
 
             link = f'https://dataopen1.sanya.gov.cn/#/elmDataList?id={item.get("id")}={title}'
             # 其他信息提取
             file_type = [item.get('formats', '')]  # 假设formats字段直接提供了文件格式
             is_api = 'False' if 'json' not in file_type else 'True'
 
-            access_count = int(item.get('view_count', 0))
-            download_count = int(item.get('download_count', 0))
-            api_call_count = int(item.get('tracking_count', 0)) # 假设API调用次数未提供
+            access_count = item.get('view_count', None)
+            download_count = item.get('download_count', None)
+            api_call_count = item.get('tracking_count', None) # 假设API调用次数未提供
 
             location = self.name
             update_cycle = ''

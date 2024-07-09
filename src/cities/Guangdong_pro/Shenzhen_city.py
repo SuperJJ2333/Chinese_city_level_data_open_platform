@@ -86,13 +86,13 @@ class ShenzhenCrawler(PageBase):
                 if item.get('updateDate') else None
 
             open_conditions = item.get('openLevelName', '')
-            data_volume = item.get('recordTotal', 0)
+            data_volume = item.get('recordTotal', None)
             is_api = 'True' if int(item.get('invokedCount', 0)) > 0 else 'False'
             file_type = item.get('suffixes', '').split(',') if item.get('suffixes') else []
 
-            access_count = int(item.get('visits', 0))
-            download_count = int(item.get('downloads', 0))
-            api_call_count = int(item.get('invokedCount', 0))
+            access_count = item.get('visits', None)
+            download_count = item.get('downloads', None)
+            api_call_count = item.get('invokedCount', None)
             link = f"https://opendata.sz.gov.cn/data/dataSet/toDataDetails/{item.get('resId').replace('/', '_')}"  # 示例链接，实际情况可能需要根据具体情况调整
             update_cycle = item.get('updateCycle', '')
 

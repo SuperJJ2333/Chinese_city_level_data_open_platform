@@ -142,7 +142,7 @@ class JinzhouCrawler(PageBase):
 
         access_count = session_page.ele('x://*[@id="app"]/div[7]/div[1]/div/div/div/div[2]/ul[1]/li[6]').text
         download_count = session_page.ele('x://*[@id="app"]/div[7]/div[1]/div/div/div/div[2]/ul[1]/li[7]').text
-        api_call_count = 0  # Assuming no specific HTML element for API call count
+        api_call_count = None  # Assuming no specific HTML element for API call count
         link = session_page.url
 
         update_cycle = frames.ele('x://tr[4]/td[2]').text

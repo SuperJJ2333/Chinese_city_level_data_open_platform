@@ -24,31 +24,32 @@ class FuzhouCrawler(PageBase):
 
         api_city_info = {'name': '抚州市_api',
                          'province': 'Jiangxi',
-                         'total_items_num': 241,
+                         'total_items_num': 30,
                          'each_page_count': 10,
                          'base_url': 'https://data.jxfz.gov.cn/openapi/catalog/portal/catalog/catalogs/getCatalogByPage',
                          'is_api': 'True'
                          }
 
-        super().__init__(api_city_info, is_headless)
+        super().__init__(city_info, is_headless)
 
-        self.headers = {
-            "accept": "application/json, text/plain, */*",
-            "accept-language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
-            "authorization": "algorithm=HMAC-SHA256,appId=C20221025110751,time=1718971399236,sign=oGPToW2rVmsJLgvT4DlZTi2BgS/pNn/id1OWbAyvALY=",
-            "content-type": "application/json",
-            "priority": "u=1, i",
-            "sec-ch-ua": "\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"",
-            "sec-ch-ua-mobile": "?0",
-            "sec-ch-ua-platform": "\"Windows\"",
-            "sec-fetch-dest": "empty",
-            "sec-fetch-mode": "cors",
-            "sec-fetch-site": "same-origin",
-            "x-xsrf-token": "f784f93c-e06c-4394-b3a9-55e6d6ad4eb1"
-        }
         if self.is_api:
-            self.params = '{"catalogTitle":"","categoryDetailId":"531","pageNum":1,"pageSize":10,"orderName":"","orderSort":"","dictRefList":[{"value":"1","dictRef":"openLimit"},{"value":"API","dictRef":"physicalResourceType"}]}'
+            self.headers = {"Host":"data.jxfz.gov.cn","Connection":"keep-alive","Content-Length":"200","sec-ch-ua":"\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"","X-XSRF-TOKEN":"01290b2e-459e-4053-972d-247c2bd81569","sec-ch-ua-mobile":"?0","Authorization":"algorithm=HMAC-SHA256,appId=C20221025110751,time=1720458613350,sign=Cyh1ABLFFyH0edkxc9j/SYT20U1Jt9rokf7mfu2E4tw=","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0","Content-Type":"application/json","Accept":"application/json, text/plain, */*","sec-ch-ua-platform":"\"Windows\"","Origin":"https://data.jxfz.gov.cn","Sec-Fetch-Site":"same-origin","Sec-Fetch-Mode":"cors","Sec-Fetch-Dest":"empty","Referer":"https://data.jxfz.gov.cn/interfaceServices?categoryDetailId=531&activeId=531","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6","Cookie":"mozi-assist={%22show%22:false%2C%22audio%22:false%2C%22speed%22:%22middle%22%2C%22zomm%22:1%2C%22cursor%22:false%2C%22pointer%22:false%2C%22bigtext%22:false%2C%22overead%22:false}; XSRF-TOKEN=01290b2e-459e-4053-972d-247c2bd81569; vuex=%7B%22token%22%3A%22%22%2C%22routerIndex%22%3A2%2C%22navIndex%22%3A0%2C%22dataTotal%22%3A3885853453%2C%22indexCount%22%3A1570%2C%22searchValue%22%3A%22%22%2C%22categoryDetailId%22%3A%22531%22%2C%22activeId%22%3A%22531%22%2C%22unReadQues%22%3A0%7D"}
+            self.params = '{"catalogTitle":"","categoryDetailId":"531","pageNum":4,"pageSize":3,"orderName":"","orderSort":"","dictRefList":[{"value":"1","dictRef":"openLimit"},{"value":"API","dictRef":"physicalResourceType"}]}'
+
         else:
+            self.headers = {"Accept": "application/json, text/plain, */*", "Accept-Encoding": "gzip, deflate, br, zstd",
+                            "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+                            "Authorization": "algorithm=HMAC-SHA256,appId=C20221025110751,time=1720457804637,sign=OM5JZ59/VxQ7tvLGHw3Y5dwSs7iaxhdBrx7ghjZweGY=",
+                            "Connection": "keep-alive", "Content-Length": "201", "Content-Type": "application/json",
+                            "Cookie": "mozi-assist={%22show%22:false%2C%22audio%22:false%2C%22speed%22:%22middle%22%2C%22zomm%22:1%2C%22cursor%22:false%2C%22pointer%22:false%2C%22bigtext%22:false%2C%22overead%22:false}; XSRF-TOKEN=01290b2e-459e-4053-972d-247c2bd81569; vuex=%7B%22token%22%3A%22%22%2C%22routerIndex%22%3A1%2C%22navIndex%22%3A0%2C%22dataTotal%22%3A3885853453%2C%22indexCount%22%3A1570%2C%22searchValue%22%3A%22%22%2C%22categoryDetailId%22%3A%22531%22%2C%22activeId%22%3A%22531%22%2C%22unReadQues%22%3A0%7D",
+                            "Host": "data.jxfz.gov.cn", "Origin": "https://data.jxfz.gov.cn",
+                            "Referer": "https://data.jxfz.gov.cn/openDate?categoryDetailId=531&activeId=531",
+                            "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
+                            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0",
+                            "X-XSRF-TOKEN": "01290b2e-459e-4053-972d-247c2bd81569",
+                            "sec-ch-ua": "\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"",
+                            "sec-ch-ua-mobile": "?0", "sec-ch-ua-platform": "\"Windows\""}
+
             self.params = '{"catalogTitle":"","categoryDetailId":"531","pageNum":4,"pageSize":10,"orderName":"","orderSort":"","dictRefList":[{"value":"1","dictRef":"openLimit"},{"value":"FILE","dictRef":"physicalResourceType"}]}'
         self.params = json.loads(self.params)
 
@@ -65,7 +66,7 @@ class FuzhouCrawler(PageBase):
             self.params['pageNum'] = i
 
             url = self.base_url
-            session.post(url=url, headers=self.headers, proxies=self.proxies, json=self.params)
+            session.post(url=url, headers=self.headers, proxies=self.fiddler_proxies, json=self.params, verify=False)
 
             while True:
                 try:
@@ -146,15 +147,15 @@ class FuzhouCrawler(PageBase):
 
             release_time = item['dynamicCatalogFields'].get('catalogCreateTime', '')
             update_time = item['dynamicCatalogFields'].get('updateTime', '')
-            open_conditions = item['dynamicCatalogFields'].get('openCondition', '')
+            open_conditions = item['dynamicCatalogFields'].get('accessLimit', '')
 
-            data_volume = item['statisticsModel'].get('view', 0)
+            data_volume = item['statisticsModel'].get('view', None)
             is_api = 'True' if 'api' in [stype['value'] for stype in item['serviceTypes']] else 'False'
             file_type = [item['dynamicCatalogFields'].get('resourceParamType', '')]
 
-            access_count = item['statisticsModel'].get('view', 0)
-            download_count = item['statisticsModel'].get('exchange', 0)
-            api_call_count = 0  # 示例中没有API调用次数，因此设为0
+            access_count = item['statisticsModel'].get('view', None)
+            download_count = item['statisticsModel'].get('exchange', None)
+            api_call_count = None  # 示例中没有API调用次数，因此设为0
             link = f'https://data.jxfz.gov.cn/openDate/directory/{item["id"]}'  # 未指定链接，保留为空
             update_cycle = item['dynamicCatalogFields'].get('updateCycle', '')
 
@@ -180,13 +181,13 @@ class FuzhouCrawler(PageBase):
             update_time = item['dynamicCatalogFields'].get('updateTime', '')
             open_conditions = item['dynamicCatalogFields'].get('accessLimit', '')
 
-            data_volume = item['statisticsModel'].get('view', 0)
+            data_volume = item['statisticsModel'].get('view', None)
             is_api = 'True' if any(st['value'] == 'INTERFACE_SERVICE' for st in item['serviceTypes']) else 'False'
             file_type = [item['dynamicCatalogFields'].get('resourceParamType', '')]
 
-            access_count = item['statisticsModel'].get('view', 0)
-            download_count = item['statisticsModel'].get('exchange', 0)
-            api_call_count = 0  # 示例中没有API调用次数，因此设为0
+            access_count = item['statisticsModel'].get('view', None)
+            download_count = item['statisticsModel'].get('exchange', None)
+            api_call_count = None  # 示例中没有API调用次数，因此设为0
             link = f'https://data.jxfz.gov.cn/openDate/directory/{item["id"]}'  # 未指定链接，保留为空
             update_cycle = item['dynamicCatalogFields'].get('updateCycle', '')
 

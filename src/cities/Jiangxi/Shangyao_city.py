@@ -142,7 +142,7 @@ class ShangraoCrawler(PageBase):
             'x://div/span[contains(text(),"访问量")]').text.split("：")[1]
         download_count = session_page.ele(
             'x://div/span[contains(text(),"下载量")]').text.split("：")[1]
-        api_call_count = 0  # 页面中未提供API调用次数信息
+        api_call_count = None  # 页面中未提供API调用次数信息
         link = session_page.url
 
         update_cycle = session_page.ele(

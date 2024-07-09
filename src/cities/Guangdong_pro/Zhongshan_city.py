@@ -139,7 +139,7 @@ class ZhongshanCrawler(PageBase):
 
         access_count = frames.ele('x://tr[6]/td[1]').text
         download_count = frames.ele('x://tr[5]/td[1]').text
-        api_call_count = 0  # Placeholder as no relevant data is available
+        api_call_count = None  # Placeholder as no relevant data is available
         link = session_page.url
 
         update_cycle = frames.ele('x://tr[4]/td[1]').text
@@ -173,8 +173,8 @@ class ZhongshanCrawler(PageBase):
             is_api = 'True'
             file_type = ['json']
 
-            access_count = item.get('viewCount', 0)
-            download_count = item.get('downCount', 0)
+            access_count = item.get('viewCount', None)
+            download_count = item.get('downCount', None)
             api_call_count = 0
             link = f'http://open.huaibeidata.cn:1123/#/interface/detail/{item["id"]}'  # 未提供
             update_cycle = item.get('updateCycle', '')

@@ -94,13 +94,13 @@ class GuangzhouCrawler(PageBase):
 
             open_conditions = '无条件开放' if item.get(
                 'openStatus') == '1' else '有条件开放'  # 假设'openStatus' '1'是无条件开放
-            data_volume = item.get('dataCount', 0)
+            data_volume = item.get('dataCount', None)
             is_api = 'True' if "3" in item.get('dataFormat') else 'False'
             file_type = [f['fileFormat'] for f in item.get('dataFileList', []) if 'fileFormat' in f]  # 列出所有文件类型
 
-            access_count = item.get('viewCount', 0)
-            download_count = item.get('downloadCount', 0)
-            api_call_count = item.get('apiCallCount', 0)
+            access_count = item.get('viewCount', None)
+            download_count = item.get('downloadCount', None)
+            api_call_count = item.get('apiCallCount', None)
             link = f"https://data.gz.gov.cn/search.html?title={title}"  # 示例链接，实际情况可能需要根据具体情况调整
             update_cycle = self.format_update_cycle(item.get('updateCycle', ''))
 

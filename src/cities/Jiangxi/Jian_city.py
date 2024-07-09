@@ -33,7 +33,7 @@ class JianCrawler(PageBase):
                          'is_api': 'True'
                          }
 
-        super().__init__(api_city_info, is_headless)
+        super().__init__(city_info, is_headless)
 
         self.headers = {
             "accept": "application/json, text/plain, */*",
@@ -155,15 +155,15 @@ class JianCrawler(PageBase):
         release_time = data.get('createTime', '')
         update_time = data.get('dataUpdateTime', '')
         open_conditions = "无条件开放" if data.get('openCondition', '') == '无' else "有条件开放"
-        data_volume = data.get('dataSize', 0)
+        data_volume = data.get('dataSize', None)
 
         # Determine if the resource is an API based on resource type
         is_api = 'True' if data.get('resResourceType', '') == '1' else 'False'  # Assuming '1' indicates an API type
         file_types = []
 
-        access_count = data.get('accessNum', 0)
-        download_count = data.get('downNum', 0)
-        api_call_count = 0  # Not provided in JSON
+        access_count = data.get('accessNum', None)
+        download_count = data.get('downNum', None)
+        api_call_count = None  # Not provided in JSON
         link = url  # Assume no direct link provided
 
         update_cycle = self.format_update_cycle(data.get('resUpdateCycle', ''))
@@ -187,7 +187,7 @@ class JianCrawler(PageBase):
         release_time = data.get('createTime', '')
         update_time = data.get('dataUpdateTime', '')
         open_conditions = "有条件开放" if data.get('resShareType', '') == '402882a75885fd150158860e3d170006' else "无条件开放"
-        data_volume = data.get('dataSize', 0)
+        data_volume = data.get('dataSize', None)
 
         # 确定资源是否为API，假设'local'类型为API
         is_api = 'True' if data.get('serviceApiType', '') == 'local' else 'False'
@@ -196,11 +196,11 @@ class JianCrawler(PageBase):
         file_type = ['接口']
 
         # 访问和下载次数
-        access_count = data.get('accessNum', 0)
-        download_count = data.get('downNum', 0)
+        access_count = data.get('accessNum', None)
+        download_count = data.get('downNum', None)
 
         # API调用次数，默认没有则设为0
-        api_call_count = data.get('callNum', 0) if data.get('callNum') else 0
+        api_call_count = data.get('callNum', None) if data.get('callNum') else None
 
         # 服务的完整路径或链接
         link = data.get('servicePath', '')

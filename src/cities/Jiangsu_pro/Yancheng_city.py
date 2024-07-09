@@ -30,7 +30,7 @@ class YanchengCrawler(PageBase):
                          'is_api': 'True'
                          }
 
-        super().__init__(api_city_info, is_headless)
+        super().__init__(city_info, is_headless)
 
         self.headers = {"Accept": "application/json, text/javascript, */*; q=0.01",
                         "Accept-Encoding": "gzip, deflate, br, zstd",
@@ -137,14 +137,14 @@ class YanchengCrawler(PageBase):
             release_time = item.get('createTime', '')
             update_time = item.get('publishTime', '')  # 使用新的字段名称
             open_conditions = '无条件开放' if item.get('shareType', 0) == 0 else '有条件开放'  # 使用新的字段名称
-            data_volume = item.get('dataCount', 0)
+            data_volume = item.get('dataCount', None)
             is_api = 'True' if item.get('interfaceType', 0) == 1 else 'False'
             file_type = ['json'] if item.get('isJson', 0) == 1 else ['excel'] if item.get('isExcel', 0) == 1 else [
                 'csv'] if item.get('isCsv', 0) == 1 else []
 
-            access_count = item.get('viewCount', 0)
-            download_count = item.get('downloadCount', 0)
-            api_call_count = 0  # JSON数据中未提供API调用次数
+            access_count = item.get('viewCount', None)
+            download_count = item.get('downloadCount', None)
+            api_call_count = None  # JSON数据中未提供API调用次数
             link = f'https://www.yancheng.gov.cn/opendata/openCatalog/deatil/{item.get("catalogPk", "")}'  # 假设没有具体的链接信息
             update_cycle = item.get('updateCycle', '')
 
@@ -171,7 +171,7 @@ class YanchengCrawler(PageBase):
             release_time = item.get('createTime', '')
             update_time = item.get('publishTime', '')  # 使用新的字段名称
             open_conditions = item.get('openCondition', '')
-            data_volume = item.get('dataCount', 0)
+            data_volume = item.get('dataCount', None)
 
             # 根据是否有接口判断是否为API
             is_api = 'True'
@@ -185,9 +185,9 @@ class YanchengCrawler(PageBase):
             if item.get('isCsv', 0) == 1:
                 file_type.append('csv')
 
-            access_count = item.get('viewCount', 0)
-            download_count = item.get('downloadCount', 0)
-            api_call_count = download_count  # JSON数据中未提供API调用次数
+            access_count = item.get('viewCount', None)
+            download_count = item.get('downloadCount', None)
+            api_call_count = None  # JSON数据中未提供API调用次数
             link = f'https://www.yancheng.gov.cn/opendata/interface/detail/{item.get("catalogPk", "")}'  # 假设没有具体的链接信息
             update_cycle = item.get('updateCycle', '')
 

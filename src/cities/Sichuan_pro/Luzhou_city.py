@@ -18,18 +18,30 @@ class LuzhouCrawler(PageBase):
     """
 
     def __init__(self, is_headless=True):
-        city_info = {'name': '泸州市_api',
+        city_info = {'name': '泸州市',
                      'province': 'Sichuan',
-                     'total_items_num': 6986,
+                     'total_items_num': 6956,
                      'each_page_count': 10,
                      'base_url': 'https://data.luzhou.cn/portal/dataservice/getPage'
                      }
 
-        super().__init__(city_info, is_headless)
+        api_city_info = {'name': '泸州市_api',
+                         'province': 'Sichuan',
+                         'total_items_num': 6986,
+                         'each_page_count': 10,
+                         'base_url': 'https://data.luzhou.cn/portal/dataservice/getPage',
+                         'is_api': 'True'
+                         }
 
-        self.headers = {"Accept":"*/*","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6","Connection":"keep-alive","Content-Length":"95","Content-Type":"application/x-www-form-urlencoded; charset=UTF-8","Cookie":"JSESSIONID=A74063A806BCE5ECC23A492E703CF897; Hm_lvt_dce2578ca0b0d4c50e3f97a9871ac709=1719001694,1719050026; Hm_lpvt_dce2578ca0b0d4c50e3f97a9871ac709=1719051922","Host":"data.luzhou.cn","Origin":"https://data.luzhou.cn","Referer":"https://data.luzhou.cn/portal/openapi?orgId=","Sec-Fetch-Dest":"empty","Sec-Fetch-Mode":"cors","Sec-Fetch-Site":"same-origin","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0","X-Requested-With":"XMLHttpRequest","sec-ch-ua":"\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"","sec-ch-ua-mobile":"?0","sec-ch-ua-platform":"\"Windows\""}
+        super().__init__(api_city_info, is_headless)
 
-        self.params = {'codeId': '031435e690e74555937e3285bfceba88', 'searchOrder': '0', 'page': '2', 'rows': '10', 'serviceType': '0,4'}
+        if self.is_api:
+            self.headers = {"Accept":"*/*","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6","Connection":"keep-alive","Content-Length":"95","Content-Type":"application/x-www-form-urlencoded; charset=UTF-8","Cookie":"JSESSIONID=F353C990F1BDFA5EB4449E086F0E0ABE; Hm_lvt_dce2578ca0b0d4c50e3f97a9871ac709=1719001694,1719050026,1720515882; HMACCOUNT=A202F23FD4E0D795; Hm_lpvt_dce2578ca0b0d4c50e3f97a9871ac709=1720516071","Host":"data.luzhou.cn","Origin":"https://data.luzhou.cn","Referer":"https://data.luzhou.cn/portal/openapi?orgId=","Sec-Fetch-Dest":"empty","Sec-Fetch-Mode":"cors","Sec-Fetch-Site":"same-origin","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0","X-Requested-With":"XMLHttpRequest","sec-ch-ua":"\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"","sec-ch-ua-mobile":"?0","sec-ch-ua-platform":"\"Windows\""}
+
+            self.params = {'codeId': '031435e690e74555937e3285bfceba88', 'searchOrder': '0', 'page': '2', 'rows': '10', 'serviceType': '0,4'}
+        else:
+            self.headers = {"Accept":"*/*","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6","Connection":"keep-alive","Content-Length":"95","Content-Type":"application/x-www-form-urlencoded; charset=UTF-8","Cookie":"JSESSIONID=F353C990F1BDFA5EB4449E086F0E0ABE; Hm_lvt_dce2578ca0b0d4c50e3f97a9871ac709=1719001694,1719050026,1720515882; HMACCOUNT=A202F23FD4E0D795; Hm_lpvt_dce2578ca0b0d4c50e3f97a9871ac709=1720515908","Host":"data.luzhou.cn","Origin":"https://data.luzhou.cn","Referer":"https://data.luzhou.cn/portal/opendata?orgId=","Sec-Fetch-Dest":"empty","Sec-Fetch-Mode":"cors","Sec-Fetch-Site":"same-origin","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0","X-Requested-With":"XMLHttpRequest","sec-ch-ua":"\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"","sec-ch-ua-mobile":"?0","sec-ch-ua-platform":"\"Windows\""}
+            self.params = {'codeId': '031435e690e74555937e3285bfceba88', 'searchOrder': '0', 'page': '3', 'rows': '10', 'serviceType': '0,3'}
 
     def run(self):
         self.total_data = self.process_views()
@@ -74,15 +86,16 @@ class LuzhouCrawler(PageBase):
         for item in urls_list:
             url = f'http://www.wlcbdata.gov.cn/portal/service_detail?id={item.get("rowGuid")}&type=opendata&orgId='
 
-            headers = {"Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,"
-                                "image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-                       "Accept-Encoding":"gzip, deflate","Accept-Language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,"
-                                                                           "en-US;q=0.6","Cache-Control":"max-age=0",
-                       "Connection":"keep-alive","Cookie":"JSESSIONID=E0F5CF23AA4E749EC56F9CA2305A19DF",
-                       "Host":"www.wlcbdata.gov.cn","Referer":"http://www.wlcbdata.gov.cn/portal/opendata?orgId=",
-                       "Upgrade-Insecure-Requests":"1","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                                                                    "AppleWebKit/537.36 (KHTML, like Gecko) "
-                                                                    "Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0"}
+            headers = {"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,"
+                                 "image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+                       "Accept-Encoding": "gzip, deflate", "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,"
+                                                                              "en-US;q=0.6",
+                       "Cache-Control": "max-age=0",
+                       "Connection": "keep-alive", "Cookie": "JSESSIONID=E0F5CF23AA4E749EC56F9CA2305A19DF",
+                       "Host": "www.wlcbdata.gov.cn", "Referer": "http://www.wlcbdata.gov.cn/portal/opendata?orgId=",
+                       "Upgrade-Insecure-Requests": "1", "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                                                                       "AppleWebKit/537.36 (KHTML, like Gecko) "
+                                                                       "Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0"}
 
             session_page.get(url=url, headers=headers, proxies=self.proxies)
 
@@ -131,13 +144,13 @@ class LuzhouCrawler(PageBase):
         update_time = release_time
 
         open_conditions = session_page.ele('x://tr[td="开放条件"]/td[4]').text
-        data_volume = 0  # 页面中未提供数据量信息
+        data_volume = item.get('collectNum', None)  # 页面中未提供数据量信息
         file_types = [session_page.ele('x://tr[td="资源格式"]/td[2]').text]
         is_api = 'False' if '数据库' not in file_types else 'True'
 
-        access_count = item.get('access_amount', 0)
-        download_count = item.get('download_amount', 0)
-        api_call_count = download_count if is_api == 'True' else 0
+        access_count = item.get('serviceViewCount', None)
+        download_count = item.get('serviceApplyCount', None)
+        api_call_count = None
         link = session_page.url
 
         update_cycle = session_page.ele(

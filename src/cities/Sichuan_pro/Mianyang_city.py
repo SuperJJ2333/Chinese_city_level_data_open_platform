@@ -154,12 +154,12 @@ class MianyangCrawler(PageBase):
 
         file_type = []
 
-        access_count = data.get('browseCount', 0)
+        access_count = None
         download_count = data.get('dir_statistics_data', '')[0].get('db_downloadnum', '')  # 假设数据量信息存在于storageCount字段
 
         is_api = 'False'
 
-        api_call_count = download_count if is_api == 'True' else 0  # 假设数据量信息存在于storageCount字段
+        api_call_count = data.get('dir_statistics_data', '')[0].get('service_time_All', None)
 
         link = item_url  # 假设没有具体的链接信息可用
 
@@ -187,8 +187,8 @@ class MianyangCrawler(PageBase):
             open_conditions = '有条件开放' if item.get('isOpen', '') == '1' else '无条件开放'
             data_volume = item.get('resourceMount', '0')  # 数据量信息，如果没有提供默认为 '0'
 
-            access_count = item.get('browseCount', 0)
-            download_count = item.get('applyCount', 0)  # 假设 applyCount 可能意味着下载
+            access_count = item.get('browseCount', None)
+            download_count = item.get('applyCount', None)  # 假设 applyCount 可能意味着下载
             api_call_count = item.get('serviceCount', 0)  # 使用 serviceCount 作为 API 调用次数
             link = item.get('preUrl', '')  # 使用 preUrl 作为链接地址，如果有的话
 

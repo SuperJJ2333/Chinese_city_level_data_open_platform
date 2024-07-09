@@ -57,7 +57,7 @@ def process_xlsx_files(source_folder, target_folder):
             df.rename(columns=column_mapping, inplace=True)
 
             df['location'] = extract_city_name(file_name)  # 处理行政区域列
-            df['api_call_count'] = 0  # 新增API调用计数列
+            df['api_call_count'] = None  # 新增API调用计数列
             df['link'] = ''  # 新增链接列
 
             df = df[column_names]
@@ -81,8 +81,9 @@ def extract_city_name(text):
         return match.group(1)
     return None
 
+
 if __name__ == '__main__':
     # 使用函数
-    source_folder = r'E:\pythonProject\outsource\China_province_opened_data\docs\Shandong'
-    target_folder = r'E:\pythonProject\outsource\China_province_opened_data\output\Shandong'
+    source_folder = r'E:\pythonProject\outsource\China_province_opened_data\docs\Guangxi'
+    target_folder = r'E:\pythonProject\outsource\China_province_opened_data\output\Guangxi'
     process_xlsx_files(source_folder, target_folder)

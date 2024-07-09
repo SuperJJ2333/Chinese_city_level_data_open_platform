@@ -23,7 +23,8 @@ class NanchongCrawler(PageBase):
                      }
         super().__init__(city_info, is_headless)
 
-        self.headers = {"Accept":"*/*","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6","Connection":"keep-alive","Cookie":"JSESSIONID=F8395113118F65230D5B347B70820ECB; _gscu_651081769=19297691tckkrc17; _gscbrs_651081769=1; _gscs_651081769=19297691r1p3f017|pv:3","Host":"www.nanchong.gov.cn","Referer":"https://www.nanchong.gov.cn/data/catalog/index.html","Sec-Fetch-Dest":"empty","Sec-Fetch-Mode":"cors","Sec-Fetch-Site":"same-origin","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0","X-Requested-With":"XMLHttpRequest","sec-ch-ua":"\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"","sec-ch-ua-mobile":"?0","sec-ch-ua-platform":"\"Windows\""}
+        self.headers = {"Accept":"*/*","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6","Connection":"keep-alive","Cookie":"JSESSIONID=2963A4D4F0D11B5FA5A3C4539FFA7A0B; _gscu_651081769=19297691tckkrc17; _trs_uv=ly8iw1cn_5533_h64z; _gscbrs_651081769=1; _gscs_651081769=205055532cmk5c17|pv:2","Host":"www.nanchong.gov.cn","Referer":"https://www.nanchong.gov.cn/data/catalog/index.html","Sec-Fetch-Dest":"empty","Sec-Fetch-Mode":"cors","Sec-Fetch-Site":"same-origin","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0","X-Requested-With":"XMLHttpRequest","sec-ch-ua":"\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"","sec-ch-ua-mobile":"?0","sec-ch-ua-platform":"\"Windows\""}
+
         self.params = {'page': '2', 'limit': '10', 'field': 'data_Update_Time'}
 
     def run(self):
@@ -106,14 +107,14 @@ class NanchongCrawler(PageBase):
             release_time = item.get('RELEASETIME', '')
             update_time = item.get('UPDATE_TIME', '')
 
-            data_volume = item.get('RESOURCESNUM', 0)
-            is_api = 'False'  # 根据描述，没有API访问标记，设为False
+            data_volume = item.get('RESOURCESNUM', None)
+            is_api = 'True' if item.get('CALLNUM', 0) > 0 else 'False'  # 根据描述，没有API访问标记，设为False
 
             file_type = item.get('FORMAT_NAME', '').split(',')  # 假设格式名称可以直接使用
 
-            access_count = item.get('ACCESSCOUNT', 0)
-            download_count = item.get('DOWNNUM', 0)
-            api_call_count = item.get('CALLNUM', 0)
+            access_count = item.get('ACCESSCOUNT', None)
+            download_count = item.get('DOWNNUM', None)
+            api_call_count = item.get('CALLNUM', None)
             link = f'https://www.nanchong.gov.cn/data/catalog/details.html?id={item.get("ID", "")}'  # 假设没有具体的链接信息
 
             open_conditions, update_cycle = self.extract_data(item.get('RESOURCECODE', ''))

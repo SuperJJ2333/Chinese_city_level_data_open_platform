@@ -16,14 +16,15 @@ class ChuzhouCrawler(PageBase):
     """
 
     def __init__(self, is_headless=True):
-        city_info = {'name': 'Chuzhou',
+        city_info = {'name': '滁州市',
                      'province': 'Anhui',
                      'total_items_num': 1516,
                      'each_page_count': 10,
-                     'base_url': 'https://data.zhihuichuzhou.com:8007/api/OpenDirectory/select?shareType=%E5%85%A8%E9%83%A8&resourceStatus=%E5%85%A8%E9%83%A8&updatetimes=%E5%85%A8%E9%83%A8&orderType=0&sortnum=1&page={page_num}&size=10&star='
+                     'base_url': 'https://data.zhihuichuzhou.com:8007/api/OpenDirectory/select?shareType=%E5%85%A8%E9%83%A8&resourceStatus=%E5%85%A8%E9%83%A8&updatetimes=%E5%85%A8%E9%83%A8&orderType=0&sortnum=1&page={page_num}&size=10&star=',
+                     'is_api': 'True'
                      }
 
-        super().__init__(city_info, is_headless, is_api=True)
+        super().__init__(city_info, is_headless)
 
         self.headers = {"Accept": "application/json, text/plain, */*", "Accept-Encoding": "gzip, deflate, br, zstd",
                         "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",

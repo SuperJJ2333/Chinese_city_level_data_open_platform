@@ -142,7 +142,7 @@ class LianyungangCrawler(PageBase):
 
         access_count = item_info['access_count']
         download_count = item_info['download_count']
-        api_call_count = download_count if is_api == 'True' else 0
+        api_call_count = download_count if is_api == 'True' else None
         link = session_page.url
 
         update_cycle = ''

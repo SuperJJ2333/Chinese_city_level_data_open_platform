@@ -22,13 +22,6 @@ class GuangyuanCrawler(PageBase):
                      'each_page_count': 5,
                      'base_url': 'https://data.cngy.gov.cn/open/dataPool/dataPoolPager'}
 
-        api_city_info = {'name': '荆门市_api',
-                         'province': 'Hubei',
-                         'total_items_num': 22,
-                         'each_page_count': 10,
-                         'base_url': 'https://data.jingmen.gov.cn/prod-api/openService/rest/page?serviceName=&topicClassify=&dataRealm=&organName=&industryType=&servicePublishTimeSort=&applyCountSort=&browseCountSort=&scoreCountSort=&downCountSort=&page={page_num}&size=10',
-                         'is_api': 'True'
-                         }
 
         super().__init__(city_info, is_headless)
 
@@ -156,12 +149,12 @@ class GuangyuanCrawler(PageBase):
         # 其他属性处理
         open_conditions = '无条件开放'
 
-        access_count = item.get('access_count', 0)
-        download_count = item.get('download_count', 0)
-        data_volume = item.get('data_volume', 0)
+        access_count = item.get('total', None)
+        download_count = item.get('download_count', None)
+        data_volume = item.get('data_volume', None)
         is_api = 'False'
         file_type = [item.get('resourcrtype', '')]
-        api_call_count = 0  # 示例中没有API调用次数，因此设为0
+        api_call_count = None  # 示例中没有API调用次数，因此设为0
         link = url
         update_cycle = self.format_update_cycle(item.get('cycle', ''))
 

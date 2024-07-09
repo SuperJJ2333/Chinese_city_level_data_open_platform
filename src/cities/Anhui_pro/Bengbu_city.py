@@ -15,7 +15,7 @@ class BengbuCrawler(PageBase):
     目的数据在目录页中
     """
     def __init__(self, is_headless=True):
-        city_info = {'name': 'Bengbu',
+        city_info = {'name': '蚌埠市',
                      'province': 'Anhui',
                      'total_items_num': 130,
                      'each_page_count': 10,
@@ -138,55 +138,61 @@ class BengbuCrawler(PageBase):
 
         return models
 
-    @staticmethod
-    def extract_page_data(session_page, file_type, url):
+    def extract_page_data(self, session_page, file_type, url):
 
-        title = session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[1]/h1').text
-        subject = session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[2]/text()')
-        description = session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[1]/text()')
-        source_department = session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[3]/text()')
+        try:
+            title = session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[1]/h1').text
+            subject = session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[2]').text.split('：')[-1]
+            description = session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[1]').text.split('：')[-1]
+            source_department = session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[3]').text.split('：')[-1]
 
-        if not session_page.ele('x://*[@id="ls_wenzhang"]/h2/span'):
-            release_time = datetime.strptime(session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[5]/text()'),
-                                             '%Y-%m-%d %H:%M:%S.%f').strftime('%Y-%m-%d')
-            update_time = datetime.strptime(session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[6]/text()'),
-                                            '%Y-%m-%d %H:%M:%S.%f').strftime('%Y-%m-%d')
+            if not session_page.ele('x://*[@id="ls_wenzhang"]/h2/span'):
+                release_time = datetime.strptime(session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[5]').text.split('：')[-1],
+                                                 '%Y-%m-%d %H:%M:%S.%f').strftime('%Y-%m-%d')
+                update_time = datetime.strptime(session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[6]').text.split('：')[-1],
+                                                '%Y-%m-%d %H:%M:%S.%f').strftime('%Y-%m-%d')
 
-            open_conditions = session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[11]/text()')
-            data_volume = 0  # 假设默认为0
-            is_api = 'False'
-            file_type = [file_type]
+                open_conditions = session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[11]').text.split('：')[-1]
+                data_volume = None  # 假设默认为0
+                is_api = 'False'
+                file_type = [file_type]
 
-            access_count = session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[8]/text()')
-            download_count = session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[9]/text()')
-            api_call_count = 0
-            link = url
+                access_count = session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[8]').text.split('：')[-1]
+                download_count = session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[9]').text.split('：')[-1]
+                api_call_count = None
+                link = url
 
-            update_cycle = session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[7]/text()')
-        else:
-            release_time = datetime.strptime(session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[7]/text()'),
-                                             '%Y-%m-%d %H:%M:%S.%f').strftime('%Y-%m-%d')
-            update_time = datetime.strptime(session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[8]/text()'),
-                                            '%Y-%m-%d %H:%M:%S.%f').strftime('%Y-%m-%d')
+                update_cycle = session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[7]').text.split('：')[-1]
+            else:
+                release_time = datetime.strptime(session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[7]').text.split('：')[-1],
+                                                 '%Y-%m-%d %H:%M:%S.%f').strftime('%Y-%m-%d')
+                update_time = datetime.strptime(session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[8]').text.split('：')[-1],
+                                                '%Y-%m-%d %H:%M:%S.%f').strftime('%Y-%m-%d')
 
-            open_conditions = session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[14]/text()')
-            data_volume = 0  # 假设默认为0
-            is_api = 'True'
-            file_type = [file_type]
+                open_conditions = session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[14]').text.split('：')[-1]
+                data_volume = None # 假设默认为0
+                is_api = 'True'
+                file_type = [file_type]
 
-            access_count = session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[12]/text()')
-            download_count = 0
-            api_call_count = session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[6]/text()')
-            link = url
+                access_count = session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[12]').text.split('：')[-1]
+                download_count = None
+                api_call_count = session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[6]').text.split('：')[-1]
+                link = url
 
-            update_cycle = session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[9]/text()')
+                update_cycle = session_page.ele('x://*[@id="ls_wenzhang"]/div[1]/div[2]/ul/li[9]').text.split('：')[-1]
 
-        # 创建DataModel实例
-        model = DataModel(title, subject, description, source_department, release_time,
-                          update_time, open_conditions, data_volume, is_api, file_type,
-                          access_count, download_count, api_call_count, link, update_cycle)
+            # 创建DataModel实例
+            model = DataModel(title, subject, description, source_department, release_time,
+                              update_time, open_conditions, data_volume, is_api, file_type,
+                              access_count, download_count, api_call_count, link, update_cycle, location=self.name)
 
-        return model.to_dict()
+            return model.to_dict()
+        except Exception as e:
+            self.logger.error(f'{url} - 解析页面数据失败 - {e}')
+            return None
+
+
+
 
     @staticmethod
     def format_update_cycle(it):

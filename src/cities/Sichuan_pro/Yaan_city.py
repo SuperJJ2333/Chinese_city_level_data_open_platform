@@ -32,7 +32,7 @@ class YaanCrawler(PageBase):
                          'is_api': 'True'
                          }
 
-        super().__init__(api_city_info, is_headless)
+        super().__init__(city_info, is_headless)
 
         if self.is_api:
             self.headers = {"Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6","Connection":"keep-alive","Cookie":"OPENSESSION=e4e29ec7-1305-4e0a-a18e-e64996a11c6e; Hm_lvt_c3f009f814f701e8fad8a17f9682ec79=1719304151; __utrace=0570f13f282097d0908c8752904e66a5; Hm_lpvt_c3f009f814f701e8fad8a17f9682ec79=1719307714","Host":"www.yaandata.com","Referer":"https://www.yaandata.com/oportal/api/","Sec-Fetch-Dest":"document","Sec-Fetch-Mode":"navigate","Sec-Fetch-Site":"same-origin","Sec-Fetch-User":"?1","Upgrade-Insecure-Requests":"1","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0","sec-ch-ua":"\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"","sec-ch-ua-mobile":"?0","sec-ch-ua-platform":"\"Windows\""}
@@ -154,7 +154,7 @@ class YaanCrawler(PageBase):
             'x://*[@id="app"]/div[6]/div[1]/div/div/div/div[2]/ul/li[6]').text
         download_count = session_page.ele(
             'x://*[@id="app"]/div[6]/div[1]/div/div/div/div[2]/ul/li[7]').text
-        api_call_count = 0  # 页面中未提供API调用次数信息
+        api_call_count = None  # 页面中未提供API调用次数信息
         link = session_page.url
 
         update_cycle = frame.ele('x://tr[4]/td[2]').text
@@ -182,7 +182,7 @@ class YaanCrawler(PageBase):
 
         open_conditions = session_page.ele(
             'x://*[@id="app"]/div[6]/div[1]/div/div/div/div[2]/ul/li[5]/span').text
-        data_volume = 0
+        data_volume = None
         file_type = files_type
         is_api = 'True' if '接口' in file_type else 'False'
 
@@ -190,7 +190,7 @@ class YaanCrawler(PageBase):
             'x://*[@id="app"]/div[6]/div[1]/div/div/div/div[2]/ul/li[6]').text
         download_count = session_page.ele(
             'x://*[@id="app"]/div[6]/div[1]/div/div/div/div[2]/ul/li[7]').text
-        api_call_count = download_count  # 页面中未提供API调用次数信息
+        api_call_count = None  # 页面中未提供API调用次数信息
         link = session_page.url
 
         update_cycle = ''

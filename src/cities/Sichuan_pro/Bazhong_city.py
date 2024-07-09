@@ -17,17 +17,17 @@ class BazhongCrawler(PageBase):
     def __init__(self, is_headless=True):
         city_info = {'name': '巴中市',
                      'province': 'Sichuan',
-                     'total_items_num': 21,
-                     'each_page_count': 10,
-                     'base_url': 'https://www.cnbz.gov.cn/content/dataOpen/getDataOpenInfoPage?pageIndex={page_num}&pageSize=10&sortField=publishTime&sortOrder=desc&nodeTree=1004078515323094745'
-
+                     'total_items_num': 8678,
+                     'each_page_count': 20,
+                     'base_url': 'https://www.bzgongxiang.com/api/rcms/catalog/listCatalog?field=publishTime&dir=desc&page={page_num}&pageSize=20',
                      }
 
         super().__init__(city_info, is_headless)
 
-        self.headers = {"Accept":"application/json, text/javascript, */*; q=0.01","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6","Connection":"keep-alive","Cookie":"SHIROJSESSIONID=e0818c81-1486-4c84-b81e-55d0d833655e; wzaConfigTime=1719304748044","Host":"www.cnbz.gov.cn","Ls-Language":"zh","Referer":"https://www.cnbz.gov.cn/site/tpl/6783253?nodeTreeId=1004078515323094745","Sec-Fetch-Dest":"empty","Sec-Fetch-Mode":"cors","Sec-Fetch-Site":"same-origin","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0","X-Requested-With":"XMLHttpRequest","sec-ch-ua":"\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"","sec-ch-ua-mobile":"?0","sec-ch-ua-platform":"\"Windows\""}
+        self.headers = {"Accept":"application/json, text/plain, */*","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6","Connection":"keep-alive","Content-Length":"51","Content-Type":"application/json;charset=UTF-8","Cookie":"isVisit=true","Host":"www.bzgongxiang.com","Origin":"https://www.bzgongxiang.com","Referer":"https://www.bzgongxiang.com/","Sec-Fetch-Dest":"empty","Sec-Fetch-Mode":"cors","Sec-Fetch-Site":"same-origin","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0","X-Requested-With":"XMLHttpRequest","sec-ch-ua":"\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"","sec-ch-ua-mobile":"?0","sec-ch-ua-platform":"\"Windows\""}
 
-        self.params = {'page': '2', 'limit': '10', 'field': 'data_Update_Time'}
+        self.params = '{"searchContent":"","nodeTree":"","sharingType":""}'
+        self.params = json.loads(self.params)
 
     def run(self):
         self.total_data = self.process_views()
@@ -40,7 +40,7 @@ class BazhongCrawler(PageBase):
 
         for i in range(1, self.total_page_num):
             url = self.base_url.format(page_num=i)
-            session.get(url=url, proxies=self.proxies, headers=self.headers)
+            session.post(url=url, proxies=self.proxies, headers=self.headers, json=self.params)
 
             while True:
                 try:
@@ -114,22 +114,24 @@ class BazhongCrawler(PageBase):
         models = []
 
         for item in results:
+            item = item.get('catalogInfo', {})
+
             title = item.get('resourceName', '')
             subject = item.get('industryCategory', '')
             description = item.get('remark', '')
-            source_department = item.get('orgName', '')
+            source_department = item.get('dataSource', '')
 
             release_time = item.get('publishTime', '')
-            update_time = item.get('updateTime', '') if item.get('updateTime') else release_time  # 使用发布时间作为默认值
+            update_time = item.get('updateTime', '') # 使用发布时间作为默认值
 
             open_conditions = item.get('sharingProperty', '')
-            data_volume = item.get('dataVolume', 0)
+            data_volume = item.get('dataVolume', None)
             is_api = 'True' if item.get('sharingType', '').lower() == 'api' else 'False'
-            file_type = [item.get('resourceTypeDetail', '').split(',')]
+            file_type = item.get('resourceTypeDetail', '').split(',')
 
-            access_count = int(item.get('viewCount', 0)) if item.get('viewCount') else 0  # 假设没有提供访问次数则默认为0
-            download_count = int(item.get('downloadTimes', 0)) if item.get('downloadTimes') else 0  # 假设没有提供下载次数则默认为0
-            api_call_count = int(item.get('collectCount', 0)) if item.get('collectCount') else 0  # 假设没有提供 API 调用次数则默认为0
+            access_count = item.get('viewCount', None) # 假设没有提供访问次数则默认为0
+            download_count = item.get('downloadTimes', None)
+            api_call_count = None
             link = f'https://www.bzgongxiang.com/#/dataCatalog/catalogDetail/{item.get("id")}'  # 假设没有具体的链接信息
             update_cycle = item.get('dataUpdatePeriod', '')
 
@@ -155,11 +157,11 @@ class BazhongCrawler(PageBase):
             release_time = item.get('createTime', '')
             update_time = item.get('updateTime', '')
             open_conditions = '有条件开放' if item.get('isOpen', '') == '1' else '无条件开放'
-            data_volume = item.get('resourceMount', '0')  # 数据量信息，如果没有提供默认为 '0'
+            data_volume = item.get('resourceMount', None)  # 数据量信息，如果没有提供默认为 '0'
 
-            access_count = item.get('browseCount', 0)
-            download_count = item.get('applyCount', 0)  # 假设 applyCount 可能意味着下载
-            api_call_count = item.get('serviceCount', 0)  # 使用 serviceCount 作为 API 调用次数
+            access_count = item.get('browseCount', None)
+            download_count = item.get('applyCount', None)  # 假设 applyCount 可能意味着下载
+            api_call_count = item.get('serviceCount', None)  # 使用 serviceCount 作为 API 调用次数
             link = item.get('preUrl', '')  # 使用 preUrl 作为链接地址，如果有的话
 
             file_type = ['接口']  # 文件类型，如果没有默认为空

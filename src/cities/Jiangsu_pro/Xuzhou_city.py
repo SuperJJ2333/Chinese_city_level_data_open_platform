@@ -30,11 +30,11 @@ class XuzhouCrawler(PageBase):
         self.headers = {"Accept": "application/json, text/plain, */*", "Accept-Encoding": "gzip, deflate",
                         "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
                         "Content-Type": "application/json;charset=UTF-8",
-                        "Cookie": "_gscu_1870995672=18615311zmlgct73; _gscbrs_1870995672=1; _appId=e761216543826b072e9dfc995d2bd57d; _gscs_1870995672=186352672yt85q16|pv:2",
+                        "Cookie": "_gscu_1870995672=18615311zmlgct73; _gscbrs_1870995672=1; _gscs_1870995672=20377879cf84fp73|pv:1; _appId=ab5c1a8d3779f537ada364eb6a9faa1a",
                         "Host": "data.gxj.xz.gov.cn", "Origin": "http://data.gxj.xz.gov.cn",
-                        "Referer": "http://data.gxj.xz.gov.cn/",
+                        "Proxy-Connection": "keep-alive", "Referer": "http://data.gxj.xz.gov.cn/",
                         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0",
-                        "appCode": "e761216543826b072e9dfc995d2bd57d", "token": "undefined"}
+                        "appCode": "ab5c1a8d3779f537ada364eb6a9faa1a", "token": "undefined"}
 
         self.params = '{"pageNo":2,"pageSize":10,"zylx":["01","02","03"],"ssbmId":["00"],"mlmc":"","gxsjPx":2,"llslPx":"","sqslPx":"","ssztlmId":["00"],"ssjclmId":["00"],"ssqtlmId":["00"],"kflx":["00"]}'
         self.params = json.loads(self.params)
@@ -83,9 +83,10 @@ class XuzhouCrawler(PageBase):
             url = f'http://data.gxj.xz.gov.cn/exchangeopengateway/v1.0/mlxx/getSjmlxq?mlbh={item.get("rowGuid")}&appCode=e761216543826b072e9dfc995d2bd57d'
 
             headers = {"Accept": "application/json, text/plain, */*", "Accept-Encoding": "gzip, deflate",
-                       "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6", "Connection": "keep-alive",
-                       "Cookie": "_gscu_1870995672=18615311zmlgct73; _gscbrs_1870995672=1; _appId=e761216543826b072e9dfc995d2bd57d; _gscs_1870995672=186352672yt85q16|pv:5",
-                       "Host": "data.gxj.xz.gov.cn", "Referer": "http://data.gxj.xz.gov.cn/",
+                       "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+                       "Cookie": "_gscu_1870995672=18615311zmlgct73; _gscbrs_1870995672=1; _appId=ab5c1a8d3779f537ada364eb6a9faa1a; _gscs_1870995672=20377879cf84fp73|pv:3",
+                       "Host": "data.gxj.xz.gov.cn", "Proxy-Connection": "keep-alive",
+                       "Referer": "http://data.gxj.xz.gov.cn/",
                        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0",
                        "token": "undefined"}
 
@@ -133,13 +134,13 @@ class XuzhouCrawler(PageBase):
         open_conditions = self.format_update_cycle(item.get('kftj', ''))
         update_cycle = item.get('gxzq', '')
 
-        access_count = item.get('llsl', 0)
-        download_count = item.get('sqsl', 0)
+        access_count = item.get('llsl', None)
+        download_count = item.get('sqsl', None)
 
         is_api = 'False'
         file_types = []
-        data_volume = 0
-        api_call_count = 0
+        data_volume = None
+        api_call_count = None
         link = url
 
         model = DataModel(title, subject, description, source_department, release_time, update_time,

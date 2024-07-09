@@ -128,9 +128,9 @@ class ChangzhouCrawler(PageBase):
         update_cycle = session_page.ele('x:/html/body/div[1]/div[2]/div[1]/div[2]/p[6]/span').text
         data_volume = session_page.ele('x:/html/body/div[1]/div[2]/div[1]/div[2]/p[14]/span').text
 
-        access_count = item.get('access_count', 0)
-        download_count = item.get('download_amount', 0)
-        api_call_count = 0
+        access_count = item.get('access_count', None)
+        download_count = item.get('download_amount', None)
+        api_call_count = None
 
         api_frame = session_page.ele("'x://*/li[@class='selectTag']/a'")
         try:

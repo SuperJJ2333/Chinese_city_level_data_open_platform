@@ -121,14 +121,14 @@ class ZhoushanCrawler(PageBase):
             update_time = convert_timestamp_to_date(item.get('updateDate', None))
 
             open_conditions = "无条件开放" if item.get('isopen') == '1' else "有条件开放"  # 新数据中没有开放条件字段，设为'无条件开放'
-            data_volume = 0
+            data_volume = None
 
             is_api = 'True'  # 根据是否有apiId判断是否为API数据
             file_type = ['XLS', 'CSV', 'XML', 'JSON', 'RDF']  # 新的数据结构中没有文件类型字段
 
-            access_count = int(item.get('visitNum', 0))
-            download_count = int(item.get('downloadNum', 0))
-            api_call_count = download_count
+            access_count = item.get('visitNum', None)
+            download_count = item.get('downloadNum', None)
+            api_call_count = None
 
             link = f'http://data.zhoushan.gov.cn/#/OpenData/DataSet/Detail?id={item["id"]}&isStructuredData=1'  # 假设没有具体的链接信息
             update_cycle = self.format_update_cycle(item.get('frequery', ''))

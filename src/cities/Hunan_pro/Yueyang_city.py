@@ -123,16 +123,16 @@ class YueyangCrawler(PageBase):
 
         open_conditions = session_page.ele(
             'x://tr[td[contains(text(), "公开属性")]]/td[2]').text
-        data_volume = 0  # 页面中未提供数据量信息
+        data_volume = None  # 页面中未提供数据量信息
         file_type = session_page.ele(
             'x://tr[td[contains(text(), "数据格式")]]/td[2]').text.split(',')
         is_api = 'False' if 'API' not in file_type else 'True'
 
-        access_count = int(session_page.ele(
-            'x://tr[td[contains(text(), "访问量")]]/td[2]').text)
-        download_count = int(session_page.ele(
-            'x://tr[td[contains(text(), "下载次数")]]/td[2]').text)
-        api_call_count = 0  # 页面中未提供API调用次数信息
+        access_count = session_page.ele(
+            'x://tr[td[contains(text(), "访问量")]]/td[2]').text
+        download_count = session_page.ele(
+            'x://tr[td[contains(text(), "下载次数")]]/td[2]').text
+        api_call_count = None  # 页面中未提供API调用次数信息
         link = session_page.url
 
         update_cycle = session_page.ele(

@@ -37,10 +37,10 @@ class GuizhouCrawler(PageBase):
 
         self.city_code = {
             # "贵阳市": 520100,
-            # "六盘水市": 520200,
-            # "遵义市": 520300,
-            # "安顺市": 520400,
-            # "毕节市": 520500,
+            "六盘水市": 520200,
+            "遵义市": 520300,
+            "安顺市": 520400,
+            "毕节市": 520500,
             "铜仁市": 520600
         }
 
@@ -87,12 +87,12 @@ class GuizhouCrawler(PageBase):
         return views_list
 
     def process_page(self, resId):
-        '''
+        """
         1. 发送post请求，获取api数据
         2. 解析api数据，获取开放条件和数据量
         :param resId:
         :return:
-        '''
+        """
 
         url = 'https://data.guizhou.gov.cn/api/search/data/getDataDetailByDataId'
 
@@ -110,7 +110,7 @@ class GuizhouCrawler(PageBase):
 
         item = json_data['data']
 
-        data_volume = item.get('dataCapacity', 0)
+        data_volume = item.get('dataCapacity', None)
         update_cycle = item.get('frequency', '')
 
         return {'data_volume': data_volume, 'update_cycle': update_cycle}
@@ -136,9 +136,9 @@ class GuizhouCrawler(PageBase):
             is_api = 'True' if 'json' in (item.get('resourceFormats') or []) else 'False'
             file_type = item.get('resourceFormats', [])
 
-            access_count = int(item.get('views', 0))
-            download_count = item.get('calls', 0)
-            api_call_count = int(item.get('calls', 0))
+            access_count = item.get('views', None)
+            download_count = item.get('calls', None)
+            api_call_count = item.get('calls', None)
             link = f'https://data.guizhou.gov.cn/guiyang/open-data/{item.get("id")}'  # 假设没有具体的链接信息
             # update_cycle = self.format_update_cycle(item.get('frequency', ''))
             location = self.name

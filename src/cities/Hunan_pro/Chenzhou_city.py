@@ -120,13 +120,13 @@ class ChenzhouCrawler(PageBase):
             update_time = item.get('dataUpdateTime', '')
 
             open_conditions = item.get('openLevelName', '')  # 映射到开放级别的名称
-            data_volume = item.get('recordTotal', 0)  # 记录总数作为数据量
+            data_volume = item.get('recordTotal', None)  # 记录总数作为数据量
             file_type = item.get('suffixes', '').split(',')
             is_api = 'True' if 'json' in file_type else 'False'  # 假设类型为'3'表示API
 
-            access_count = int(item.get('visits', 0))
-            download_count = int(item.get('downloads', 0))
-            api_call_count = int(item.get('invokedCount', 0))
+            access_count = item.get('visits', None)
+            download_count = item.get('downloads', None)
+            api_call_count = item.get('invokedCount', None)
 
             link = f'http://113.219.136.14:36001/data/dataSet/toDataDetails/{item["resId"]}'  # 假设没有具体的链接信息
             update_cycle = item.get('updateCycle', '')

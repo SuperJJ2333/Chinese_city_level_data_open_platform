@@ -31,20 +31,12 @@ class MeishanCrawler(PageBase):
                          'is_api': 'True'
                          }
 
-        super().__init__(api_city_info, is_headless)
+        super().__init__(city_info, is_headless)
 
-        self.headers = {"Accept": "*/*", "Accept-Encoding": "gzip, deflate",
-                        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
-                        "Connection": "keep-alive", "Content-Length": "95",
-                        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-                        "Cookie": "JSESSIONID=CFFAE89760CB7C642A24F9487019F2A6; _gscu_120503026=19299350e4c34m27; _gscbrs_120503026=1; _gscs_120503026=19299350clvsbi27|pv:16",
-                        "Host": "data.ms.gov.cn", "Origin": "http://data.ms.gov.cn",
-                        "Referer": "http://data.ms.gov.cn/portal/openapi?orgId=",
-                        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0",
-                        "X-Requested-With": "XMLHttpRequest"}
+        if not self.is_api:
+            self.headers = {"Accept":"*/*","Accept-Encoding":"gzip, deflate","Accept-Language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6","Connection":"keep-alive","Content-Length":"77","Content-Type":"application/x-www-form-urlencoded; charset=UTF-8","Cookie":"_gscu_120503026=19299350e4c34m27; Hm_lvt_ce25b27836955eea968bfeefa0185fef=1720173505; _gscu_877711934=20173506y4pzoj15; JSESSIONID=2EAC31ADE99D156FCB0FBC76BAEFC90E; _gscbrs_120503026=1; _gscs_120503026=20516826px4tyu27|pv:6","Host":"data.ms.gov.cn","Origin":"http://data.ms.gov.cn","Referer":"http://data.ms.gov.cn/portal/catalog?orgId=","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0","X-Requested-With":"XMLHttpRequest"}
 
-        self.params = {'codeId': '29001fffc4854893b4b3035f930624ff', 'searchOrder': '0', 'page': '1', 'rows': '10',
-                       'serviceType': '1,4'}
+            self.params = {'codeId': '29001fffc4854893b4b3035f930624ff', 'searchOrder': '0', 'page': '2', 'rows': '10', 'organId': ''}
 
     def run(self):
         self.total_data = self.process_views()
@@ -103,7 +95,7 @@ class MeishanCrawler(PageBase):
 
     def extract_page_data(self, json_data):
         data = json.loads(json_data)
-        results = data['result']['rows']
+        results = data['rows']
         # 调整数据路径以匹配提供的JSON结构
         models = []
 
@@ -117,13 +109,13 @@ class MeishanCrawler(PageBase):
             update_time = item.get('updateTime', '')
 
             open_conditions = item.get('shareCondition', '')
-            data_volume = item.get('resourceMount', 0)
+            data_volume = item.get('resourceMount', None)
             is_api = 'False'  # 由于数据未指定API访问，统一设为'False'
             file_type = item.get('resourceTypeText', '').split(',')
 
-            access_count = item.get('pageViewCount', 0)
-            download_count = item.get('pageDownCount', 0)
-            api_call_count = item.get('serviceCount', 0)
+            access_count = item.get('pageViewCount', None)
+            download_count = item.get('pageDownCount', None)
+            api_call_count = item.get('serviceCount', None)
             link = f'http://data.ms.gov.cn/portal/catalog_detail?id={item["id"]}&resourceSource=0&categoryCodeId={item["codeId"]}&orgId=&serviceType=0,1,3,4'  # 假设没有具体的链接信息
             update_cycle = self.format_update_cycle(item.get('shareWay', ''))
 
@@ -151,20 +143,21 @@ class MeishanCrawler(PageBase):
             update_time = item.get('updateTime', '') if item.get('updateTime') else release_time  # 使用发布时间作为默认更新时间
 
             open_conditions = "无条件开放" if item.get('openType', '') == "0" else "有条件开放"  # 使用openType字段表示开放条件
-            data_volume = item.get('resourceMount', 0)
+            data_volume = item.get('resourceMount', None)
             is_api = 'True' if item.get('serviceType', '') == '1' else 'False'  # 假设serviceType为'1'表示有API
             file_type = [item.get('serviceTypeText', '').split(',')]
 
-            access_count = int(item.get('serviceViewCount', 0))
-            download_count = int(item.get('collectNum', 0))
-            api_call_count = int(item.get('serviceApplyCount', 0))
+            access_count = item.get('serviceViewCount', None)
+            download_count = item.get('collectNum', None)
+            api_call_count = item.get('serviceApplyCount', None)
             link = f'http://data.ms.gov.cn/portal/service_detail?id={item["id"]}&type=openapi&orgId='
             update_cycle = self.extract_data(link)
 
             # 创建DataModel实例
             model = DataModel(title, subject, description, source_department, release_time,
                               update_time, open_conditions, data_volume, is_api, file_type,
-                              access_count, download_count, api_call_count, link, update_cycle)
+                              access_count, download_count, api_call_count, link, update_cycle,
+                              self.name)
             models.append(model.to_dict())
 
         return models

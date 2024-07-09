@@ -119,13 +119,13 @@ class HuzhouCrawler(PageBase):
             update_time = item.get('lastUpdateTime', '')
 
             open_conditions = item.get('sharingType', '')
-            data_volume = item.get('dataSetDetail', {}).get('dataCapacity', 0)  # Assuming 'data_count' represents the data volume
+            data_volume = item.get('dataSetDetail', {}).get('dataCapacity', None)  # Assuming 'data_count' represents the data volume
             file_type = [item.get('resourceType', '')]  # Assuming resourceType contains file format information
             is_api = 'True'
 
-            access_count = item.get('dataSetDetail', {}).get('visits', 0)  # Assuming 'visits_count' is the number of accesses
-            download_count = item.get('dataSetDetail', {}).get('download', 0)  # Assuming this field represents download counts
-            api_call_count = download_count  # Assuming this represents API call counts
+            access_count = item.get('dataSetDetail', {}).get('visits', None)  # Assuming 'visits_count' is the number of accesses
+            download_count = item.get('dataSetDetail', {}).get('download', None)  # Assuming this field represents download counts
+            api_call_count = None  # Assuming this represents API call counts
             link = f'http://data.huzhou.gov.cn/open_data/dataset/detail?id={item["catalogId"]}' # Assuming this is the link to the data
 
             update_cycle = item.get('collectionPeriod', '')  # Assuming 'collectionPeriod' indicates the update cycle

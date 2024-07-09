@@ -17,7 +17,7 @@ class DatongCrawler(PageBase):
     """
 
     def __init__(self, is_headless=True):
-        city_info = {'name': 'Datong',
+        city_info = {'name': '大同市',
                      'province': 'Shanxi',
                      'total_items_num': 111,
                      'each_page_count': 6,
@@ -107,8 +107,7 @@ class DatongCrawler(PageBase):
 
         return data_list
 
-    @staticmethod
-    def extract_page_data(session_page, files_type):
+    def extract_page_data(self, session_page, files_type):
         # 假定session_page是已经加载了HTML内容的对象
         title = session_page.ele('x://div[@class="detail-header"]/span[@class="detail-title"]').text
         subject = session_page.ele(
@@ -125,7 +124,7 @@ class DatongCrawler(PageBase):
 
         open_conditions = session_page.ele(
             'x://div[@class="info-list"]/ul/li[div[@class="info-header"]="开放状态"]/div[@class="info-body"]/span').text
-        data_volume = 0  # 页面中未提供数据量信息
+        data_volume = None  # 页面中未提供数据量信息
         file_type = []
         is_api = 'True' if 'json' in file_type else 'False'
 
@@ -133,7 +132,7 @@ class DatongCrawler(PageBase):
             'x://div[@class="info-list"]/ul/li[div[@class="info-header"]="浏览次数"]/div[@class="info-body"]').text
         download_count = session_page.ele(
             'x://div[@class="info-list"]/ul/li[div[@class="info-header"]="下载次数"]/div[@class="info-body"]').text
-        api_call_count = 0  # 页面中未提供API调用次数信息
+        api_call_count = None  # 页面中未提供API调用次数信息
         link = session_page.url
 
         update_cycle = session_page.ele(
@@ -142,7 +141,7 @@ class DatongCrawler(PageBase):
         # 创建DataModel实例
         model = DataModel(title, subject, description, source_department, release_time,
                           update_time, open_conditions, data_volume, is_api, file_type,
-                          access_count, download_count, api_call_count, link, update_cycle)
+                          access_count, download_count, api_call_count, link, update_cycle, self.name)
 
         return model.to_dict()
 

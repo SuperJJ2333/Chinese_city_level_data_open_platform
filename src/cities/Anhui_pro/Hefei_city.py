@@ -14,7 +14,7 @@ class HefeiCrawler(PageBase):
     直接在目录页获取目的数据
     """
     def __init__(self, is_headless=True):
-        city_info = {'name': 'Hefei',
+        city_info = {'name': '合肥市',
                      'province': 'Anhui',
                      'total_items_num': 326,
                      'each_page_count': 10,
@@ -91,19 +91,19 @@ class HefeiCrawler(PageBase):
             release_time = datetime.strptime(item.get('zxtbsj', ''), '%Y%m%d%H%M%S').strftime('%Y-%m-%d')
             update_time = datetime.strptime(item.get('gxsj', ''), '%Y%m%d%H%M%S').strftime('%Y-%m-%d')
             open_conditions = ''  # 假设默认为'无'
-            data_volume = 0  # 假设默认为0
+            data_volume = None  # 假设默认为0
             is_api = 'False'  # 假设默认为'否'
             file_type = [item.get('fjhzm', '')]
-            access_count = item.get('fws', 0)
-            download_count = item.get('xzs', 0)  # 假设默认为0
-            api_call_count = 0  # 假设默认为0
+            access_count = item.get('fws', None)
+            download_count = item.get('xzs', None)  # 假设默认为0
+            api_call_count = None  # 假设默认为0
             link = ''  # 未提供
             update_cycle = self.format_update_cycle(item.get('gxpl', ''))
 
             # 创建DataModel实例
             model = DataModel(title, subject, description, source_department, release_time,
                               update_time, open_conditions, data_volume, is_api, file_type,
-                              access_count, download_count, api_call_count, link, update_cycle)
+                              access_count, download_count, api_call_count, link, update_cycle, self.name)
             models.append(model.to_dict())
 
         return models

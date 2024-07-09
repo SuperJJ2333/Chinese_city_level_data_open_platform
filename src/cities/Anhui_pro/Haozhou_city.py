@@ -18,14 +18,14 @@ class HaozhouCrawler(PageBase):
     """
 
     def __init__(self, is_headless=True):
-        city_info = {'name': 'Haozhou',
+        city_info = {'name': '亳州市',
                      'province': 'Anhui',
                      'total_items_num': 479,
                      'each_page_count': 6,
                      'base_url': 'http://60.174.80.67:8098/open-data-web/kfzy/queryDataCatalog.do?currentPageNo={page_num}&pageSize=6'
                      }
 
-        api_city_info = {'name': 'Haozhou_api',
+        api_city_info = {'name': '亳州市_api',
                          'province': 'Anhui',
                          'total_items_num': 280,
                          'each_page_count': 14,
@@ -33,7 +33,7 @@ class HaozhouCrawler(PageBase):
                          'is_api': 'True'
                          }
 
-        super().__init__(api_city_info, is_headless)
+        super().__init__(city_info, is_headless)
 
         self.headers = {"Accept": "application/json, text/javascript, */*; q=0.01", "Accept-Encoding": "gzip, deflate",
                         "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
@@ -67,7 +67,8 @@ class HaozhouCrawler(PageBase):
                     self.logger.warning(f'第{i}页 - 解析JSON数据失败，正在重试 - {e}')
 
             if json_data:
-                page_data = self.extract_page_data(json_data) if not self.is_api else self.extract_api_page_data(json_data)
+                page_data = self.extract_page_data(json_data) if not self.is_api \
+                    else self.extract_api_page_data(json_data)
                 views_list.extend(page_data)
                 self.logger.info(
                     f'第{i}/{self.total_page_num}页 - 已获取数据{len(views_list)}/{self.total_items_num}条')
@@ -135,13 +136,13 @@ class HaozhouCrawler(PageBase):
             update_time = datetime.strptime(item.get('gxsj', ''), '%Y%m%d%H%M%S').strftime('%Y-%m-%d')
 
             open_conditions = ''
-            data_volume = 0
+            data_volume = None
             is_api = 'False'
             file_type = [item.get('fjhzm', '')]
 
-            access_count = item.get('fws', 0)
-            download_count = item.get('xzs', 0)
-            api_call_count = 0  # Assuming 0 since not provided
+            access_count = item.get('fws', None)
+            download_count = item.get('xzs', None)
+            api_call_count = None  # Assuming 0 since not provided
             link = ''
             update_cycle = ''
 
@@ -167,13 +168,13 @@ class HaozhouCrawler(PageBase):
             update_time = datetime.strptime(item.get('gxsj', ''), '%Y%m%d%H%M%S').strftime('%Y-%m-%d')
 
             open_conditions = ''
-            data_volume = 0
+            data_volume = None
             is_api = 'True'
             file_type = [item.get('fjhzm', '')]
 
-            access_count = item.get('fws', 0)
-            download_count = 0
-            api_call_count = item.get('xzs', 0)  # Assuming 0 since not provided
+            access_count = item.get('fws', None)
+            download_count = None
+            api_call_count = item.get('xzs', None)  # Assuming 0 since not provided
             link = ''
             update_cycle = ''
 

@@ -146,11 +146,11 @@ class TaizhouCrawler(PageBase):
         else:
             open_conditions = "完全公开"
 
-        data_volume = data.get('dataCount', 0)  # 使用dataCount作为数据量
+        data_volume = data.get('dataCount', None)  # 使用dataCount作为数据量
         is_api = 'True'
-        access_count = int(data.get('visitCount', 0))
-        download_count = int(data.get('useCount', 0))
-        api_call_count = int(data.get('invokes', 0) if data.get('invokes', 0) else 0)
+        access_count = data.get('visitCount', None)
+        download_count = data.get('useCount', None)
+        api_call_count = data.get('invokes', None)
 
         file_types = ["XLS", "CSV", "XML", "JSON", "RDF"]
 

@@ -120,21 +120,21 @@ class HuhehaoteCrawler(PageBase):
         for item in results:
             title = item.get('catalogName', '')
             subject = ','.join(item.get('categoryNames', []))  # 使用逗号分隔多个主题
-            description = item.get('remark', '无')
-            source_department = item.get('dataSource', '未提供') or '未提供'
+            description = item.get('remark', '')
+            source_department = item.get('dataSource', '')
 
-            release_time = item.get('publishTime', '未提供')
+            release_time = item.get('publishTime', '')
             update_time = release_time  # 未提供更新时间信息
-            open_conditions = item.get('sharingProperty', '无条件共享') or '无条件共享'
-            data_volume = item.get('fileMount', 0)  # 页面中未提供数据量信息
+            open_conditions = item.get('sharingProperty', '') or ''
+            data_volume = item.get('fileMount', None)  # 页面中未提供数据量信息
 
             is_api = 'True' if item.get('haveApi', 'False') else 'False'
-            file_type = ['数据库']if item.get('databaseMount', 0) > 0 else []
+            file_type = ['数据库']if item.get('databaseMount', None) and item.get('databaseMount', None) > 0 else []
 
-            access_count = item.get('clickCount', 0)
-            download_count = item.get('collectCount', 0)  # 假设collectCount为下载次数
-            api_call_count = item.get('interfaceMount', 0)
-            link = '未提供'  # 假设没有具体的链接信息
+            access_count = item.get('clickCount', None)
+            download_count = item.get('collectCount', None)  # 假设collectCount为下载次数
+            api_call_count = item.get('interfaceMount', None)
+            link = ''  # 假设没有具体的链接信息
             update_cycle = item.get('dataUpdatePeriod', '')
 
             # 创建DataModel实例

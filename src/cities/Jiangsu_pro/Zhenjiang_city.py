@@ -30,20 +30,12 @@ class ZhengjiangCrawler(PageBase):
                          'is_api': 'True'
                          }
 
-        super().__init__(api_city_info, is_headless)
+        super().__init__(city_info, is_headless)
 
-        self.headers = {"Accept": "application/json, text/plain, */*", "Accept-Encoding": "gzip, deflate, br, zstd",
-                        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
-                        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTg4MzAzMDMsInVzZXJfbmFtZSI6Impzenc5ODgyMDUxMjIzNSIsImF1dGhvcml0aWVzIjpbIlJPTEVfNzgwNTA3ODQ3ODkxODgxOTg0Il0sImp0aSI6ImNiMjRjZGVlLTQ0Y2MtNDNjMS1hZGE5LWEyNWZiZjk1NmVjZiIsImNsaWVudF9pZCI6Imlzc3RlY2giLCJzY29wZSI6WyJhbGwiXX0._j_JQ6ONhYNToBdSJx4efFc760FlTAyCulefzK56Fm8",
-                        "Connection": "keep-alive",
-                        "Cookie": "arialoadData=false; login=true; refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJqc3p3OTg4MjA1MTIyMzUiLCJzY29wZSI6WyJhbGwiXSwiYXRpIjoiY2IyNGNkZWUtNDRjYy00M2MxLWFkYTktYTI1ZmJmOTU2ZWNmIiwiZXhwIjoxNzE4ODMwMzAzLCJhdXRob3JpdGllcyI6WyJST0xFXzc4MDUwNzg0Nzg5MTg4MTk4NCJdLCJqdGkiOiIxMDFhMWU4ZS01ZTg3LTQ3NDMtYjM3Yy00NjNlNThkYTYxMDQiLCJjbGllbnRfaWQiOiJpc3N0ZWNoIn0.IAKtE-_a6uRN2PlRWrjr3VOKBd5nH7LfFtQnJiXbFVU; accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTg4MzAzMDMsInVzZXJfbmFtZSI6Impzenc5ODgyMDUxMjIzNSIsImF1dGhvcml0aWVzIjpbIlJPTEVfNzgwNTA3ODQ3ODkxODgxOTg0Il0sImp0aSI6ImNiMjRjZGVlLTQ0Y2MtNDNjMS1hZGE5LWEyNWZiZjk1NmVjZiIsImNsaWVudF9pZCI6Imlzc3RlY2giLCJzY29wZSI6WyJhbGwiXX0._j_JQ6ONhYNToBdSJx4efFc760FlTAyCulefzK56Fm8; codefool=true; dataPermission=undefined; userId=ff8080818ce867f1019031d721233dbd; orgId=bbcebe981f5943b9a8ba0f3e8e26e978; username=jszw98820512235; firstPath=/portal/index",
-                        "Host": "data.zhenjiang.gov.cn",
-                        "Referer": "https://data.zhenjiang.gov.cn/?uuid=2cc2b8de-f1ca-409d-b764-17beff437b1a",
-                        "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
-                        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0",
-                        "sec-ch-ua": "\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"",
-                        "sec-ch-ua-mobile": "?0", "sec-ch-ua-platform": "\"Windows\""}
-
+        if self.is_api:
+            self.headers = {"Accept":"application/json, text/plain, */*","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6","Connection":"keep-alive","Cookie":"arialoadData=false","Host":"data.zhenjiang.gov.cn","Referer":"https://data.zhenjiang.gov.cn/?uuid=2d25323c-7b6c-11ed-b150-5254007afb88","Sec-Fetch-Dest":"empty","Sec-Fetch-Mode":"cors","Sec-Fetch-Site":"same-origin","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0","sec-ch-ua":"\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"","sec-ch-ua-mobile":"?0","sec-ch-ua-platform":"\"Windows\""}
+        else:
+            self.headers = {"Accept":"application/json, text/plain, */*","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6","Connection":"keep-alive","Cookie":"arialoadData=false","Host":"data.zhenjiang.gov.cn","Referer":"https://data.zhenjiang.gov.cn/?uuid=2d25323c-7b6c-11ed-b150-5254007afb88","Sec-Fetch-Dest":"empty","Sec-Fetch-Mode":"cors","Sec-Fetch-Site":"same-origin","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0","sec-ch-ua":"\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"","sec-ch-ua-mobile":"?0","sec-ch-ua-platform":"\"Windows\""}
         self.params = {'page': '2', 'limit': '10', 'field': 'data_Update_Time'}
 
     def run(self):
@@ -137,7 +129,7 @@ class ZhengjiangCrawler(PageBase):
             release_time = item.get('publishTime', '')
             update_time = item.get('updateTime', '')
             open_conditions = '无条件开放' if item.get('isOpen', 0) == 0 else '有条件开放'
-            data_volume = item.get('storageCount', 0)
+            data_volume = item.get('storageCount', None)
 
             # 判断是否有API接口
             is_api = 'True' if item.get('serviceInterfaceCount', 0) > 0 else 'False'
@@ -145,9 +137,9 @@ class ZhengjiangCrawler(PageBase):
             # 文件类型由资源类型决定
             file_type = [item.get('resMountType', '')] if item.get('resMountType', '') else []
 
-            access_count = item.get('browseCount', 0)
-            download_count = item.get('downCount', 0)
-            api_call_count = item.get('serviceInterfaceCount', 0)  # 使用服务接口计数作为API调用次数
+            access_count = item.get('browseCount', None)
+            download_count = item.get('downCount', None)
+            api_call_count = item.get('serviceInterfaceCount', None)  # 使用服务接口计数作为API调用次数
             link = f'https://data.zhenjiang.gov.cn/?uuid={item.get("instanceId", "")}#/open/data-resource/info/{item.get("id", "")}'  # 假设没有具体的链接信息
             update_cycle = self.format_update_cycle(item.get('updateCycle', ''))
 
@@ -174,7 +166,7 @@ class ZhengjiangCrawler(PageBase):
             release_time = item.get('servicePublishTime', '')
             update_time = item.get('updateTime', '')
             open_conditions = '无条件开放' if item.get('isOpen', 0) == 0 else '有条件开放'
-            data_volume = item.get('dataRealm', '0')
+            data_volume = item.get('dataRealm', None)
 
             # 判断是否有API接口
             is_api = 'True'
@@ -182,9 +174,9 @@ class ZhengjiangCrawler(PageBase):
             # 文件类型由资源类型决定
             file_type = ['API']  # 假设所有资源都是API类型
 
-            access_count = item.get('browseCount', 0)
-            download_count = item.get('downCount', 0)
-            api_call_count = item.get('callCount', 0)  # 使用调用次数
+            access_count = item.get('browseCount', None)
+            download_count = item.get('downCount', None)
+            api_call_count = item.get('callCount', None)  # 使用调用次数
             link = f''  # 假设preUrl字段提供了API的链接
 
             update_cycle = '每月'

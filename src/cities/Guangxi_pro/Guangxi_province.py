@@ -29,22 +29,22 @@ class GuangxiCrawler(PageBase):
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0",
         }
 
-        self.city_type = [
-            "https://nn.data.gxzf.gov.cn/nn/api/",
-            "https://lz.data.gxzf.gov.cn/lz/api/",
-            "https://gl.data.gxzf.gov.cn/gl/api/",
-            "https://wz.data.gxzf.gov.cn/wz/api/",
-            "https://bh.data.gxzf.gov.cn/bh/api/",
-            "https://fcg.data.gxzf.gov.cn/fcg/api/",
-            "https://qz.data.gxzf.gov.cn/qz/api/",
-            "https://gg.data.gxzf.gov.cn/gg/api/",
-            "https://yl.data.gxzf.gov.cn/yl/api/",
-            "https://bs.data.gxzf.gov.cn/bs/api/",
-            "https://hz.data.gxzf.gov.cn/hz/api/",
-            "https://hc.data.gxzf.gov.cn/hc/api/",
-            "https://cz.data.gxzf.gov.cn/cz/api/",
-            "https://cz.data.gxzf.gov.cn/cz/api/"
-        ]
+        self.city_types = {
+            "南宁市": "https://nn.data.gxzf.gov.cn/nn/api/",
+            "柳州市": "https://lz.data.gxzf.gov.cn/lz/api/",
+            "桂林市": "https://gl.data.gxzf.gov.cn/gl/api/",
+            "梧州市": "https://wz.data.gxzf.gov.cn/wz/api/",
+            "北海市": "https://bh.data.gxzf.gov.cn/bh/api/",
+            "防城港市": "https://fcg.data.gxzf.gov.cn/fcg/api/",
+            "钦州市": "https://qz.data.gxzf.gov.cn/qz/api/",
+            "贵港市": "https://gg.data.gxzf.gov.cn/gg/api/",
+            "玉林市": "https://yl.data.gxzf.gov.cn/yl/api/",
+            "百色市": "https://bs.data.gxzf.gov.cn/bs/api/",
+            "贺州市": "https://hz.data.gxzf.gov.cn/hz/api/",
+            "河池市": "https://hc.data.gxzf.gov.cn/hc/api/",
+            "来宾市": "https://lb.data.gxzf.gov.cn/lb/api/",
+            "崇左市": "https://cz.data.gxzf.gov.cn/cz/api/"
+        }
 
         self.params = {'pageSize': '10', 'pageNum': '1', 'xzqh': '3405'}
 
@@ -53,10 +53,9 @@ class GuangxiCrawler(PageBase):
         爬虫入口函数
         """
         # 遍历城市list
-        for city_url in self.city_type:
+        for city_name, city_url in self.city_types.items():
             # 获取城市名称
-            extracted_part = city_url.split(".")[0].replace("https://", "") + "_api"
-            self.name = extracted_part
+            self.name = city_name + '_api'
             # 获取总item数
             self.session.get(url=city_url, headers=self.headers, proxies=self.proxies)
             self.total_items_num = int(self.session.ele('x://*[@id="record_count"]/span').text)
@@ -126,8 +125,7 @@ class GuangxiCrawler(PageBase):
 
         return info_list
 
-    @staticmethod
-    def extract_page_data(session_page):
+    def extract_page_data(self, session_page):
         # 假设session_page是一个加载了HTML内容的lxml的HTML元素对象
         models_list = []
 
@@ -145,10 +143,11 @@ class GuangxiCrawler(PageBase):
             open_conditions = item.ele('x://div[3]/div[5]/span[2]').text
             file_type = [file.text for file in item.eles('x://div[4]/div[1]/ul/li')]
             is_api = 'True' if '接口' in file_type else 'False'
+            data_volume = None  # 假设数据量未提供
 
             access_count = item.ele('x://div[4]/div[2]').text.strip().replace('次', '').replace(',', '')
-            download_count = 0  # 假设下载次数未提供
-            api_call_count = 0  # 假设API调用次数未提供
+            download_count = None  # 假设下载次数未提供
+            api_call_count = None  # 假设API调用次数未提供
             link = item.ele('x://div/a').attr('href')
 
             update_cycle = ''  # 假设更新周期未提供
@@ -156,8 +155,9 @@ class GuangxiCrawler(PageBase):
             # 创建DataModel实例
             model = DataModel(
                 title, subject, description, source_department, release_time,
-                update_time, open_conditions, 0, is_api, file_type,
-                int(access_count), download_count, api_call_count, link, update_cycle
+                update_time, open_conditions, data_volume, is_api, file_type,
+                int(access_count), download_count, api_call_count, link, update_cycle,
+                location=self.name
             )
             models_list.append(model.to_dict())
 

@@ -121,12 +121,12 @@ class YinchuanCrawler(PageBase):
                 if item.get('conf_update_time') else None
 
             open_conditions = item.get('open_type', '')
-            data_volume = item.get('catalogStatistic', {}).get('data_count', 0)
+            data_volume = item.get('catalogStatistic', {}).get('data_count', None)
             is_api = 'True' if item.get('catalogStatistic', {}).get('api_count', 0) > 0 else 'False'
             file_type = []
-            access_count = item.get('catalogStatistic', {}).get('use_visit', 0)
-            download_count = item.get('catalogStatistic', {}).get('use_file_count', 0)
-            api_call_count = item.get('catalogStatistic', {}).get('api_count', 0)
+            access_count = item.get('catalogStatistic', {}).get('use_visit', None)
+            download_count = item.get('catalogStatistic', {}).get('use_file_count', None)
+            api_call_count = item.get('catalogStatistic', {}).get('api_count', None)
             link = ''  # 假设没有具体的链接信息
             update_cycle = self.format_update_cycle(item.get('conf_update_cycle', ''))
 

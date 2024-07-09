@@ -15,7 +15,7 @@ class WuhuCrawler(PageBase):
     一级跳转：目的数据在目录页
     """
     def __init__(self, is_headless=True):
-        city_info = {'name': 'Wuhu',
+        city_info = {'name': '芜湖市',
                      'province': 'Anhui',
                      'total_items_num': 375,
                      'each_page_count': 15,
@@ -137,19 +137,19 @@ class WuhuCrawler(PageBase):
             release_time = datetime.strptime(item.get('createDate', ''), '%Y-%m-%d').strftime('%Y-%m-%d')
             update_time = datetime.strptime(item.get('updateDate', ''), '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d')
             open_conditions = '公开' if item.get('isValid', '') == '1' else '有条件开放'  # 假设默认为'无'
-            data_volume = 0  # 假设默认为0
+            data_volume = None  # 假设默认为0
             is_api = 'False' if item.get('isValid', '') == '1' else 'True'  # 假设默认为'否'
             file_type = [file.get('fileType', '').replace('.', '') for file in item.get('fileList', [])]
-            access_count = item.get('smcDataSetBrowseCount', {}).get('browseCount', 0)
-            download_count = item.get('dataSetDownloadCount', {}).get('downloadCount', 0)
-            api_call_count = item.get('dataSetDownloadCount', {}).get('apiInvokeCount', 0)
+            access_count = item.get('smcDataSetBrowseCount', {}).get('browseCount', None)
+            download_count = item.get('dataSetDownloadCount', {}).get('downloadCount', None)
+            api_call_count = item.get('dataSetDownloadCount', {}).get('apiInvokeCount', None)
             link = f'https://data.wuhu.cn/datagov-ops/data/toDetailPage?id={item["createUser"]["id"]}'  # 未提供
             update_cycle = self.format_update_cycle(item.get('dataUpdateFrequency', ''))
 
             # 创建DataModel实例
             model = DataModel(title, subject, description, source_department, release_time,
                               update_time, open_conditions, data_volume, is_api, file_type,
-                              access_count, download_count, api_call_count, link, update_cycle)
+                              access_count, download_count, api_call_count, link, update_cycle, self.name)
             models.append(model.to_dict())
 
         return models

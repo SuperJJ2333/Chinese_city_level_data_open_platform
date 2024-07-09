@@ -30,7 +30,7 @@ class JinmenCrawler(PageBase):
                          'is_api': 'True'
                          }
 
-        super().__init__(api_city_info, is_headless)
+        super().__init__(city_info, is_headless)
 
         self.headers = {
             "Cookie": "Hm_lvt_d921f686cee12cfb5ec38ea5b128d6ae=1718374028; Hm_lpvt_d921f686cee12cfb5ec38ea5b128d6ae=1718374046",
@@ -132,16 +132,16 @@ class JinmenCrawler(PageBase):
         update_time = data.get('updateTime', '')
 
         open_conditions = data.get('openCondition', '')
-        data_volume = data.get('storageCount', '0')  # 假设数据量信息存在于storageCount字段
+        data_volume = data.get('storageCount', None)  # 假设数据量信息存在于storageCount字段
 
         file_type = [fmt.strip() for fmt in data.get('resourceShapeType', '').split(',')] if data.get(
             'resourceShapeType') else []
 
-        access_count = data.get('browseCount', 0)
-        download_count = data.get('downloads', 0)
-        api_call_count = int(data.get('serviceCount', 0))  # 假设服务计数作为API调用次数
+        access_count = data.get('browseCount', None)
+        download_count = data.get('downloads', None)
+        api_call_count = data.get('serviceCount', None)  # 假设服务计数作为API调用次数
 
-        is_api = 'True' if api_call_count > 0 else 'False'
+        is_api = 'True' if api_call_count and int(api_call_count) > 0 else 'False'
 
         link = item_url  # 假设没有具体的链接信息可用
 
@@ -167,11 +167,11 @@ class JinmenCrawler(PageBase):
             release_time = item.get('createTime', '')
             update_time = item.get('updateTime', '')
             open_conditions = '有条件开放' if item.get('isOpen', '') == '1' else '无条件开放'
-            data_volume = item.get('resourceMount', '0')  # 数据量信息，如果没有提供默认为 '0'
+            data_volume = item.get('resourceMount', None) # 数据量信息，如果没有提供默认为 '0'
 
-            access_count = item.get('browseCount', 0)
-            download_count = item.get('applyCount', 0)  # 假设 applyCount 可能意味着下载
-            api_call_count = item.get('serviceCount', 0)  # 使用 serviceCount 作为 API 调用次数
+            access_count = item.get('browseCount', None)
+            download_count = item.get('applyCount', None)  # 假设 applyCount 可能意味着下载
+            api_call_count = item.get('serviceCount', None)  # 使用 serviceCount 作为 API 调用次数
             link = item.get('preUrl', '')  # 使用 preUrl 作为链接地址，如果有的话
 
             file_type = ['接口']  # 文件类型，如果没有默认为空

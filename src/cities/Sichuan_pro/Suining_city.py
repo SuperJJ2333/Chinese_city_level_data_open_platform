@@ -28,7 +28,7 @@ class SuiningCrawler(PageBase):
 
         super().__init__(city_info, is_headless)
 
-        self.headers = {"Accept":"application/json, text/plain, */*","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6","Connection":"keep-alive","Content-Length":"198","Content-Type":"application/json;charset=UTF-8","Cookie":"__jsluid_s=5ec85c44241a179cfbe3cc750d1c8e77; Hm_lvt_04894bddc914b5373a794a477b8a29c5=1719130939; _appId=6560e1c1955eeda3b5498990bd22dfca","Host":"www.suining.gov.cn","Origin":"https://www.suining.gov.cn","Referer":"https://www.suining.gov.cn/data","Sec-Fetch-Dest":"empty","Sec-Fetch-Mode":"cors","Sec-Fetch-Site":"same-origin","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0","appCode":"6560e1c1955eeda3b5498990bd22dfca","sec-ch-ua":"\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"","sec-ch-ua-mobile":"?0","sec-ch-ua-platform":"\"Windows\"","token":"undefined"}
+        self.headers = {"Accept":"application/json, text/plain, */*","Accept-Encoding":"gzip, deflate, br, zstd","Accept-Language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6","Connection":"keep-alive","Content-Length":"198","Content-Type":"application/json;charset=UTF-8","Cookie":"__jsluid_s=5ec85c44241a179cfbe3cc750d1c8e77; Hm_lvt_04894bddc914b5373a794a477b8a29c5=1719130939,1720160432; _appId=66da18329738687beda378c9b35e41b3","Host":"www.suining.gov.cn","Origin":"https://www.suining.gov.cn","Referer":"https://www.suining.gov.cn/data","Sec-Fetch-Dest":"empty","Sec-Fetch-Mode":"cors","Sec-Fetch-Site":"same-origin","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0","appCode":"66da18329738687beda378c9b35e41b3","sec-ch-ua":"\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"","sec-ch-ua-mobile":"?0","sec-ch-ua-platform":"\"Windows\"","token":"undefined"}
 
         self.params = '{"pageNo":2,"pageSize":10,"zylx":["01","02"],"ssbmId":["00"],"mlmc":"","gxsjPx":2,"llslPx":"","sqslPx":"","pfPx":"","ssztlmId":["00"],"ssjclmId":["00"],"ssqtlmId":["00"],"kflx":["00"],"wjlx":["00"]}'
 
@@ -165,9 +165,7 @@ class SuiningCrawler(PageBase):
             update_cycle = self.format_update_cycle(item.get('gxzq', ''))
 
             open_conditions = "有条件开放" if item.get('gxlx', '') == "01" else "无条件开放"
-            data_volume = item.get('jghxxjls', 0)
-
-            is_api = 'False'
+            data_volume = item.get('jghxxjls', None)
 
             mapping = {
                 "01": "库表",
@@ -179,9 +177,11 @@ class SuiningCrawler(PageBase):
 
             file_type = [mapping.get(gxzq_value, '')] if gxzq_value in mapping else []
 
-            access_count = item.get('kfptLlsl', 0)
-            download_count = item.get('wjxxsl', 0)
-            api_call_count = item.get('kfptSqsl', 0)
+            is_api = 'True' if '接口' in file_type else 'False'
+
+            access_count = item.get('kfptLlsl', None)
+            download_count = item.get('wjxxsl', None)
+            api_call_count = item.get('kfptSqsl', None)
 
             link = f'https://www.suining.gov.cn/data#/DataSet/{item["mlbh"]}'
 

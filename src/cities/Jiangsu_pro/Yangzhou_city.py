@@ -22,15 +22,8 @@ class YangzhouCrawler(PageBase):
                      'base_url': 'https://www.yangzhou.gov.cn/u/interfacesWebOpenData/loadPage?currentPage={page_num}&pageSize=10&channel_id=ef2256dfc5774e97bbf1a1703d72becc&sszt=&lybm=&lybmAny=&lyqz=&px='
                      }
 
-        api_city_info = {'name': '盐城市_api',
-                         'province': 'Jiangsu',
-                         'total_items_num': 138,
-                         'each_page_count': 10,
-                         'base_url': 'https://www.yancheng.gov.cn/opendata/ump_gateway/open/data_service/listPageCatalogVo?pageNumber={page_num}&pageSize=10&categoryType=INDUSTRY_CLASS&searchParam=%257B%2522COND%2522%3A%255B%257B%2522columnName%2522%3A%2522serviceCatalog%2522%2C%2522relOpt%2522%3A%2522%3D%2522%2C%2522value%2522%3A1%2C%2522valueType%2522%3A%2522STRING%2522%257D%2C%257B%2522columnName%2522%3A%2522catalogState%2522%2C%2522relOpt%2522%3A%2522%3D%2522%2C%2522value%2522%3A25%2C%2522valueType%2522%3A%2522STRING%2522%257D%255D%2C%2522ORDER%2522%3A%255B%257B%2522columnName%2522%3A%2522PUBLISH_TIME%2522%2C%2522dir%2522%3A%2522DESC%2522%257D%255D%257D',
-                         'is_api': 'True'
-                         }
 
-        super().__init__(city_info, is_headless)
+        super().__init__(api_city_info, is_headless)
 
         self.headers = {"Accept": "*/*", "Accept-Encoding": "gzip, deflate, br, zstd",
                         "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
@@ -134,7 +127,7 @@ class YangzhouCrawler(PageBase):
             release_time = item.get('PUBLISHED_TIME_DATETIME', '')
             update_time = item.get('AAW_ZHGX_DATETIME', '')
             open_conditions = item.get('AAW_KFTJ_NAME', '')
-            data_volume = item.get('AAW_WJSL', 0)
+            data_volume = item.get('AAW_WJSL', None)
 
             # 检查是否有API接口
             is_api = 'True' if item.get('interfaceType', 0) == 1 else 'False'
@@ -142,9 +135,9 @@ class YangzhouCrawler(PageBase):
             # 文件类型由是否支持JSON和Excel判断
             file_type = []
 
-            access_count = item.get('CNT_HIT', 0)
-            download_count = item.get('CNT_DOWNLOAD', 0)
-            api_call_count = 0  # JSON数据中未提供API调用次数
+            access_count = item.get('CNT_HIT', None)
+            download_count = item.get('CNT_DOWNLOAD', None)
+            api_call_count = None  # JSON数据中未提供API调用次数
             link = f'https://data.yangzhou.gov.cn/kfyz/sjml/202405/{item.get("MANUSCRIPT_METADATA_ID", "")}.shtml'  # 假设没有具体的链接信息
             update_cycle = item.get('AAW_GXPL', '')
 
@@ -171,7 +164,7 @@ class YangzhouCrawler(PageBase):
             release_time = item.get('createTime', '')
             update_time = item.get('publishTime', '')  # 使用新的字段名称
             open_conditions = item.get('openCondition', '')
-            data_volume = item.get('dataCount', 0)
+            data_volume = item.get('dataCount', None)
 
             # 根据是否有接口判断是否为API
             is_api = 'True'
@@ -185,9 +178,9 @@ class YangzhouCrawler(PageBase):
             if item.get('isCsv', 0) == 1:
                 file_type.append('csv')
 
-            access_count = item.get('viewCount', 0)
-            download_count = item.get('downloadCount', 0)
-            api_call_count = download_count  # JSON数据中未提供API调用次数
+            access_count = item.get('viewCount', None)
+            download_count = item.get('downloadCount', None)
+            api_call_count = None  # JSON数据中未提供API调用次数
             link = f'https://www.yancheng.gov.cn/opendata/interface/detail/{item.get("catalogPk", "")}'  # 假设没有具体的链接信息
             update_cycle = item.get('updateCycle', '')
 

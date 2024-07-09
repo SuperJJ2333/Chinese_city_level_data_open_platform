@@ -17,21 +17,22 @@ class HuaibeiCrawler(PageBase):
     接口数据需要第二次爬取
     """
     def __init__(self, is_headless=True):
-        city_info = {'name': 'Huaibei',
+        city_info = {'name': '淮北市',
                      'province': 'Anhui',
                      'total_items_num': 380,
                      'each_page_count': 10,
                      'base_url': 'http://open.huaibeidata.cn:1123/opendata/oapi/dataset/pagelist?name=&curPageNumber={page_num}&pageSize=10&total=380&fileType=&appTypeId=&companyId='
                      }
 
-        api_city_info = {'name': 'Huaibei_api',
+        api_city_info = {'name': '淮北市_api',
                          'province': 'Anhui',
                          'total_items_num': 317,
                          'each_page_count': 10,
-                         'base_url': 'http://open.huaibeidata.cn:1123/opendata/oapi/iface/pagelist?name=&curPageNumber={page_num}&pageSize=10&total=317&fileType=&appTypeId=&companyId='
+                         'base_url': 'http://open.huaibeidata.cn:1123/opendata/oapi/iface/pagelist?name=&curPageNumber={page_num}&pageSize=10&total=317&fileType=&appTypeId=&companyId=',
+                         'is_api': 'True'
                          }
 
-        super().__init__(city_info, is_headless, is_api=True)
+        super().__init__(api_city_info, is_headless)
 
         self.headers = {"Accept": "application/json, text/plain, */*", "Accept-Encoding": "gzip, deflate",
                         "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
@@ -138,16 +139,16 @@ class HuaibeiCrawler(PageBase):
             is_api = 'False' if item.get('json', '') == '' else 'True'  # 假设默认为'否'
             file_type = [item.get('resourceFormat', '').replace('.', '')]
 
-            access_count = item.get('viewCount', 0)
-            download_count = item.get('downCount', 0)
-            api_call_count = 0
+            access_count = item.get('viewCount', None)
+            download_count = item.get('downCount', None)
+            api_call_count = None
             link = f'http://open.huaibeidata.cn:1123/#/data_public/detail/{item["id"]}'  # 未提供
             update_cycle = item.get('updateCycle', '')
 
             # 创建DataModel实例
             model = DataModel(title, subject, description, source_department, release_time,
                               update_time, open_conditions, data_volume, is_api, file_type,
-                              access_count, download_count, api_call_count, link, update_cycle)
+                              access_count, download_count, api_call_count, link, update_cycle, self.name)
             models.append(model.to_dict())
 
         return models
@@ -174,16 +175,16 @@ class HuaibeiCrawler(PageBase):
             is_api = 'True'
             file_type = ['json']
 
-            access_count = item.get('viewCount', 0)
-            download_count = item.get('downCount', 0)
-            api_call_count = 0
+            access_count = item.get('viewCount', None)
+            download_count = item.get('downCount', None)
+            api_call_count = None
             link = f'http://open.huaibeidata.cn:1123/#/interface/detail/{item["id"]}'  # 未提供
             update_cycle = item.get('updateCycle', '')
 
             # 创建DataModel实例
             model = DataModel(title, subject, description, source_department, release_time,
                               update_time, open_conditions, data_volume, is_api, file_type,
-                              access_count, download_count, api_call_count, link, update_cycle)
+                              access_count, download_count, api_call_count, link, update_cycle, self.name)
             models.append(model.to_dict())
 
         return models

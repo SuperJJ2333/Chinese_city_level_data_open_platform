@@ -86,10 +86,10 @@ class PageBase:
         """保存数据到文件。"""
         logger.success(f"{self.name} - 共爬取数据{len(self.total_data)}条")
 
+        save_to_excel(self.total_data, self.name, self.province)
+
         self.page.quit()
         self.session.close()
-
-        save_to_excel(self.total_data, self.name, self.province)
 
     def count_page_num(self):
         """获取总页数。"""

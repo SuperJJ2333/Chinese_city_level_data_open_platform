@@ -145,7 +145,7 @@ class TaizhouCrawler(PageBase):
 
         access_count = session_page.ele('x://*[@id="apifw_one"]/div[3]/div[1]/table//tr[1]/td').text
         download_count = session_page.ele('x://*[@id="apifw_one"]/div[3]/div[1]/table//tr[2]/td').text
-        api_call_count = 0  # 页面中未提供API调用次数信息
+        api_call_count = None  # 页面中未提供API调用次数信息
         link = session_page.url
 
         update_cycle = ''  # 页面中更新周期是固定文本

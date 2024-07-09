@@ -109,8 +109,8 @@ class WuhanCrawler(PageBase):
             data_volume = 0  # 假设默认为0
             is_api = 'False'  # 假设默认为'否'
             file_type = [item.get('fjhzm', '')]
-            access_count = item.get('fws', 0)
-            download_count = item.get('xzs', 0)  # 假设默认为0
+            access_count = item.get('fws', None)
+            download_count = item.get('xzs', None)  # 假设默认为0
             api_call_count = 0  # 假设默认为0
             link = ''  # 未提供
             update_cycle = self.format_update_cycle(item.get('gxpl', ''))
@@ -140,13 +140,13 @@ class WuhanCrawler(PageBase):
             file_formats = item.get('cataFormatDetail', '').split(',') if item.get('cataFormatDetail') else []
             file_type = [fmt.strip() for fmt in file_formats]
 
-            access_count = int(item.get('pageView', 0))
-            download_count = int(item.get('downloads', 0))
-            api_call_count = int(item.get('serviceCount', 0))  # Assuming 'serviceCount' reflects API calls
+            access_count = item.get('pageView', None)
+            download_count = item.get('downloads', None)
+            api_call_count = item.get('applyNum', None)  # Assuming 'serviceCount' reflects API calls
             is_api = 'False' if not self.is_api else 'True'
 
             open_conditions = item.get('openTypeDetail', '未知')  # Defaulting to '未知' if not specified
-            data_volume = item.get('dataCount', 0)
+            data_volume = item.get('fileCount', None)
 
             link = f'https://data.wuhan.gov.cn/page/data/data_interface_details.html?cataId={item["cataId"]}&serviceCode={item["serviceCode"]}'  # No URL provided in the data
 
@@ -182,9 +182,9 @@ class WuhanCrawler(PageBase):
             is_api = 'True'
             file_type = ['json']
 
-            access_count = item.get('viewCount', 0)
-            download_count = item.get('downCount', 0)
-            api_call_count = 0
+            access_count = item.get('viewCount', None)
+            download_count = item.get('downCount', None)
+            api_call_count = None  # 未提供
             link = f'http://open.huaibeidata.cn:1123/#/interface/detail/{item["id"]}'  # 未提供
             update_cycle = item.get('updateCycle', '')
 
