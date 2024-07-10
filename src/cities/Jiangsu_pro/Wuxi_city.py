@@ -35,19 +35,22 @@ class WuxiCrawler(PageBase):
 
         super().__init__(city_info, is_headless)
 
-        self.headers = {"Accept": "application/json, text/javascript, */*; q=0.01",
-                        "Accept-Encoding": "gzip, deflate, br, zstd",
-                        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
-                        "Content-Type": "application/x-www-form-urlencoded",
-                        "Cookie": "JSESSIONID=9D8B1BA6EBA82393264A9EEAED62B9D9; sub_domain_cokie=qF2CeHnkg66TaVt3w5H0hQ%3D%3D; region_name=%E6%97%A0%E9%94%A1%E5%B8%82; _gscu_567925102=18552973v0b8h414; _gscbrs_567925102=1; _gscs_567925102=t18613742xhbfwg14|pv:10",
-                        "Host": "data.wuxi.gov.cn", "Origin": "https://data.wuxi.gov.cn",
-                        "Referer": "https://data.wuxi.gov.cn/data/dev/developer/serviceList.htm",
-                        "Sec-Fetch-Dest": "empty", "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
-                        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0",
-                        "X-Requested-With": "XMLHttpRequest",
-                        "sec-ch-ua": "\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"",
-                        "sec-ch-ua-mobile": "?0", "sec-ch-ua-platform": "\"Windows\""}
-        self.params = {'page': '3', 'pageSize': '10', 'orderType': 'online_time desc', 'key': 'orgId='}
+        if not self.is_api:
+            self.headers = {"Accept": "application/json, text/javascript, */*; q=0.01",
+                            "Accept-Encoding": "gzip, deflate, br, zstd",
+                            "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+                            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+                            "Host": "data.wuxi.gov.cn", "Origin": "https://data.wuxi.gov.cn",
+                            "Referer": "https://data.wuxi.gov.cn/data/catalog/index.htm", "Sec-Fetch-Dest": "empty",
+                            "Sec-Fetch-Mode": "cors", "Sec-Fetch-Site": "same-origin",
+                            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0",
+                            "X-Requested-With": "XMLHttpRequest",
+                            "sec-ch-ua": "\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"",
+                            "sec-ch-ua-mobile": "?0", "sec-ch-ua-platform": "\"Windows\""}
+
+            self.params = {'org_code': '', 'region_code': '', 'conf_use_type': '', 'group_id': '',
+                           'conf_catalog_format': '', 'open_type': '', 'page': '4', 'pageSize': '10',
+                           '_order': 'cc.data_update_time desc', 'keyword': ''}
 
     def run(self):
         self.total_data = self.process_views()
@@ -59,11 +62,14 @@ class WuxiCrawler(PageBase):
         session = self.session
 
         for i in range(1, self.total_page_num):
-            # self.params['page'] = str(i)
-            # params = self.params
-
-            url = self.base_url.format(page_num=i)
-            session.get(url=url, headers=self.headers, proxies=self.proxies)
+            if self.is_api:
+                url = self.base_url.format(page_num=i)
+                session.get(url=url, headers=self.headers, proxies=self.proxies)
+            else:
+                self.params['page'] = str(i)
+                params = self.params
+                session.post(url=self.base_url, data=params, headers=self.headers,
+                             proxies=self.fiddler_proxies, verify=False)
 
             while True:
                 try:
@@ -129,7 +135,7 @@ class WuxiCrawler(PageBase):
 
         for item in results:
             title = item.get('cata_title', '')
-            subject = item.get('cata_tags', '')  # 使用标签作为主题
+            subject = item.get('cataLogGroups', {})[-1].get('group_name', '')  # 使用标签作为主题
             description = item.get('description', '')
             source_department = item.get('org_name', '')
 

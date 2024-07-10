@@ -45,9 +45,8 @@ class FujianCrawler(PageBase):
         self.params = {'sort': '0', 'pageNo': '38', 'pageSize': '15'}
 
         self.city_code_map = {
-
             "福州市": "350100000000",
-            "福建省": '000',
+            # "福建省": '000',
             "厦门市": "350200000000",
             "莆田市": "350300000000",
             "三明市": "350400000000",
@@ -177,11 +176,11 @@ class FujianCrawler(PageBase):
 
         for item in results:
             title = item.get('catalogName', '') if item.get('catalogName') is not None else item.get('serviceName', '')
-            subject = item.get('themeName', '') if item.get('themeName') is not None else item.get('serviceName', '')
+            subject = item.get('themeName', '')
             description = item.get('catalogDes', '') if item.get('catalogDes') is not None else item.get('serviceDesc', '')
             source_department = item.get('orgName', '')
 
-            release_time = item.get('releaseTime') if item.get('releaseTime') is not None else item.get('updateTime', None)
+            release_time = item.get('releaseTime')
             update_time = item.get('updateTime', '')
 
             open_conditions = '无条件开放' if item.get('openType') == '1' else '有条件开放'

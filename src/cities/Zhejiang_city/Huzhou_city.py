@@ -124,7 +124,7 @@ class HuzhouCrawler(PageBase):
             is_api = 'True'
 
             access_count = item.get('dataSetDetail', {}).get('visits', None)  # Assuming 'visits_count' is the number of accesses
-            download_count = item.get('dataSetDetail', {}).get('download', None)  # Assuming this field represents download counts
+            download_count = item.get('dataSetDetail', {}).get('provinces_output_files', None)  # Assuming this field represents provinces_output_files counts
             api_call_count = None  # Assuming this represents API call counts
             link = f'http://data.huzhou.gov.cn/open_data/dataset/detail?id={item["catalogId"]}' # Assuming this is the link to the data
 

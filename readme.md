@@ -38,10 +38,14 @@ cd Chinese_city_level_data_open_platform
 ├── README.md
 
 src: 包含所有的源代码
-cities: 各个城市的爬虫实现
-common: 公共工具和辅助函数
+src/cities: 各个城市的爬虫实现
+src/analysis: 数据分析和整合
+src/common: 公共工具和辅助函数
 config.py: 配置文件
-main.py: 主入口文件
+
+
 output: 保存爬取的数据
+output/cities_output_files: 保存各个城市的爬取数据
+output/provinces_output_files: 保存各省的爬取数据
 
 ```

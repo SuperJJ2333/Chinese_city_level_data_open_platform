@@ -128,7 +128,7 @@ class HaerbinCrawler(PageBase):
         is_api = 'True' if 'json' in files_type else 'False'
 
         access_count = session_page.ele('x://img[contains(@src,"eye")]/following-sibling::text()').strip()
-        download_count = session_page.ele('x://img[contains(@src,"download")]/following-sibling::text()').strip()
+        download_count = session_page.ele('x://img[contains(@src,"provinces_output_files")]/following-sibling::text()').strip()
         api_call_count = None  # Placeholder, as there is no specific information in HTML
         link = session_page.url  # Assuming the session_page object contains the URL
 

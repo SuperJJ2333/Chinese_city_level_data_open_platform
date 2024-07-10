@@ -131,7 +131,7 @@ class SuizhouCrawler(PageBase):
             data_volume = item.get('fileSize', None)  # 数据量信息，如果没有提供默认为 '0'
 
             access_count = item.get('visit', None)
-            download_count = item.get('download', None)
+            download_count = item.get('provinces_output_files', None)
             api_call_count = None  # 假设数据中没有 API 调用次数
             link = f'http://www.suizhou.gov.cn/data//dataSet/toDataSet/{item.get("id")}'  # 假设没有提供具体的链接信息
             update_cycle = item.get('updateCycle', '')
