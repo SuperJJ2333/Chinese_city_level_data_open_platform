@@ -124,7 +124,7 @@ class XiaoganCrawler(PageBase):
         open_conditions = ''
         is_api_conditions = session_page.ele(
             'x://div[@class="data-content"]//div[contains(text(), "API接口")]/following-sibling::div/a').text
-        data_volume = 0  # Assuming data volume isn't provided.
+        data_volume = None  # Assuming data volume isn't provided.
 
         file_type = session_page.ele('x://div[@class="data-content"]//div[contains(text(), '
                                      '"数据格式")]/following-sibling::div').text  # This would ideally be set based on
